@@ -3,12 +3,12 @@
 const Home = () => {
     // coding di sini
     <>
-        <div>dawddawdwa</div>
-        <div>dawddawdwa</div>
-        <div>dawddawdwa</div>
-        <div>dawddawdwa</div>
-        <div>dawddawdwa</div>
-        <div>dawddawdwa</div>
+        <div>wdjejdwjdjwejdewdwed</div>
+        <div>wdjejdwjdjwejdewdwed</div>
+        <div>wdjejdwjdjwejdewdwed</div>
+        <div>wdjejdwjdjwejdewdwed</div>
+        <div>wdjejdwjdjwejdewdwed</div>
+        <div>wdjejdwjdjwejdewdwed</div>
     </>
 }
 
