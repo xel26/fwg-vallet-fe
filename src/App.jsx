@@ -32,23 +32,23 @@ const router = createBrowserRouter([
     element: <Login/>
   },
   {
-    path: 'forgot-password',
+    path: '/forgot-password',
     element: <ForgotPassword/>
   },
   {
-    path: 'enter-pin',
+    path: '/enter-pin',
     element: <EnterPin/>
   },
   {
-    path: 'dashboard',
+    path: '/dashboard',
     element: <Dashboard/>
   },
   {
-    path: 'transfer',
+    path: '/transfer',
     element: <Transfer/>
   },
   {
-    path: 'transfer-detail',
+    path: '/transfer-detail/:id',
     element: <TransferDetail/>
   },
   {
