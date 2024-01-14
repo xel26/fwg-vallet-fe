@@ -2,7 +2,7 @@
 
 const Home = () => {
     // coding di sini
-    <><div>test</div></>
+    <><div>ujian</div></>
 }
 
 export default Home;
