@@ -1,34 +1,82 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { createBrowserRouter, RouterProvider } from 'react-router-dom'
+
+import { Provider } from 'react-redux'
+import { persistor, store } from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
+
+import Home from './pages/Home'
+import Register from './pages/Register'
+import Login from './pages/Login'
+import ForgotPassword from './pages/ForgotPassword'
+import EnterPin from './pages/EnterPin'
+import Dashboard from './pages/Dashboard'
+import Transfer from './pages/Transfer'
+import TransferDetail from './pages/TransferDetail'
+import TopUp from './pages/TopUp'
+import Profile from './pages/Profile'
+import ChangePin from './pages/ChangePin'
+import ChangePassword from './pages/ChangePassword'
+
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <Home/> 
+  },
+  {
+    path: '/register',
+    element: <Register/>
+  },
+  {
+    path: '/login',
+    element: <Login/>
+  },
+  {
+    path: 'forgot-password',
+    element: <ForgotPassword/>
+  },
+  {
+    path: 'enter-pin',
+    element: <EnterPin/>
+  },
+  {
+    path: 'dashboard',
+    element: <Dashboard/>
+  },
+  {
+    path: 'transfer',
+    element: <Transfer/>
+  },
+  {
+    path: 'transfer-detail',
+    element: <TransferDetail/>
+  },
+  {
+    path: 'top-up',
+    element: <TopUp/>
+  },
+  {
+    path: 'profile',
+    element: <Profile/>
+  },
+  {
+    path: 'change-pin',
+    element: <ChangePin/>
+  },
+  {
+    path: 'change-password',
+    element: <ChangePassword/>
+  }
+])
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <RouterProvider router={router}/>
+      </PersistGate>
+    </Provider>
   )
 }
 
