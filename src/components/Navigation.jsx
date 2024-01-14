@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ListNavigation = ({path, value}) => {
     return (
-      <Link to={`/${path}`} className={` flex items-center gap-4 ${document.URL.endsWith(path) ? 'bg-[#764abc] text-white' : 'text-[#4F5665]'}  rounded p-2`}>
+      <Link to={`/${path}`} className={` flex items-center gap-4 ${document.URL.includes(path) ? 'bg-[#764abc] text-white' : 'text-[#4F5665]'}  rounded p-2`}>
         {value === "Dashboard" ? (
            <FiPieChart size={20}/>
         ): value == "Transfer" ? (
