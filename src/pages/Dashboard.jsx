@@ -1,7 +1,14 @@
 //import
 
 const Dashboard = () => {
-    // coding di sini
+    return (
+        <>
+        <div>test</div>
+        <div>test</div>
+        <div>test</div>
+        <div>test</div>
+        </>
+    )
 }
 
 export default Dashboard;
