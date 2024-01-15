@@ -10,6 +10,7 @@ import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import EnterPin from './pages/EnterPin'
 import Dashboard from './pages/Dashboard'
+import HistoryTransaction from './pages/HistoryTransaction'
 import Transfer from './pages/Transfer'
 import TransferDetail from './pages/TransferDetail'
 import TopUp from './pages/TopUp'
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <Dashboard/>
+  },
+  {
+    path: 'history-transaction',
+    element: <HistoryTransaction/>
   },
   {
     path: '/transfer',
