@@ -1,6 +1,6 @@
 import { FaCheckCircle, FaStar, FaMoneyBill } from 'react-icons/fa'
 import { FiStar } from 'react-icons/fi'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useState, } from 'react'
 
 import userPhoto from '../assets/media/user.jpg'
@@ -8,17 +8,21 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import Button from '../components/Button'
 import CardStatusTransfer from '../components/CardStatusTransfer'
+import CardEnterPin from '../components/CardEnterPin'
 
 const TransferDetail = ({isFavorite=false}) => {
   const navigate = useNavigate()
+
   const [statusTransfer, setStatusTransfer] = useState(false)
-  const [cardStatus, setCardStatus] = useState(true)
+  const [cardStatusShow, setCardStatusShow] = useState(false)
   const handleCardStatus = () => {
-    setCardStatus(!cardStatus)
+    setCardStatusShow(!cardStatus)
     if(statusTransfer){
       navigate('/dashboard')
     }
   }
+
+  const [cardEnterPinShow, setCardEnterPinShow] = useState(false)
 
     return (
       <>
@@ -69,7 +73,7 @@ const TransferDetail = ({isFavorite=false}) => {
                       type="text"
                       name="transferAmount"
                       placeholder="Enter Nominal Transfer"
-                      className="text-[#4F5665] w-full outline-none bg-transparent text-sm "
+                      className="text-[#4F5665] w-full outline-none bg-transparent text-sm"
                     />
                   </label>
                 </div>
@@ -91,9 +95,13 @@ const TransferDetail = ({isFavorite=false}) => {
               </form>
 
               <CardStatusTransfer
-                cardStatus={cardStatus}
+                cardStatusShow={cardStatusShow}
                 statusTransfer={statusTransfer}
                 handleCardStatus={handleCardStatus}
+              />
+
+              <CardEnterPin
+                cardEnterPinShow={cardEnterPinShow}
               />
             </div>
           </section>
