@@ -1,5 +1,5 @@
 import { FaCheckCircle, FaStar, FaMoneyBill } from 'react-icons/fa'
-import { FiStar } from 'react-icons/fi'
+import { FiStar, FiSend } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { useState, } from 'react'
 
@@ -9,6 +9,9 @@ import Navigation from "../components/Navigation";
 import Button from '../components/Button'
 import CardStatusTransfer from '../components/CardStatusTransfer'
 import CardEnterPin from '../components/CardEnterPin'
+import { TransferSteps } from './Transfer'
+
+
 
 const TransferDetail = ({isFavorite=false}) => {
   const navigate = useNavigate()
@@ -31,6 +34,19 @@ const TransferDetail = ({isFavorite=false}) => {
           <Navigation />
 
           <section className="relative flex-1 flex flex-col gap-4 mt-4 pl-8">
+            <div className="flex items-center gap-4 pt-10 pl">
+              <FiSend size={20} color="#764abc" />
+              <div className="font-bold">Transfer Money</div>
+            </div>
+
+            <div className="flex items-center gap-4">
+              <TransferSteps steps={1} value="Find People" />
+              <hr className="border-[#4F5665] border-dashed h-0 w-12 " />
+              <TransferSteps steps={2} value="Set Nominal" />
+              <hr className="border-[#4F5665] border-dashed h-0 w-12 " />
+              <TransferSteps steps={3} value="Finish" />
+            </div>
+
             <div className="border flex-1 mr-10 mb-10 p-4 flex flex-col gap-8">
               <div className="font-bold">People Information</div>
 
@@ -100,9 +116,7 @@ const TransferDetail = ({isFavorite=false}) => {
                 handleCardStatus={handleCardStatus}
               />
 
-              <CardEnterPin
-                cardEnterPinShow={cardEnterPinShow}
-              />
+              <CardEnterPin cardEnterPinShow={cardEnterPinShow} />
             </div>
           </section>
         </main>

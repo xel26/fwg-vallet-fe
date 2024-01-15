@@ -8,7 +8,7 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 
 
-const TransferSteps = ({steps, value}) => {
+export const TransferSteps = ({steps, value}) => {
     return (
       <div className="flex items-center gap-4">
         <div className="rounded-full bg-[#4F5665] w-5 h-5 flex justify-center items-center text-white">
