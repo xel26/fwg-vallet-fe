@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom'
 import transferSuccess from '../assets/media/transfer-success.png'
 import transferFailed from '../assets/media/transfer-failed.png'
 
-const CardStatusTransfer = ({cardStatus, statusTransfer, handleCardStatus}) => {
+const CardStatusTransfer = ({cardStatusShow, statusTransfer, handleCardStatus}) => {
     return (
-        <div className={`${cardStatus ? 'block' : 'hidden'} absolute bg-[#00000099] left-0 top-0 h-full w-full z-40 flex justify-center items-center`}>
+        <div className={`${cardStatusShow ? 'block' : 'hidden'} absolute bg-[#00000099] left-0 top-0 h-full w-full z-40 flex justify-center items-center`}>
         <div className='h-fit w-2/6 bg-white rounded-xl'>
             <div className='p-4 flex flex-col items-center gap-2'>
               <div className='flex justify-start w-full'>
-                <p className='text-sm text-[#4F5665] font-semibold'>TRANSFER TO GHALUH 1</p>
+                <p className='text-xs text-[#4F5665] font-semibold'>TRANSFER TO GHALUH 1</p>
               </div>
                 <hr className='w-full'/>
     
