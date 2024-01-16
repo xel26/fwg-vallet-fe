@@ -1,5 +1,5 @@
 import { FaWallet } from "react-icons/fa";
-import { FiSearch, FiShoppingCart, FiChevronDown, FiUser, FiLogOut } from 'react-icons/fi'
+import { FiSearch, FiShoppingCart, FiChevronDown, FiUser, FiLogOut,  } from 'react-icons/fi'
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -10,6 +10,10 @@ const Navbar = ({home, login, dashboard}) => {
     const handleDropDownMenu = () => {
         setDropDownMenu(!dropDownMenu)
     }
+    // const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+    // const handleHamburgerMenu = () => {
+    //     setShowHamburgerMenu(!showHamburgerMenu);
+    // }
 
     const [navSearch, setNavSearch] = useState(false)
     return(
@@ -26,6 +30,15 @@ const Navbar = ({home, login, dashboard}) => {
             <div className={`${home ? "text-white" : "text-[#764abc]"}`}>
               E-Wallet
             </div>
+          
+          {/* <div className="md:hidden flex">
+            <FaHamburger className='cursor-pointer' onClick={handleHamburgerMenu} />
+          </div>
+
+          <div className={`md:hidden flex flex-col w-full gap-[18px] h-screen px-[40px] bg-white text-[#764abc] rounded-b-2xl right-0 text-center absolute top-16 ${showHamburgerMenu ? 'block' : 'hidden'}`}>
+              <div className="border border-transparent justify-center text-sm mt-[18px] p-5 hover:border rounded-md hover:bg-violet-400">Sign In</div>
+              <div className="border border-transparent justify-center text-sm hover:border p-5 rounded-md hover:bg-violet-400">Sign Up</div>
+          </div> */}
           </div>
 
           <div className="relative flex gap-4">
