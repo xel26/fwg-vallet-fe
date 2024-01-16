@@ -19,23 +19,26 @@ const Register = () => {
     const toggleConfirmPasswordVisibility = () => {
         setcConfirmPasswordVisible(!confirmPasswordVisible)
     }
+
     return (
         <>
             <header className="flex bg-[#764abc] h-screen">
-                <div className="bg-white flex flex-1 justify-center rounded-r-xl">
+                <div className="bg-white flex flex-1 justify-center md:rounded-r-xl">
                     <form className=" flex flex-col justify-center w-[90%]">
                         <div className="flex items-center">
                             <img width="35px" src={logoAuth} alt="" />
                             <span className="text-[#764abc] text-[20px]">Vallet</span>
                         </div>
-                        <span className="text-[#0B132A] text-[28px]">Start Accessing Banking Needs With All Devices and All
+                        <span className="text-[#0B132A] text-[24px]">Start Accessing Banking Needs With All Devices and All
                             Platforms With 30.000+ Users</span>
                         <span className="text-[#4F5665] text-[16px]">Transfering money is eassier than ever, you can access Zwallet
                             wherever you are. Desktop, laptop, mobile phone? we cover all of that for you!</span>
-                        <button className="my-[10px] flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
-                            src={logoGoogle} alt="" />Sign In With Google</button>
-                        <button className="flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
-                            src={logoFacebook} alt="" />Sign In With Facebook</button>
+                        <div className="flex md:flex-col flex-row gap-[10px]">
+                            <button className="md:my-[10px] flex justify-center bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
+                                src={logoGoogle} alt="" /><span className="hidden md:block">Sign In With Google</span></button>
+                            <button className="flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
+                                src={logoFacebook} alt="" /><span className="hidden md:block">Sign In With Facebook</span></button>
+                        </div>
                         <div className=" flex items-center w-full">
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                             <p className="w-[30%] text-center text-[#4F5665]">Or</p>
@@ -82,7 +85,7 @@ const Register = () => {
                     </form>
                 </div>
                 <div className="hidden flex-1 md:flex justify-center items-center">
-                    <div className="max-w-[90%]"><img src={registerImage} alt=""/></div>
+                    <div className="max-w-[90%]"><img src={registerImage} alt="" /></div>
                 </div>
             </header>
         </>

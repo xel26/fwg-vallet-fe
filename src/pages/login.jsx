@@ -15,6 +15,7 @@ const Login = () => {
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible)
     }
+
     return (
         <>
             <header className="flex bg-[#764abc] h-screen">
@@ -26,10 +27,12 @@ const Login = () => {
                         </div>
                         <span className="text-[#0B132A] text-[30px]">Hello Welcome Back 👋</span>
                         <span className="text-[#4F5665] text-[16px]">Fill out the form correctly or you can login with several option.</span>
-                        <button className="my-[10px] flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
-                            src={logoGoogle} alt="" />Sign In With Google</button>
-                        <button className="flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
-                            src={logoFacebook} alt="" />Sign In With Facebook</button>
+                        <div className="flex md:flex-col flex-row gap-[10px]">
+                            <button className="md:my-[10px] flex justify-center bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
+                                src={logoGoogle} alt="" /><span className="hidden md:block">Sign In With Google</span></button>
+                            <button className="flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
+                                src={logoFacebook} alt="" /><span className="hidden md:block">Sign In With Facebook</span></button>
+                        </div>
                         <div className=" flex items-center w-full">
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                             <p className="w-[30%] text-center text-[#4F5665]">Or</p>
@@ -38,9 +41,9 @@ const Login = () => {
                         <div className="flex gap-3 flex-col">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
                             <div className="-mt-[5px] flex relative items-center">
-                            <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
-                            <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="email"
-                                id="email" type="email" placeholder="Enter Your Email" />
+                                <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="email"
+                                    id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
                         <div className="flex gap-3 flex-col">

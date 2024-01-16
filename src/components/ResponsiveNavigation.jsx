@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const ListNavigation = ({ path, value }) => {
     return (
-        <Link to={`/${path}`} className={` flex items-center gap-4 ${document.URL.includes(path) ? 'bg-[#764abc] text-white' : 'text-[#4F5665]'}  rounded p-2`}>
+        <Link to={`/${path}`} className={` flex flex-col items-center gap-[10px] ${document.URL.includes(path) ? 'bg-[#764abc] text-white' : 'text-[#4F5665]'}  rounded p-2`}>
             {value === "Dashboard" ? (
                 <FiPieChart size={20} />
             ) : value == "Transfer" ? (
@@ -21,17 +21,16 @@ const ListNavigation = ({ path, value }) => {
     );
 }
 
-const Navigation = () => {
+const ResponsiveNavigation = () => {
     return (
-        <aside className="h-full border border-l-2 w-1/5 pt-10 pl-12 pr-4 hidden sm:flex flex-col gap-2">
+        <aside className="bg-[#E8E8E8] sm:hidden flex justify-between">
             <ListNavigation path="dashboard" value="Dashboard" />
             <ListNavigation path="transfer" value="Transfer" />
             <ListNavigation path="history-transaction" value="History" />
             <ListNavigation path="top-up" value="Top Up" />
             <ListNavigation path="profile" value="Profile" />
-            <ListNavigation path="#" value="Keluar" />
         </aside>
     )
 }
 
-export default Navigation
+export default ResponsiveNavigation
