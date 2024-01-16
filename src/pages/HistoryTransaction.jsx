@@ -1,11 +1,11 @@
-import { FaStar } from "react-icons/fa";
-import { FiSearch, FiSend, FiStar } from 'react-icons/fi'
+import { FiSearch, FiStar, FiRotateCcw, FiTrash2 } from 'react-icons/fi'
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import userPhoto from '../assets/media/user.jpg'
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
+import PageNavigation from '../components/PageNavigation';
 
 
 export const TransferSteps = ({steps, value}) => {
@@ -20,78 +20,88 @@ export const TransferSteps = ({steps, value}) => {
 }
 
 
-const CardListContact = ({id, image, contactName, number, isFavorite}) => {
+const CardHistoryTransaction = ({id, image, contactName, PhoneNumber, amount, type}) => {
     return (
       <div className="flex items-center justify-between pl-24">
         <div>
           <img src={image} className="rounded h-10 w-10 object-cover" />
         </div>
-        <Link to={`/transfer-detail/${id}`} className="active:underline">{contactName}</Link>
+        <div>{contactName}</div>
+        <div>{PhoneNumber}</div>
         <div className="flex items-center gap-24">
-          <div>{number}</div>
-          {isFavorite ? <FaStar color="orange" /> : <FiStar color="#4F5665" />}
+          <div className={`${type === "income" ? 'text-[#1EC15F]': 'text-[#D00000]'}`}>RP.{amount.toLocaleString('id')}</div>
+          <FiTrash2 color='#D00000'/>
         </div>
       </div>
     );
 }
 
-const Transfer = () => {
-    const [listContact, setListContact] = useState([
+
+const HistoryTransaction = () => {
+    const [listHistoryTransaction, setListHistoryTransaction] = useState([
         {
             id: 1,
             image: userPhoto,
             name: "Ghaluh 1",
-            number: "(239)555-0108",
-            isFavorite: true
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "income"
         },
         {
             id: 2,
             image: userPhoto,
             name: "Ghaluh 2",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "expense"
         },
         {
             id: 3, 
             image: userPhoto,
             name: "Ghaluh 3",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "income"
         },
         {
             id: 4,
             image: userPhoto,
             name: "Ghaluh 4",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "expense"
         },
         {
             id: 5,
             image: userPhoto,
             name: "Ghaluh 5",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "income"
         },
         {
             id: 6,
             image: userPhoto,
             name: "Ghaluh 6",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "expense"
         },
         {
             id: 7,
             image: userPhoto,
             name: "Ghaluh 7",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "income"
         },
         {
             id: 8,
             image: userPhoto,
             name: "Ghaluh 8",
-            number: "(239)555-0108",
-            isFavorite: false
+            PhoneNumber: "(308) 555-0121",
+            amount: 50000,
+            type: "expense"
         },
 
     ])
@@ -105,26 +115,13 @@ const Transfer = () => {
 
           <section className="flex-1 flex flex-col gap-4 pt-3">
             <div className="flex items-center gap-4 pt-10 pl">
-              <FiSend size={20} color="#764abc" />
-              <div className="font-bold">Transfer Money</div>
-            </div>
-
-            <div className="flex items-center gap-4">
-              <TransferSteps steps={1} value="Find People" />
-              <hr className="border-[#4F5665] border-dashed h-0 w-12 " />
-              <TransferSteps steps={2} value="Set Nominal" />
-              <hr className="border-[#4F5665] border-dashed h-0 w-12 " />
-              <TransferSteps steps={3} value="Finish" />
+              <FiRotateCcw size={20} color="#764abc" />
+              <div className="font-bold">History Transaction</div>
             </div>
 
             <div className="border flex-1 mr-10 mb-10 p-4 flex flex-col gap-8">
               <div className="flex justify-between">
-                <div>
-                  <div className="font-bold">Find People</div>
-                  <div className="text-xs text-[#4F5665]">
-                    8 Result Found For Ghaluh
-                  </div>
-                </div>
+                  <p className="font-bold">Find Transaction</p>
 
                 <form className="w-[15rem] h-fit flex">
                   <label className="border rounded relative w-full">
@@ -143,16 +140,22 @@ const Transfer = () => {
               </div>
 
               <div className="flex flex-col justify-center gap-4">
-                {listContact &&
-                  listContact.map((item) => (
-                    <CardListContact
+                {listHistoryTransaction &&
+                  listHistoryTransaction.map((item) => (
+                    <CardHistoryTransaction
                       id={item.id}
                       image={item.image}
                       contactName={item.name}
-                      number={item.number}
-                      isFavorite={item.isFavorite}
+                      PhoneNumber={item.PhoneNumber}
+                      amount={item.amount}
+                      type={item.type}
                     />
                   ))}
+              </div>
+
+              <div className='text-[#4F5665] text-sm flex justify-between w-full'>
+                <p>Show 8 History of 100 History</p>
+                <PageNavigation/>
               </div>
             </div>
           </section>
@@ -161,4 +164,4 @@ const Transfer = () => {
     );
 }
 
-export default Transfer;
+export default HistoryTransaction;

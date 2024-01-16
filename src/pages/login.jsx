@@ -7,6 +7,7 @@ import logoAuth from "../assets/image/logo auth.png"
 import logoGoogle from "../assets/image/google.svg"
 import logoFacebook from "../assets/image/facebook.svg"
 
+
 const Login = () => {
 
     // Ganti type di input dari password ke text
@@ -68,6 +69,7 @@ const Login = () => {
             </header>
         </>
     )
+
 }
 
 export default Login;
