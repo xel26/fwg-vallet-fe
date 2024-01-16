@@ -65,11 +65,11 @@ const router = createBrowserRouter([
     element: <Profile/>
   },
   {
-    path: 'change-pin',
+    path: 'profile/change-pin',
     element: <ChangePin/>
   },
   {
-    path: 'change-password',
+    path: 'profile/change-password',
     element: <ChangePassword/>
   }
 ])

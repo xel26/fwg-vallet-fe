@@ -22,15 +22,17 @@ const ListNavigation = ({ path, value }) => {
 }
 
 const Navigation = () => {
-    return (
+
+    return(
         <aside className="h-full border border-l-2 w-1/5 pt-10 pl-12 pr-4 hidden sm:flex flex-col gap-2">
-            <ListNavigation path="dashboard" value="Dashboard" />
-            <ListNavigation path="transfer" value="Transfer" />
-            <ListNavigation path="history-transaction" value="History" />
-            <ListNavigation path="top-up" value="Top Up" />
-            <ListNavigation path="profile" value="Profile" />
-            <ListNavigation path="#" value="Keluar" />
-        </aside>
+        <ListNavigation path="dashboard" value="Dashboard" />
+        <ListNavigation path="transfer" value="Transfer" />
+        <ListNavigation path="history-transaction" value="History" />
+        <ListNavigation path="top-up" value="Top Up" />
+        <ListNavigation path="profile" value="Profile" />
+        <ListNavigation path="#" value="Keluar" />
+      </aside>
+
     )
 }
 
