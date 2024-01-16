@@ -1,11 +1,9 @@
 //import
 import React from "react"
-import { Link } from "react-router-dom"
-import { FiEyeOff, FiEye, FiKey,FiMail, FiUser } from "react-icons/fi"
-import enterPinImage from "../assets/image/enter pin.png"
-import logoAuth from "../assets/image/logo auth.png"
-import logoGoogle from "../assets/image/google.svg"
-import logoFacebook from "../assets/image/facebook.svg"
+import { FiEyeOff, FiEye, FiKey, FiUser } from "react-icons/fi"
+import Navbar from "../components/Navbar"
+import Navigation from "../components/Navigation"
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 const ChangePassword = () => {
 
@@ -24,17 +22,16 @@ const ChangePassword = () => {
     }
     return (
         <>
-            <nav className="h-[75px] bg-violet-400">
-            </nav>
-            <header className="flex">
-                <div className="w-[265px] bg-orange-400 h-screen">f</div>
-                <div className=" flex flex-1">
-                    <div className="flex px-[50px] flex-col gap-[30px] justify-center">
-                        <div className="flex gap-[10px]">
+            <Navbar/>
+            <header className="flex pt-[56px]">
+                <Navigation/>
+                <div className=" flex flex-1 pt-[25px]">
+                    <div className=" w-full flex md:px-[50px] flex-col gap-[20px] justify-center">
+                        <div className="md:pl-[0px] pl-[30px] flex gap-[10px]">
                             <div><FiUser /></div>
                             <span className="font-bold">Profile</span>
                         </div>
-                        <form className="flex flex-col gap-[10px] border-2 p-[30px] w-[1020px]">
+                        <form className="flex flex-col gap-[10px] md:border-2 p-[30px] w-full">
                             <span className="text-[#0B132A] font-bold">Change Password</span>
                             <div className="flex gap-3 flex-col">
                                 <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Existing Password</label>
@@ -75,6 +72,7 @@ const ChangePassword = () => {
                             <div><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold text-white" type="submit">Submit</button>
                             </div>
                         </form>
+                        <ResponsiveNavigation/>
                     </div>
                 </div>
             </header>

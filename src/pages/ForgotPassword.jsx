@@ -1,17 +1,12 @@
 //import
-import React from "react"
-import { Link } from "react-router-dom"
 import { FiMail} from "react-icons/fi"
-import registerImage from "../assets/image/register.png"
 import logoAuth from "../assets/image/logo auth.png"
-import logoGoogle from "../assets/image/google.svg"
-import logoFacebook from "../assets/image/facebook.svg"
 
 const ForgotPassword = () => {
     return (
         <>
             <header className="flex justify-center items-center bg-[#764abc] h-screen">
-                <form className="flex w-[90%s] md:max-w-[40%] p-[50px] gap-[15px] flex-col bg-white rounded-xl">
+                <form className="flex w-[90%] md:max-w-[40%] p-[50px] gap-[15px] flex-col bg-white rounded-xl">
                     <div className="flex gap-[10px] items-center">
                         <img width="35px" src={logoAuth} alt=""/>
                             <span className="text-[#764abc] text-[20px]">Vallet</span>
