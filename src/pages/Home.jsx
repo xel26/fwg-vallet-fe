@@ -2,8 +2,7 @@
 import { useEffect } from 'react'
 
 //import gambar
-import Logo_icon from "../assets/media/Logo_tanpanama.png"
-import Hamburger_menu from "../assets/media/hamburger-menu.png"
+
 import Mobile_dashboard_1 from "../assets/media/mobile-dashboard-1.png"
 import Playstore from "../assets/media/playstore.png"
 import Appstore from "../assets/media/appstore.png"
