@@ -20,7 +20,9 @@ import Airbnb_logo from "../assets/media/airbnb.png"
 import Canon_logo from "../assets/media/canon.png"
 import Dell_logo from "../assets/media/dell.png"
 import Profile from "../assets/media/profile.png"
-import { FiArrowLeft, FiArrowRight, FiDownload, FiFacebook, FiGithub, FiHeadphones, FiInstagram, FiMail, FiPhone, FiShield, FiStar, FiTwitter } from 'react-icons/fi'
+import { FiArrowLeft, FiArrowRight, FiDownload, FiHeadphones, FiShield, FiStar } from 'react-icons/fi'
+import Navbar from '../components/Navbar'
+import Footer from '../components/Footer'
 
 const Home = () => {
     // coding di sini
@@ -34,27 +36,7 @@ const Home = () => {
 
     return(
     <>
-        {/* navbarhome */}
-        <header className="sticky top-0 z-50 flex justify-between items-center w-full h-[76px] px-4 md:px-[40px] text-white bg-[#764abc] ">
-            <div id="logo" className="flex gap-4 items-center">
-                <img className='w-[32px] h-[32px]' src={Logo_icon} alt="logo tanpa nama" />
-                <p className="text-xl font-semibold">Vallet</p>
-            </div>
-
-            <div className='flex md:hidden'>
-                <img className='cursor-pointer' src={Hamburger_menu} alt="" />
-            </div>
-            {/* Persiapan on click */}
-            <dir className="md:hidden flex flex-col w-full gap-[18px] h-screen px-[40px] bg-white text-[#764abc] rounded-b-2xl right-0 text-center absolute top-16 hidden">
-                <div className="border border-transparent justify-center text-sm mt-[18px] p-5 hover:border rounded-md  hover:bg-violet-400">Sign In</div>
-                <div className="border border-transparent justify-center text-sm hover:border p-5 rounded-md hover:bg-violet-400">Sign Up</div>
-            </dir>
-            {/* onclick */}
-            <div className="hidden md:flex md:gap-2">
-                <a className="border border-white h-[48px] py-3 px-4 rounded-md hover:bg-blue-700" href="/login">Sign In</a>
-                <a className="border text-[#764abc] bg-white border-white h-[48px] py-3 px-4 rounded-md hover:bg-slate-200" href="/register">Sign Up</a>
-            </div>
-        </header>
+        <Navbar home={true} login={false} dashboard={false} />
 
     <div>
     
@@ -248,60 +230,7 @@ const Home = () => {
     </div>
 
     {/* footer */}
-    <footer className="flex flex-col gap-[40px] px-5 py-14 bg-[#764abc] text-white ">
-        <div className="flex flex-col  gap-[40px] lg:flex-row">
-            <div className="flex lg:flex lg:flex-1">
-                <div className="flex flex-col gap-[15px] ">
-                    <div className="flex items-center gap-[15px]">
-                        <img src={Logo_icon} className='w-10 h-10' alt="e-wallet-logo"/>
-                        <p className="font-nunito text-4xl font-semibold">Vallet</p>
-                    </div>
-                        <p className="text-base font-normal">Clarity gives you the blocks and components you need to create a truly professional website.</p>
-                </div>    
-            </div>
-            <div className="flex flex-col gap-[15px] lg:flex-1">
-                <p className="font-semibold text-lg ">GET IN TOUCH</p>
-                <div className="flex gap-[15px] ">
-                    <FiPhone className='text-white h-6 w-6 font-semibold' />
-                    <p>+62 5637 8882 9901</p>
-                </div>
-                <div className="flex gap-[15px] ">
-                    <FiMail className='text-white h-6 w-6 font-semibold' />
-                    <p>contact@zwallet.com</p>
-                </div>
-            </div>
-                <div className="flex flex-col gap-[15px] lg:flex-1">
-                    <p className="font-semibold text-lg ">SOCIAL MEDIA</p>
-                    <div className="flex gap-[20px] ">
-                        
-                        <div className=' flex rounded-full w-11 h-11 bg-white justify-center items-center'>
-                        <FiTwitter className='w-5 h-5 text-[#764abc]' />
-                        </div>
-                        <div className=' flex rounded-full w-11 h-11 bg-white justify-center items-center'>
-                        <FiFacebook className='w-5 h-5 text-[#764abc]' />
-                        </div>
-                        <div className=' flex rounded-full w-11 h-11 bg-white justify-center items-center'>
-                        <FiInstagram className='w-5 h-5 text-[#764abc]' />
-                        </div>
-                        <div className=' flex rounded-full w-11 h-11 bg-white justify-center items-center'>
-                        <FiGithub className='w-5 h-5 text-[#764abc]' />
-                        </div>
-                    </div>
-                </div>
-                <div className="flex flex-col gap-[15px] lg:flex-1 ">
-                    <p className="font-semibold text-lg ">NEWSLETTER</p>
-                    <form className="flex flex-col gap-[15px]">
-                        <div className="flex gap-[15px] px-3 py-[14px] border border-[#DEDEDE] bg-white rounded-lg">
-                            <FiMail className='w-5 h-5 text-black'/>
-                            <input type="text" placeholder="Enter Your Email" id="email" className="flex-1 outline-none text-xs font-normal text-[#4F5665]"/>
-                        </div>
-                        <button className="flex-1 h-9 bg-white rounded-md text-[#764abc] py-[10px] hover:bg-slate-200">Subscribe</button>
-                    </form>
-                </div>
-        </div>
-            <div className="border border-t-white"></div>
-            <p className="text-sm font-normal text-center">© Copyright 2022, All Rights Reserved by ClarityUI</p>
-    </footer>
+    <Footer />
         
 
 
