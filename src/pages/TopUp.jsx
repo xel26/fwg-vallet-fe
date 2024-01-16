@@ -10,6 +10,7 @@ import DANA from '../assets/media/DANA.png'
 import Gopay from '../assets/media/gopay.png'
 import OVO from '../assets/media/ovo.png'
 import userPhoto from '../assets/media/user.jpg'
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 const CardListPaymentMethod = ({value, logo, label}) => {
     return (
@@ -163,6 +164,7 @@ const TopUp = () => {
               </div>
             </div>
           </form>
+          <ResponsiveNavigation/>
         </section>
       </main>
     </>

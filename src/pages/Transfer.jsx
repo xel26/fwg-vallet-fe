@@ -7,6 +7,7 @@ import userPhoto from '../assets/media/user.jpg'
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import TransferSteps from "../components/TransferSteps";
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 
 const CardListContact = ({id, image, contactName, number, isFavorite}) => {
@@ -140,6 +141,7 @@ const Transfer = () => {
                   ))}
               </div>
             </div>
+            <ResponsiveNavigation/>
           </section>
         </main>
       </>
