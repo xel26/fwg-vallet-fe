@@ -7,7 +7,7 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import PageNavigation from '../components/PageNavigation';
 import CardDetailHistoryTransaction from '../components/CardDetailHistoryTransaction';
-
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 export const TransferSteps = ({steps, value}) => {
     return (
@@ -174,6 +174,7 @@ const HistoryTransaction = () => {
             </div>
 
             <CardDetailHistoryTransaction cardShow={cardShow} handleCard={setCardShow}/>
+            <ResponsiveNavigation/>
           </section>
         </main>
       </>

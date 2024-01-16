@@ -110,7 +110,7 @@ const Navbar = () => {
                             document.URL.endsWith("/")
                               ? "text-white"
                               : "text-[#4F5665]"
-                          } z-50`}
+                          } z-50 hidden sm:block`}
                         />
 
                         <Link>
@@ -120,7 +120,7 @@ const Navbar = () => {
                               document.URL.endsWith("/")
                                 ? "text-white"
                                 : "text-[#4F5665]"
-                            }`}
+                            } hidden sm:block`}
                           />
                         </Link>
                       </>

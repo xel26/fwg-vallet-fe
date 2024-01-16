@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import Button from '../components/Button';
 import defaultProfile from '../assets/media/default-profile.png'
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 import { FiUsers, FiEdit, FiTrash, FiUser, FiMail, FiPhone } from 'react-icons/fi';
 import { Link } from 'react-router-dom';
@@ -126,6 +127,7 @@ const Profile = () => {
                <Button value="Submit" />
              </div>
            </form>
+           <ResponsiveNavigation/>
          </section>
        </main>
      </>

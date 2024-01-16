@@ -10,6 +10,7 @@ import Button from '../components/Button'
 import CardStatusTransfer from '../components/CardStatusTransfer'
 import CardEnterPin from '../components/CardEnterPin'
 import TransferSteps from "../components/TransferSteps";
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 
 
@@ -108,6 +109,8 @@ const TransferDetail = ({isFavorite=true}) => {
 
               <CardEnterPin cardEnterPinShow={cardEnterPinShow} />
             </div>
+
+            <ResponsiveNavigation/>
           </section>
         </main>
       </>
