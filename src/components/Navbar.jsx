@@ -1,5 +1,7 @@
 import { FaWallet } from "react-icons/fa";
+
 import { FiSearch, FiShoppingCart, FiChevronDown, FiUser, FiLogOut, FiMenu } from 'react-icons/fi'
+
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -15,6 +17,10 @@ const Navbar = () => {
     const handleDropDownMenu = () => {
         setDropDownMenu(!dropDownMenu)
     }
+    // const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
+    // const handleHamburgerMenu = () => {
+    //     setShowHamburgerMenu(!showHamburgerMenu);
+    // }
 
     const [navSearch, setNavSearch] = useState(false)
 
