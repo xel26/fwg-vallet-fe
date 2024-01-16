@@ -23,7 +23,7 @@ const ListNavigation = ({path, value}) => {
 
 const Navigation = () => {
     return(
-        <aside className="h-full border border-l-2 w-1/5 pt-10 pl-12 pr-4 flex flex-col gap-2">
+        <aside className="h-full border border-l-2 w-1/5 pt-10 pl-12 pr-4 hidden sm:flex flex-col gap-2">
         <ListNavigation path="dashboard" value="Dashboard" />
         <ListNavigation path="transfer" value="Transfer" />
         <ListNavigation path="history-transaction" value="History" />
