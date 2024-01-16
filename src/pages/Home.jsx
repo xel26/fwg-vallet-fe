@@ -303,8 +303,6 @@ const Home = () => {
             <p className="text-sm font-normal text-center">© Copyright 2022, All Rights Reserved by ClarityUI</p>
     </footer>
         
-
-
     </>
     )
     
