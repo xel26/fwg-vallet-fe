@@ -4,9 +4,11 @@ import { Provider } from 'react-redux'
 import { persistor, store } from './redux/store'
 import { PersistGate } from 'redux-persist/integration/react'
 
+import PrivateRoute from './components/PrivateRoute'
+
 import Home from './pages/Home'
 import Register from './pages/Register'
-import Login from './pages/Login'
+import Login from './pages/login'
 import ForgotPassword from './pages/ForgotPassword'
 import CreateNewPassword from './pages/CreateNewPassword'
 import EnterPin from './pages/EnterPin'
@@ -35,47 +37,47 @@ const router = createBrowserRouter([
   },
   {
     path: '/forgot-password',
-    element: <ForgotPassword/>
+    element: <PrivateRoute><ForgotPassword/></PrivateRoute>
   },
   {
     path: '/create-new-password',
-    element: <CreateNewPassword/>
+    element: <PrivateRoute><CreateNewPassword/></PrivateRoute>
   },
   {
     path: '/enter-pin',
-    element: <EnterPin/>
+    element: <PrivateRoute><EnterPin/></PrivateRoute>
   },
   {
     path: '/dashboard',
-    element: <Dashboard/>
+    element: <PrivateRoute><Dashboard/></PrivateRoute>
   },
   {
     path: 'history-transaction',
-    element: <HistoryTransaction/>
+    element: <PrivateRoute><HistoryTransaction/></PrivateRoute>
   },
   {
     path: '/transfer',
-    element: <Transfer/>
+    element: <PrivateRoute><Transfer/></PrivateRoute>
   },
   {
     path: '/transfer-detail/:id',
-    element: <TransferDetail/>
+    element: <PrivateRoute><TransferDetail/></PrivateRoute>
   },
   {
     path: 'top-up',
-    element: <TopUp/>
+    element: <PrivateRoute><TopUp/></PrivateRoute>
   },
   {
     path: 'profile',
-    element: <Profile/>
+    element: <PrivateRoute><Profile/></PrivateRoute>
   },
   {
     path: 'profile/change-pin',
-    element: <ChangePin/>
+    element: <PrivateRoute><ChangePin/></PrivateRoute>
   },
   {
     path: 'profile/change-password',
-    element: <ChangePassword/>
+    element: <PrivateRoute><ChangePassword/></PrivateRoute>
   }
 ])
 

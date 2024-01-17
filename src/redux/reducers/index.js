@@ -4,6 +4,7 @@ import storage from "redux-persist/lib/storage";
 
 import auth from "./auth";
 import profile from "./profile";
+import register from "./register";
 
 const authConfig = {
     key: 'auth',
@@ -12,7 +13,8 @@ const authConfig = {
 
 const reducer = combineReducers({
     auth: persistReducer(authConfig, auth),
-    profile
+    profile,
+    register
 })
 
 export default reducer
