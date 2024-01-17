@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const CardEnterPin = ({cardEnterPinShow}) => {
-  cardEnterPinShow = true
+  cardEnterPinShow = false
 
     const pins = [1, 2, 3, 4, 5, 6]
 

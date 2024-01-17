@@ -61,7 +61,7 @@ const Login = () => {
                         <div><Link to="/"><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold" type="submit">Login</button></Link>
                         </div>
                         <div className="flex mt-[10px] justify-center">
-                            <div className="text-[#4F5665]">Not Have An Account? <Link className="text-[#764abc]" to="./register">Register</Link>
+                            <div className="text-[#4F5665]">Not Have An Account? <Link className="text-[#764abc]" to="/register">Register</Link>
                             </div>
                         </div>
                     </form>
