@@ -1,7 +1,6 @@
 //import
 
-import React, { useState } from "react"
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import axios from 'axios'
 import { useDispatch, useSelector } from "react-redux"
 import { useNavigate } from "react-router-dom"
@@ -51,10 +50,8 @@ const Login = () => {
         }
     },[token, navigate])
 
-    const [emailErrorMessage, setEmailErrorMessage] = useState('email error')
+    const [errMessage, setErrMessage] = useState('error message')
     const [emailError, setEmailError] = useState(false)
-
-    const [passErrorMessage, setPassErrorMessage] = useState('email error')
     const [passError, setPassError] = useState(false)
 
     return (
@@ -81,7 +78,7 @@ const Login = () => {
                         </div>
                         <div className="relative flex gap-3 flex-col">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
-                            <p className={`${emailError ? 'block' : 'hidden'} absolute left-16 -top-2.5 text-[#D00]`}>{emailErrorMessage}</p>
+                            <p className={`${emailError ? 'block' : 'hidden'} absolute left-16 -top-2.5 text-[#D00]`}>{errMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="email"
@@ -90,7 +87,7 @@ const Login = () => {
                         </div>
                         <div className="relative flex gap-3 flex-col">
                             <label className=" mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
-                            <p className={`${passError ? 'block' : 'hidden'} absolute left-24 top-2.5  text-[#D00]`}>{passErrorMessage}</p>
+                            <p className={`${passError ? 'block' : 'hidden'} absolute left-24 top-2.5  text-[#D00]`}>{errMessage}</p>
                             <div className=" -mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="password"

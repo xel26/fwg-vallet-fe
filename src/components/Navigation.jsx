@@ -1,10 +1,12 @@
 import { FiLogOut, FiRotateCcw, FiSend, FiUsers, FiUpload, FiPieChart } from 'react-icons/fi'
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { logout as logoutAction } from '../redux/reducers/auth';
+import { useNavigate } from 'react-router-dom';
 
-
-const ListNavigation = ({ path, value }) => {
+const ListNavigation = ({ path, value, logoutHandle }) => {
     return (
-        <Link to={`/${path}`} className={` flex items-center gap-4 ${document.URL.includes(path) ? 'bg-[#764abc] text-white' : 'text-[#4F5665]'}  rounded p-2`}>
+        <Link onClick={logoutHandle} to={`/${path}`} className={` flex items-center gap-4 ${document.URL.includes(path) ? 'bg-[#764abc] text-white' : 'text-[#4F5665]'}  rounded p-2`}>
             {value === "Dashboard" ? (
                 <FiPieChart size={20} />
             ) : value == "Transfer" ? (
@@ -23,6 +25,13 @@ const ListNavigation = ({ path, value }) => {
 
 const Navigation = () => {
 
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+    const logoutProcess = () => {
+        dispatch(logoutAction())
+        navigate('/')
+    }
+
     return(
         <aside className="h-full border border-l-2 w-1/5 pt-10 pl-12 pr-4 hidden sm:flex flex-col gap-2">
         <ListNavigation path="dashboard" value="Dashboard" />
@@ -30,7 +39,7 @@ const Navigation = () => {
         <ListNavigation path="history-transaction" value="History" />
         <ListNavigation path="top-up" value="Top Up" />
         <ListNavigation path="profile" value="Profile" />
-        <ListNavigation path="#" value="Keluar" />
+        <ListNavigation logoutHandle={logoutProcess} path="#" value="Keluar" />
       </aside>
 
     )

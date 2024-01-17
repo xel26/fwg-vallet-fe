@@ -11,11 +11,13 @@ import { useDispatch } from "react-redux"
 import { setregister } from "../redux/reducers/register"
 
 const Register = () => {
-    const [errMessage, setErrMessage] = useState()
     const navigate = useNavigate()
     const dispatch = useDispatch()
-
-
+    
+    const [errMessage, setErrMessage] = useState('error message')
+    const [emailError, setEmailError] = useState(false)
+    const [passError, setPassError] = useState(false)
+    const [confirmPassError, setConfirmPassError] = useState(false)
 
 
     const processRegister = async (event) => {
@@ -82,16 +84,18 @@ const Register = () => {
                             <p className="w-[30%] text-center text-[#4F5665]">Or</p>
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                         </div>
-                        <div className="flex flex-col gap-3">
+                        <div className="relative flex flex-col gap-3">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
+                            <p className={`${emailError ? 'block' : 'hidden'} absolute left-16 -top-2.5 text-[#D00]`}>{errMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="email"
                                     id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
-                        <div className="flex flex-col gap-3">
+                        <div className="relative flex flex-col gap-3">
                             <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
+                            <p className={`${passError ? 'block' : 'hidden'} absolute left-24 top-2.5 text-[#D00]`}>{errMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="password"
@@ -102,8 +106,9 @@ const Register = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex flex-col gap-3">
+                        <div className="relative flex flex-col gap-3">
                             <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="confirmPassword">Confirm Password</label>
+                            <p className={`${confirmPassError ? 'block' : 'hidden'} absolute left-40 top-2.5 text-[#D00]`}>{errMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="confirmPassword"
