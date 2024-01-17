@@ -1,5 +1,5 @@
 //import
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 //import gambar
 
@@ -21,10 +21,12 @@ import Dell_logo from "../assets/media/dell.png"
 import { FiDownload, FiHeadphones, FiShield } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
+import { Link } from 'react-router-dom'
 import Testimoni from '../components/testimoni'
 
 const Home = () => {
-    // coding di sini
+    const [token, setToken] = useState(false)
+    
     useEffect(()=>{
         window.scrollTo({
           top:0,
@@ -117,9 +119,10 @@ const Home = () => {
                     <p className="text-[#764abc] font-bold text-lg text-center lg:text-left ">WELCOME TO E-WALLET</p>
                     <p className="font-medium text-[32px] text-center lg:text-left">Your All-in-One Digital Payment Solution</p>
                     <p className="font-medium text-base text-center lg:text-left">Say goodbye to cash and hello to the future of payments! With e-wallet, you have the power of secure, fast, and convenient digital transactions right at your fingertips. Whether you&apos;re shopping, dining out, or sending money to loved ones, we&apos;ve got you covered.</p>
-                    <button className="h-[50px] justify-center bg-[#764abc] text-white py-[10px] rounded-md lg:max-w-[143px] hover:bg-violet-400 ">
-                        Get Started
-                    </button>
+
+                    <Link to={token ? '/dashboard' : '/login'} className="h-[50px] flex justify-center items-center bg-[#764abc] text-white py-[10px] rounded-md lg:max-w-[143px] hover:bg-violet-400">
+                        {token ? 'To Dashboard' : 'Get Started'}
+                    </Link>
 
                 </div>
                 <div className="relative mt-[300px] bottom-0 px-4 md:px-10 flex justify-center lg:pt-1 lg:flex-row lg:w-[680px]">
@@ -149,9 +152,9 @@ const Home = () => {
                         <img src={Check} alt="" />         
                             User Friendly</li>
                     </ul>
-                        <button className="h-[50px] justify-center bg-[#764abc] text-white py-[10px] rounded-md lg:max-w-[143px] hover:bg-violet-400">
-                            Get Started
-                        </button>
+                        <Link to={token ? '/dashboard' : '/login'} className="h-[50px] flex items-center justify-center bg-[#764abc] text-white py-[10px] rounded-md lg:max-w-[143px] hover:bg-violet-400">
+                            {token ? 'To Dashboard' : 'Get Started'}
+                        </Link>
                 </div>
             </div>
         </div>

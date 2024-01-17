@@ -1,13 +1,14 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-// import { Provider } from 'react-redux'
-// import { persistor, store } from './redux/store'
-// import { PersistGate } from 'redux-persist/integration/react'
+import { Provider } from 'react-redux'
+import { persistor, store } from './redux/store'
+import { PersistGate } from 'redux-persist/integration/react'
 
 import Home from './pages/Home'
 import Register from './pages/Register'
 import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
+import CreateNewPassword from './pages/CreateNewPassword'
 import EnterPin from './pages/EnterPin'
 import Dashboard from './pages/Dashboard'
 import HistoryTransaction from './pages/HistoryTransaction'
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
   {
     path: '/forgot-password',
     element: <ForgotPassword/>
+  },
+  {
+    path: '/create-new-password',
+    element: <CreateNewPassword/>
   },
   {
     path: '/enter-pin',
@@ -65,11 +70,11 @@ const router = createBrowserRouter([
     element: <Profile/>
   },
   {
-    path: 'change-pin',
+    path: 'profile/change-pin',
     element: <ChangePin/>
   },
   {
-    path: 'change-password',
+    path: 'profile/change-password',
     element: <ChangePassword/>
   }
 ])
@@ -77,13 +82,11 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <RouterProvider router={router}/>
-
-    // <Provider store={store}>
-    //   <PersistGate persistor={persistor}>
-    //     <RouterProvider router={router}/>
-    //   </PersistGate>
-    // </Provider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <RouterProvider router={router}/>
+      </PersistGate>
+    </Provider>
   )
 }
 

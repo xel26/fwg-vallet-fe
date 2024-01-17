@@ -1,12 +1,7 @@
 // import
-import { Link } from "react-router-dom"
-import { FiCoffee, FiFacebook, FiInstagram, FiPhone, FiTwitter } from "react-icons/fi"
-import React from "react"
-import { FiMail, FiUser } from "react-icons/fi"
-import enterPinImage from "../assets/image/enter pin.png"
+import { FiPhone} from "react-icons/fi"
+import { FiMail } from "react-icons/fi"
 import logoAuth from "../assets/image/logo auth.png"
-import logoGoogle from "../assets/image/google.svg"
-import logoFacebook from "../assets/image/facebook.svg"
 
 const Footer = () => {
     return (

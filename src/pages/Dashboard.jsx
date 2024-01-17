@@ -8,12 +8,13 @@ import moneyInsert from "../assets/media/u_money-insert.svg"
 import send from "../assets/media/send.svg"
 import p1 from "../assets/media/1.png"
 import { FiTrendingDown, FiTrendingUp,FiChevronDown } from "react-icons/fi";
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 const Dashboard = () => {
     return (
         <>
         <Navbar home={false} login={true} dashboard={true} />
-        <main className="h-[48rem] flex pt-10">
+        <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
         <Navigation />
 
         <section className="flex flex-col gap-y-4 lg:flex-row md:gap-x-5 py-4 px-5 md:py-11 md:px-10 md:justify-between w-full">
@@ -260,6 +261,7 @@ const Dashboard = () => {
             </div>
           </aside>
         </section>
+        <ResponsiveNavigation/>
         </main>
 
         </>

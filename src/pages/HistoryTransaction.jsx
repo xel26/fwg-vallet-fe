@@ -6,7 +6,8 @@ import userPhoto from '../assets/media/user.jpg'
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import PageNavigation from '../components/PageNavigation';
-
+import CardDetailHistoryTransaction from '../components/CardDetailHistoryTransaction';
+import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 export const TransferSteps = ({steps, value}) => {
     return (
@@ -20,25 +21,28 @@ export const TransferSteps = ({steps, value}) => {
 }
 
 
-const CardHistoryTransaction = ({id, image, contactName, PhoneNumber, amount, type}) => {
+const CardHistoryTransaction = ({id,  image, contactName, PhoneNumber, amount, type, deleteHistoryOrder, cardShow, handleCard}) => {
     return (
-      <div className="flex items-center justify-between pl-24">
-        <div>
+      <div onClick={() => handleCard(true)} className={`flex items-center justify-between sm:pl-24 sm:gap-36 ${id % 2 !== 0 ? 'bg-[#F9FAFB] border-b': 'bg-white'} p-2`}>
+        <div className='hidden sm:block'>
           <img src={image} className="rounded h-10 w-10 object-cover" />
         </div>
-        <div>{contactName}</div>
-        <div>{PhoneNumber}</div>
+        <div className='flex flex-col sm:flex-row sm:gap-24 flex-1 text-[#4F5665]'>
+        <div className='text-sm sm:text-base'>{contactName}</div>
+        <div className='text-sm sm:text-base'>{PhoneNumber}</div>
+        </div>
         <div className="flex items-center gap-24">
           <div className={`${type === "income" ? 'text-[#1EC15F]': 'text-[#D00000]'}`}>RP.{amount.toLocaleString('id')}</div>
-          <FiTrash2 color='#D00000'/>
+          <FiTrash2 onClick={() => deleteHistoryOrder(id)} color='#D00000' className='hidden sm:block'/>
         </div>
       </div>
     );
 }
 
 
+
 const HistoryTransaction = () => {
-    const [listHistoryTransaction, setListHistoryTransaction] = useState([
+    let [listHistoryTransaction, setListHistoryTransaction] = useState([
         {
             id: 1,
             image: userPhoto,
@@ -106,24 +110,30 @@ const HistoryTransaction = () => {
 
     ])
 
+    const deleteHistoryOrder = (id) => {
+      setListHistoryTransaction(listHistoryTransaction = listHistoryTransaction.filter((item) => item.id !== id))
+    }
+
+    const [cardShow, setCardShow] = useState(false)
+
     return (
       <>
         <Navbar home={false} login={true} dashboard={false} />
 
-        <main className="h-[48rem] flex gap-8 pt-10">
+        <main className="sm:h-[48rem] flex gap-8 pt-10">
           <Navigation />
 
-          <section className="flex-1 flex flex-col gap-4 pt-3">
-            <div className="flex items-center gap-4 pt-10 pl">
+          <section className="relative flex-1 flex flex-col gap-4 pt-3">
+            <div className="hidden sm:flex items-center gap-4 pt-10 pl">
               <FiRotateCcw size={20} color="#764abc" />
               <div className="font-bold">History Transaction</div>
             </div>
 
-            <div className="border flex-1 mr-10 mb-10 p-4 flex flex-col gap-8">
-              <div className="flex justify-between">
+            <div className="sm:border flex-1 sm:mr-10 sm:mb-10 p-4 flex flex-col gap-8">
+              <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between">
                   <p className="font-bold">Find Transaction</p>
 
-                <form className="w-[15rem] h-fit flex">
+                <form className="w-full sm:w-[15rem] h-fit flex ">
                   <label className="border rounded relative w-full">
                     <input
                       type="text"
@@ -139,25 +149,32 @@ const HistoryTransaction = () => {
                 </form>
               </div>
 
-              <div className="flex flex-col justify-center gap-4">
+              <div className="flex flex-col justify-center">
                 {listHistoryTransaction &&
                   listHistoryTransaction.map((item) => (
                     <CardHistoryTransaction
+                      key={item.id}
                       id={item.id}
                       image={item.image}
                       contactName={item.name}
                       PhoneNumber={item.PhoneNumber}
                       amount={item.amount}
                       type={item.type}
+                      deleteHistoryOrder={deleteHistoryOrder}
+                      cardShow={cardShow}
+                      handleCard={setCardShow}
                     />
                   ))}
               </div>
 
-              <div className='text-[#4F5665] text-sm flex justify-between w-full'>
+              <div className='text-[#4F5665] text-sm hidden  sm:flex justify-between w-full'>
                 <p>Show 8 History of 100 History</p>
                 <PageNavigation/>
               </div>
             </div>
+
+            <CardDetailHistoryTransaction cardShow={cardShow} handleCard={setCardShow}/>
+            <ResponsiveNavigation/>
           </section>
         </main>
       </>
