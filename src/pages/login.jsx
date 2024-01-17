@@ -1,5 +1,5 @@
 //import
-import React from "react"
+import React, { useState } from "react"
 import { Link } from "react-router-dom"
 import { FiMail, FiEyeOff, FiEye, FiKey } from "react-icons/fi"
 import loginImage from "../assets/image/login.png"
@@ -16,9 +16,15 @@ const Login = () => {
         setPasswordVisible(!passwordVisible)
     }
 
+    const [emailErrorMessage, setEmailErrorMessage] = useState('email error')
+    const [emailError, setEmailError] = useState(false)
+
+    const [passErrorMessage, setPassErrorMessage] = useState('email error')
+    const [passError, setPassError] = useState(false)
+
     return (
         <>
-            <header className="flex bg-[#764abc] h-screen">
+            <header className=" flex bg-[#764abc] h-screen">
                 <div className="bg-white flex flex-1 justify-center md:rounded-r-xl">
                     <form className=" flex flex-col justify-center gap-[10px] w-[90%]">
                         <div className="flex gap-[10px] items-center">
@@ -38,17 +44,19 @@ const Login = () => {
                             <p className="w-[30%] text-center text-[#4F5665]">Or</p>
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                         </div>
-                        <div className="flex gap-3 flex-col">
+                        <div className="relative flex gap-3 flex-col">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
+                            <p className={`${emailError ? 'block' : 'hidden'} absolute left-16 -top-2.5 text-[#D00]`}>{emailErrorMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="email"
                                     id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
-                        <div className="flex gap-3 flex-col">
-                            <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
-                            <div className="-mt-[5px] flex relative items-center">
+                        <div className="relative flex gap-3 flex-col">
+                            <label className=" mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
+                            <p className={`${passError ? 'block' : 'hidden'} absolute left-24 top-2.5  text-[#D00]`}>{passErrorMessage}</p>
+                            <div className=" -mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
                                 <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="password"
                                     id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
