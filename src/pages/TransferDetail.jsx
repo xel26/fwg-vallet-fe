@@ -14,14 +14,14 @@ import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 
 
-const TransferDetail = ({isFavorite=true}) => {
-  const navigate = useNavigate()
+const TransferDetail = () => {
 
   const [statusTransfer, setStatusTransfer] = useState(false)
   const [cardStatusShow, setCardStatusShow] = useState(false)
-
   const [cardEnterPinShow, setCardEnterPinShow] = useState(false)
+
   const [verified, setVerified] = useState(false)
+  const [isFavorite, setIsFavorite] = useState(true)
 
     return (
       <>

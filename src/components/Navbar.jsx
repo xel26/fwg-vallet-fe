@@ -8,19 +8,18 @@ import { useState } from "react";
 import userPhoto from '../assets/media/user.jpg'
 
 const Navbar = () => {
-  let login = true
-  if(document.URL.endsWith("/")){
-    login = false
+  // const [token, setToken] = useState(true)
+
+  // pengkondisian sementara
+  let token = true
+  if(document.URL.endsWith('/')){
+    token = false
   }
 
     const [dropDownMenu, setDropDownMenu] = useState(false)
     const handleDropDownMenu = () => {
         setDropDownMenu(!dropDownMenu)
     }
-    // const [showHamburgerMenu, setShowHamburgerMenu] = useState(false);
-    // const handleHamburgerMenu = () => {
-    //     setShowHamburgerMenu(!showHamburgerMenu);
-    // }
 
     const [navSearch, setNavSearch] = useState(false)
 
@@ -31,7 +30,7 @@ const Navbar = () => {
           className={`fixed w-full h-fit py-3 sm:py-0 sm:h-14 flex flex-col gap-4 items-center ${
             document.URL.endsWith("/")
               ? "bg-[#764abc]"
-              : "bg-[#764abc] sm:bg-white"
+              : "bg-[#764abc] sm:bg-white sm:border-b"
           } z-50`}
         >
           <div
@@ -49,7 +48,7 @@ const Navbar = () => {
                     document.URL.endsWith("/") ? "text-white" : "text-[#764abc]"
                   }`}
                 >
-                  E-Wallet
+                  Vallet
                 </div>
               </div>
             ) : document.URL.includes("dashboard") ? (
@@ -74,19 +73,19 @@ const Navbar = () => {
               <FaWallet
                 className={`${
                   document.URL.endsWith("/") ? "text-white" : "text-[#764abc]"
-                }`}
+                } text-xl`}
               />
               <div
                 className={`${
                   document.URL.endsWith("/") ? "text-white" : "text-[#764abc]"
-                }`}
+                } text-2xl`}
               >
-                E-Wallet
+                Vallet
               </div>
             </div>
 
             <div className="relative flex gap-4">
-              {login ? (
+              {token ? (
                 <>
                   <div className=" flex items-center gap-4">
                     {document.URL.includes("dashboard") ? (
@@ -202,9 +201,9 @@ const Navbar = () => {
         <div
           className={` ${
             showMoreNav ? "block" : "hidden"
-          } fixed bg-white text-[#764abc] flex flex-col w-full p-4 gap-4 top-12 z-50`}
+          } sm:hidden fixed bg-white text-[#764abc] flex flex-col w-full p-4 gap-4 top-12 z-50`}
         >
-          {login ? (
+          {token ? (
             <>
               <Link
                 to="/profile"
@@ -229,7 +228,7 @@ const Navbar = () => {
               </Link>
               <Link
                 to="/login"
-                className="rounded p-1 border border-[#764abc] flex justify-center items-center"
+                className="rounded p-1 border bg-[#764abc] text-white flex justify-center items-center"
               >
                 Sign Up
               </Link>

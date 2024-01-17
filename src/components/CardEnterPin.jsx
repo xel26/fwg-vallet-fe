@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 
 const CardEnterPin = ({cardEnterPinShow}) => {
-  cardEnterPinShow = false
+  cardEnterPinShow = true
 
     const pins = [1, 2, 3, 4, 5, 6]
 
@@ -24,7 +24,7 @@ const CardEnterPin = ({cardEnterPinShow}) => {
            </div>
 
            <div className="flex flex-col w-full gap-1">
-             <p className="font-semibold text-sm sm:text-xl">Enter Your Pin</p>
+             <p className="font-semibold text-sm sm:text-xl">Enter Your Pin 👋</p>
              <p className="text-[#4F5665] text-xs sm:text-sm">
                Enter Your Pin For Transaction
              </p>
