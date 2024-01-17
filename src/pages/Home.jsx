@@ -18,11 +18,11 @@ import Hnm_logo from "../assets/media/hnm.png"
 import Airbnb_logo from "../assets/media/airbnb.png"
 import Canon_logo from "../assets/media/canon.png"
 import Dell_logo from "../assets/media/dell.png"
-import Profile from "../assets/media/profile.png"
-import { FiArrowLeft, FiArrowRight, FiDownload, FiHeadphones, FiShield, FiStar } from 'react-icons/fi'
+import { FiDownload, FiHeadphones, FiShield } from 'react-icons/fi'
 import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
+import Testimoni from '../components/testimoni'
 
 const Home = () => {
     const [token, setToken] = useState(false)
@@ -157,12 +157,12 @@ const Home = () => {
             </div>
         </div>
 
-        <div className="px-4 md:px-10 py-14 flex flex-col items-center gap-[19px] lg:flex-row lg:justify-center">
+        <div className="px-4 md:px-10 py-14 flex flex-col items-center gap-[19px] lg:flex-row justify-center">
             <div className="flex flex-col lg:w-[330px]">
                 <p className="font-medium text-[32px] text-center lg:text-left">100+ Trusted Partners</p>
                 <p className="font-normal text-base text-center lg:text-left">We have reached global level and have 100+ brand partners around the globe.</p>
             </div>
-            <div className="md:flex items-center">
+            <div className="flex-col md:flex-row md:flex items-center md:justify-normal ">
                 <img  src={Microsoft_logo} alt="microsoft-logo"/>
                 <img  src={Dropbox_logo} alt="dropbox-logo"/>
                 <img  src={Hnm_logo} alt="hnm-logo"/>
@@ -175,31 +175,8 @@ const Home = () => {
         <div className="px-4 md:px-10 py-14 flex flex-col items-center gap-[19px]">
             <p className="font-medium text-[32px] text-center">What Our Users Are Saying</p>
             <p className="font-normal text-base text-center">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
-            <div className='flex justify-between items-center gap-5'>
-                <div className='hidden md:flex rounded-full w-12 h-12 bg-gray-400 justify-center items-center'>
-                    <FiArrowLeft />
-                </div>
-                <div className="flex flex-col items-center mt-10 text-white gap-[19px] bg-[#764abc] rounded-2xl p-14 lg:w-[707px]">
-                <div className='object-cover rounded-full '>
-                <img src={Profile} alt="profile-img"/>
-                </div>
-                    <p className="font-bold text-lg">James Bond</p>
-                    <div className="flex gap-[15px]">
-                        <FiStar color="#a7a9ad" className="text-xs sm:text-base"></FiStar>
-                        <FiStar color="#a7a9ad" className="text-xs sm:text-base"></FiStar>
-                        <FiStar color="#a7a9ad" className="text-xs sm:text-base"></FiStar>
-                        <FiStar color="#a7a9ad" className="text-xs sm:text-base"></FiStar>
-                        <FiStar color="#a7a9ad" className="text-xs sm:text-base"></FiStar>
-                        
-                        <p>5.0</p>
-                    </div>
-                        <p className="font-bold text-5xl">“</p>
-                        <p className="font-normal text-base text-center">I&apos;ve been using the e-wallet for over two years now, and I&apos;m very satisfied with the ease of use. This has completely changed the way I shop and conduct financial transactions.</p>
-                </div>
-                <div className=' hidden md:flex rounded-full w-12 h-12 bg-[#764abc] justify-center items-center'>
-                    <FiArrowRight />
-                </div>
-            </div>
+
+            <Testimoni />
             
                         <svg className="mt-4" width="76" height="9" viewBox="0 0 76 9" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <circle cx="38" cy="4" r="4" fill="#E8E8E8"></circle>
