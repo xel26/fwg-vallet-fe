@@ -1,5 +1,6 @@
 //import
-import { useEffect, useState } from 'react'
+import { useEffect} from 'react'
+import { useSelector } from 'react-redux'
 
 //import gambar
 
@@ -25,7 +26,7 @@ import { Link } from 'react-router-dom'
 import Testimoni from '../components/testimoni'
 
 const Home = () => {
-    const [token, setToken] = useState(false)
+    const token = useSelector(state => state.auth.token)
     
     useEffect(()=>{
         window.scrollTo({

@@ -1,12 +1,15 @@
 //import
-import React from "react"
+import React, { useEffect } from "react"
+import axios from 'axios'
+import { useDispatch, useSelector } from "react-redux"
+import { useNavigate } from "react-router-dom"
+import { login as loginAction} from "../redux/reducers/auth"
 import { Link } from "react-router-dom"
 import { FiMail, FiEyeOff, FiEye, FiKey } from "react-icons/fi"
 import loginImage from "../assets/image/login.png"
 import logoAuth from "../assets/image/logo auth.png"
 import logoGoogle from "../assets/image/google.svg"
 import logoFacebook from "../assets/image/facebook.svg"
-
 
 const Login = () => {
 
@@ -15,12 +18,42 @@ const Login = () => {
     const togglePasswordVisibility = () => {
         setPasswordVisible(!passwordVisible)
     }
+    const dispatch = useDispatch()
+    const navigate = useNavigate()
+
+    const token = useSelector(state => state.auth.token)
+
+    const loginProcess = async (e) => {
+        e.preventDefault()
+        const {value: email} = e.target.email
+        const {value: password} = e.target.password
+
+        const form = new URLSearchParams()
+        form.append('email', email)
+        form.append('password', password)
+
+        try{
+            const {data} = await axios.post('http://localhost:5555/auth/login', form.toString())
+            setTimeout(()=>{
+                dispatch(loginAction(data.results.token))
+                navigate('/dashboard')
+            },2000)
+        }catch(err){
+            console.log(err)
+        }
+    }
+
+    useEffect(()=>{
+        if(token){
+            navigate('/dashboard')
+        }
+    },[token, navigate])
 
     return (
         <>
             <header className="flex bg-[#764abc] h-screen">
                 <div className="bg-white flex flex-1 justify-center md:rounded-r-xl">
-                    <form className=" flex flex-col justify-center gap-[10px] w-[90%]">
+                    <form onSubmit={loginProcess} className=" flex flex-col justify-center gap-[10px] w-[90%]">
                         <div className="flex gap-[10px] items-center">
                             <img width="35px" src={logoAuth} alt="" />
                             <span className="text-[#764abc] text-[30px]">Vallet</span>
@@ -58,7 +91,7 @@ const Login = () => {
                                 </div>
                             </div>
                         </div>
-                        <div><Link to="/"><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold" type="submit">Login</button></Link>
+                        <div><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold" type="submit">Login</button>
                         </div>
                         <div className="flex mt-[10px] justify-center">
                             <div className="text-[#4F5665]">Not Have An Account? <Link className="text-[#764abc]" to="/register">Register</Link>
