@@ -41,6 +41,7 @@ const CardHistoryTransaction = ({id, image, contactName, PhoneNumber, amount, ty
     );
 }
 
+const HistoryTransaction = () => {
     const deleteHistoryOrder = (id) => {
       setListHistoryTransaction(listHistoryTransaction = listHistoryTransaction.filter((item) => item.id !== id))
     }
