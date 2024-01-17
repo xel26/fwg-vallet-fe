@@ -1,8 +1,9 @@
 //import
-import { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 //import gambar
 
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi'
 import Mobile_dashboard_1 from "../assets/media/mobile-dashboard-1.png"
 import Playstore from "../assets/media/playstore.png"
 import Appstore from "../assets/media/appstore.png"
@@ -23,17 +24,42 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { Link } from 'react-router-dom'
 import Testimoni from '../components/testimoni'
+import axios from 'axios'
 
 const Home = () => {
-    const [token, setToken] = useState(false)
+    const [token, setToken] = useState(false) // Token
+
+    const [testimony, setTestimony] = useState([])
+    const [pagesArr, setPagesArr] = React.useState([])
+    const [pages, setPages] = React.useState(1)
+    const [totalPages, setTotalPages] = React.useState()
+
+    const getTestimony = async() => {
+        const {data: dataTestimony } = await axios.get('http://localhost:5555/testimony?sortby=createdAt&order=desc&limits=1')
+        setTestimony(dataTestimony.results)
+        let page = []
+        for(let i = 1; i <= dataTestimony.pageInfo.totalData; i++){
+            page.push(i)
+        }
+        setPagesArr(page)
+        setPages(dataTestimony.pageInfo.currentPage)
+        setTotalPages(dataTestimony.pageInfo.totalPage)
+    }
+
+    const changePages = async(e) => { // next page
+        const { data } = await axios.get(`http://localhost:5555/testimony?sortby=createdAt&order=desc&limits=1&page=${e}`)
+        setTestimony(data.results)
+        setPages(data.pageInfo.currentPage)
+    }
     
     useEffect(()=>{
+        getTestimony(),
         window.scrollTo({
-          top:0,
-          left:0,
-          behavior:'smooth'
+            top:0,
+            left:0,
+            behavior:'smooth'
         })
-      },[])
+    },[])
 
     return(
     <>
@@ -77,7 +103,7 @@ const Home = () => {
         </div>
 
         <div>
-           <div className="pt-16 pb-10">
+            <div className="pt-16 pb-10">
             <div className="flex flex-col gap-7 px-4 md:px-10 justify-items-center lg:flex-row lg:justify-between ">
                 <div className="flex flex-col gap-[15px] lg:flex-row lg:gap-[9px]">
                     <div className="flex justify-center items-center">
@@ -178,15 +204,32 @@ const Home = () => {
             <p className="font-medium text-[32px] text-center">What Our Users Are Saying</p>
             <p className="font-normal text-base text-center">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
 
-            <Testimoni />
-            
-                        <svg className="mt-4" width="76" height="9" viewBox="0 0 76 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <circle cx="38" cy="4" r="4" fill="#E8E8E8"></circle>
-                            <circle cx="55" cy="4" r="4" fill="#E8E8E8"></circle>
-                            <circle cx="72" cy="4" r="4" fill="#E8E8E8"></circle>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4.25441 8.44432C4.24369 8.4444 4.23296 8.44444 4.22222 8.44444C4.21148 8.44444 4.20075 8.4444 4.19003 8.44432H3.91085V8.43314C1.72437 8.27376 0 6.44937 0 4.22222C0 1.99508 1.72437 0.170685 3.91085 0.0113071V0H4.22222H20.877V0.00638229C20.9545 0.0021459 21.0325 0 21.1111 0C23.443 0 25.3333 1.89035 25.3333 4.22222C25.3333 6.55409 23.443 8.44444 21.1111 8.44444C21.0325 8.44444 20.9545 8.4423 20.877 8.43806V8.44432H4.25441Z" fill="#2948FF">
-                            </path>
-                        </svg>
+            <div className='flex justify-between items-center gap-5'>
+                {pages && 
+                    <div className='hidden md:flex rounded-full w-12 h-12 bg-gray-400 justify-center items-center'>
+                        <button onClick={()=>changePages(pages - 1)} ><FiArrowLeft /></button>
+                    </div>
+                }
+                {testimony?.map((data, i) => {
+                    // let image = data.image
+                    return(
+                        <Testimoni key={i} image={data.picture} name={data.fullName} rating={data.rating} review={data.review}/>
+                    )
+                })}
+                {totalPages && 
+                    <div className=' hidden md:flex rounded-full w-12 h-12 bg-[#764abc] justify-center items-center'>
+                        <button onClick={()=>changePages(pages + 1)} ><FiArrowRight /></button>
+                    </div>
+                }
+            </div>
+
+            <svg className="mt-4" width="76" height="9" viewBox="0 0 76 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="38" cy="4" r="4" fill="#E8E8E8"></circle>
+                <circle cx="55" cy="4" r="4" fill="#E8E8E8"></circle>
+                <circle cx="72" cy="4" r="4" fill="#E8E8E8"></circle>
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M4.25441 8.44432C4.24369 8.4444 4.23296 8.44444 4.22222 8.44444C4.21148 8.44444 4.20075 8.4444 4.19003 8.44432H3.91085V8.43314C1.72437 8.27376 0 6.44937 0 4.22222C0 1.99508 1.72437 0.170685 3.91085 0.0113071V0H4.22222H20.877V0.00638229C20.9545 0.0021459 21.0325 0 21.1111 0C23.443 0 25.3333 1.89035 25.3333 4.22222C25.3333 6.55409 23.443 8.44444 21.1111 8.44444C21.0325 8.44444 20.9545 8.4423 20.877 8.43806V8.44432H4.25441Z" fill="#2948FF">
+                </path>
+            </svg>
         </div>
 
         <div className="flex flex-col bg-[#F8F8F8] px-4 md:px-10 py-14 gap-[19px] lg:flex-row-reverse lg:items-center ">
