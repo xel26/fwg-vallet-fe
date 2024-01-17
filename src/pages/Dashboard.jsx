@@ -5,19 +5,19 @@ import balance from "../assets/media/balance.svg"
 import withdraw from "../assets/media/u_money-withdraw.svg"
 import withdraw1 from "../assets/media/u_money-withdraw-1.svg"
 import moneyInsert from "../assets/media/u_money-insert.svg"
-import send from "../assets/media/send.svg"
+import send from "../assets/media/Send.svg"
 import p1 from "../assets/media/1.png"
 import { FiTrendingDown, FiTrendingUp,FiChevronDown } from "react-icons/fi";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 const Dashboard = () => {
-    return (
-        <>
+    return ( 
+        <div className="">
         <Navbar />
-        <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
+       <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
         <Navigation />
 
-        <section className="flex flex-col gap-y-4 lg:flex-row md:gap-x-5 py-4 px-5 md:py-11 md:px-10 md:justify-between w-full">
+        <section className="flex flex-col flex-1 px-5 py-4 gap-y-4 lg:flex-row md:gap-x-5 md:py-11 md:px-10 md:justify-between">
           <section className="flex flex-col lg:w-2/3 gap-y-[18px]">
             <section className="flex flex-col gap-y-4 md:flex-row md:gap-x-4 md:justify-between">
               <div className="border border-[#E8E8E8] p-[19px] flex flex-col gap-y-4 w-full rounded-md">
@@ -32,11 +32,11 @@ const Dashboard = () => {
                   <p className="text-secondary">Balance</p>
                 </div>
                 <div>
-                  <p className="text-xl xl:text-2xl text-dark font-medium">
+                  <p className="text-xl font-medium xl:text-2xl text-dark">
                     Rp. 120.000
                   </p>
                 </div>
-                <div className="flex items-center gap-x-1 text-xs text-green-500">
+                <div className="flex items-center text-xs text-green-500 gap-x-1">
                   <p className="">+2%</p>
                   <div>
                     <FiTrendingUp 
@@ -59,11 +59,11 @@ const Dashboard = () => {
                   <p className="text-secondary">Income</p>
                 </div>
                 <div>
-                  <p className="text-xl xl:text-2xl text-dark font-medium">
+                  <p className="text-xl font-medium xl:text-2xl text-dark">
                     Rp. 2.120.000
                   </p>
                 </div>
-                <div className="flex items-center gap-x-1 text-xs text-green-500">
+                <div className="flex items-center text-xs text-green-500 gap-x-1">
                   <p className="">+11.01%</p>
                   <div>
                   <FiTrendingUp 
@@ -85,11 +85,11 @@ const Dashboard = () => {
                   <p className="text-secondary">Expense</p>
                 </div>
                 <div>
-                  <p className="text-xl xl:text-2xl text-dark font-medium">
+                  <p className="text-xl font-medium xl:text-2xl text-dark">
                     Rp. 200.000
                   </p>
                 </div>
-                <div className="flex items-center gap-x-1 text-xs text-red-500">
+                <div className="flex items-center text-xs text-red-500 gap-x-1">
                   <p className="">-5.06%</p>
                   <div>
                   <FiTrendingDown 
@@ -122,7 +122,7 @@ const Dashboard = () => {
               </div>
             </section>
             <section className="border border-[#E8E8E8] p-[19px] rounded-md flex flex-col items-center gap-y-4">
-              <div className="flex flex-col gap-y-3 md:flex-row md:justify-between w-full md:items-center">
+              <div className="flex flex-col w-full gap-y-3 md:flex-row md:justify-between md:items-center">
                 <p className="font-medium text-dark">Income Chart</p>
                 <div className="flex flex-col gap-y-3 md:flex-row gap-x-4">
                   <button className="p-3 bg-[#F1F1F1] rounded-md flex gap-x-2 items-center justify-between">
@@ -140,13 +140,13 @@ const Dashboard = () => {
               </div>
             </section>
           </section>
-          <aside className="lg:w-1/3">
+          <aside className="flex-1 ">
             <div className="border border-[#E8E8E8] p-[19px] rounded-md flex flex-col gap-y-6">
-              <div className="flex justify-between items-center">
-                <p className="text-sm xl:text-base text-dark font-semibold">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold xl:text-base text-dark">
                   Transaction History
                 </p>
-                <p className="text-primary text-xs font-medium">See All</p>
+                <p className="text-xs font-medium text-primary">See All</p>
               </div>
               <div className="flex flex-col gap-y-7">
                 <div className="flex flex-row gap-x-6">
@@ -159,7 +159,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
                     <div className="flex flex-col gap-y-1">
-                      <p className="text-dark font-semibold">Robert Fox</p>
+                      <p className="font-semibold text-dark">Robert Fox</p>
                       <p className="text-secondary">Transfer</p>
                     </div>
                     <div>
@@ -177,7 +177,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
                     <div className="flex flex-col gap-y-1">
-                      <p className="text-dark font-semibold">Robert Fox</p>
+                      <p className="font-semibold text-dark">Robert Fox</p>
                       <p className="text-secondary">Transfer</p>
                     </div>
                     <div>
@@ -195,7 +195,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
                     <div className="flex flex-col gap-y-1">
-                      <p className="text-dark font-semibold">Robert Fox</p>
+                      <p className="font-semibold text-dark">Robert Fox</p>
                       <p className="text-secondary">Transfer</p>
                     </div>
                     <div>
@@ -213,7 +213,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
                     <div className="flex flex-col gap-y-1">
-                      <p className="text-dark font-semibold">Robert Fox</p>
+                      <p className="font-semibold text-dark">Robert Fox</p>
                       <p className="text-secondary">Transfer</p>
                     </div>
                     <div>
@@ -231,7 +231,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
                     <div className="flex flex-col gap-y-1">
-                      <p className="text-dark font-semibold">Robert Fox</p>
+                      <p className="font-semibold text-dark">Robert Fox</p>
                       <p className="text-secondary">Transfer</p>
                     </div>
                     <div>
@@ -249,7 +249,7 @@ const Dashboard = () => {
                   </div>
                   <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
                     <div className="flex flex-col gap-y-1">
-                      <p className="text-dark font-semibold">Robert Fox</p>
+                      <p className="font-semibold text-dark">Robert Fox</p>
                       <p className="text-secondary">Transfer</p>
                     </div>
                     <div>
@@ -262,9 +262,9 @@ const Dashboard = () => {
           </aside>
         </section>
         <ResponsiveNavigation/>
-        </main>
+      </main>
 
-        </>
+        </div>
     )
 }
 
