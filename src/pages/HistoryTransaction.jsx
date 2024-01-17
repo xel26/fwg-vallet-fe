@@ -1,5 +1,5 @@
 import { FiSearch, FiStar, FiRotateCcw, FiTrash2 } from 'react-icons/fi'
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 import userPhoto from '../assets/media/user.jpg'
@@ -8,6 +8,8 @@ import Navigation from "../components/Navigation";
 import PageNavigation from '../components/PageNavigation';
 import CardDetailHistoryTransaction from '../components/CardDetailHistoryTransaction';
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
+import { useSelector } from 'react-redux';
+import axios from 'axios';
 
 export const TransferSteps = ({steps, value}) => {
     return (
@@ -21,11 +23,11 @@ export const TransferSteps = ({steps, value}) => {
 }
 
 
-const CardHistoryTransaction = ({id,  image, contactName, PhoneNumber, amount, type, deleteHistoryOrder, cardShow, handleCard}) => {
+const CardHistoryTransaction = ({id, image, contactName, PhoneNumber, amount, type, deleteHistoryOrder, cardShow, handleCard}) => {
     return (
       <div onClick={() => handleCard(true)} className={`flex items-center justify-between sm:pl-24 sm:gap-36 ${id % 2 !== 0 ? 'bg-[#F9FAFB] border-b': 'bg-white'} p-2`}>
         <div className='hidden sm:block'>
-          <img src={image} className="rounded h-10 w-10 object-cover" />
+          <img src={`http://localhost:5555/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
         </div>
         <div className='flex flex-col sm:flex-row sm:gap-24 flex-1 text-[#4F5665]'>
         <div className='text-sm sm:text-base'>{contactName}</div>
@@ -39,102 +41,52 @@ const CardHistoryTransaction = ({id,  image, contactName, PhoneNumber, amount, t
     );
 }
 
-
-
-const HistoryTransaction = () => {
-    let [listHistoryTransaction, setListHistoryTransaction] = useState([
-        {
-            id: 1,
-            image: userPhoto,
-            name: "Ghaluh 1",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "income"
-        },
-        {
-            id: 2,
-            image: userPhoto,
-            name: "Ghaluh 2",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "expense"
-        },
-        {
-            id: 3, 
-            image: userPhoto,
-            name: "Ghaluh 3",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "income"
-        },
-        {
-            id: 4,
-            image: userPhoto,
-            name: "Ghaluh 4",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "expense"
-        },
-        {
-            id: 5,
-            image: userPhoto,
-            name: "Ghaluh 5",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "income"
-        },
-        {
-            id: 6,
-            image: userPhoto,
-            name: "Ghaluh 6",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "expense"
-        },
-        {
-            id: 7,
-            image: userPhoto,
-            name: "Ghaluh 7",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "income"
-        },
-        {
-            id: 8,
-            image: userPhoto,
-            name: "Ghaluh 8",
-            PhoneNumber: "(308) 555-0121",
-            amount: 50000,
-            type: "expense"
-        },
-
-    ])
-
     const deleteHistoryOrder = (id) => {
       setListHistoryTransaction(listHistoryTransaction = listHistoryTransaction.filter((item) => item.id !== id))
     }
 
     const [cardShow, setCardShow] = useState(false)
 
+//===================================================================================================================================//
+
+const token = useSelector(state => state.auth.token)
+const [transferList, setTransferList] = useState()
+
+useEffect(()=>{
+  if(token){
+    axios.get(`http://localhost:5555/customer/history-transaction`, {
+      headers : {
+        'Authorization' : `Bearer ${token}`
+      }
+    }).then(({data})=>{
+     setTransferList(data.results)
+      
+    }).catch((err)=>{console.log(err)})
+  }
+},[token])
+
+//==================================================================================================================================//
+
     return (
       <>
+      {/* <button onClick={debug}>ygashduy <br /> asdadasd <br /> asdasd</button> */}
         <Navbar home={false} login={true} dashboard={false} />
 
         <main className="sm:h-[48rem] flex gap-8 pt-10">
           <Navigation />
 
-          <section className="relative flex-1 flex flex-col gap-4 pt-3">
-            <div className="hidden sm:flex items-center gap-4 pt-10 pl">
+          <section className="relative flex flex-col flex-1 gap-4 pt-3">
+            <div className="items-center hidden gap-4 pt-10 sm:flex pl">
               <FiRotateCcw size={20} color="#764abc" />
               <div className="font-bold">History Transaction</div>
             </div>
 
-            <div className="sm:border flex-1 sm:mr-10 sm:mb-10 p-4 flex flex-col gap-8">
+            <div className="flex flex-col flex-1 gap-8 p-4 sm:border sm:mr-10 sm:mb-10">
               <div className="flex flex-col gap-2 sm:gap-0 sm:flex-row sm:justify-between">
                   <p className="font-bold">Find Transaction</p>
 
                 <form className="w-full sm:w-[15rem] h-fit flex ">
-                  <label className="border rounded relative w-full">
+                  <label className="relative w-full border rounded">
                     <input
                       type="text"
                       placeholder="Enter Number Or Full Name"
@@ -150,7 +102,7 @@ const HistoryTransaction = () => {
               </div>
 
               <div className="flex flex-col justify-center">
-                {listHistoryTransaction &&
+                {/* {listHistoryTransaction &&
                   listHistoryTransaction.map((item) => (
                     <CardHistoryTransaction
                       key={item.id}
@@ -160,6 +112,22 @@ const HistoryTransaction = () => {
                       PhoneNumber={item.PhoneNumber}
                       amount={item.amount}
                       type={item.type}
+                      deleteHistoryOrder={deleteHistoryOrder}
+                      cardShow={cardShow}
+                      handleCard={setCardShow}
+                    />
+                  ))} */}
+
+                {transferList &&
+                  transferList.map((item) => (
+                    <CardHistoryTransaction
+                      key={item.id}
+                      id={item.id}
+                      image={item.sender.id == 1? item.recipient.picture : item.sender.picture}
+                      contactName={item.sender.id == 1? item.recipient.fullName : item.sender.fullName}
+                      PhoneNumber={item.sender.id == 1? item.recipient.phone : item.sender.phone}
+                      amount={item.amount}
+                      type={item.sender.id == 1? 'asda' : 'income'}
                       deleteHistoryOrder={deleteHistoryOrder}
                       cardShow={cardShow}
                       handleCard={setCardShow}
