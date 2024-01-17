@@ -82,8 +82,6 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    // <RouterProvider router={router}/>
-
     <Provider store={store}>
       <PersistGate persistor={persistor}>
         <RouterProvider router={router}/>
