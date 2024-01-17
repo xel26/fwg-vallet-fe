@@ -14,7 +14,7 @@ const Dashboard = () => {
     return ( 
         <div className="">
         <Navbar />
-      <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
+       <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
         <Navigation />
 
         <section className="flex flex-col flex-1 px-5 py-4 gap-y-4 lg:flex-row md:gap-x-5 md:py-11 md:px-10 md:justify-between">
