@@ -62,7 +62,7 @@ const ChangePassword = () => {
             <Navbar/>
             <header className="flex pt-[56px]">
                 <Navigation/>
-                <div className=" flex flex-1 pt-[25px]">
+                <div className=" flex flex-1 pt-[66px]">
                     <div className=" w-full flex md:px-[50px] flex-col gap-[20px] justify-center">
                         <div className="md:pl-[0px] pl-[30px] flex gap-[10px]">
                             <div><FiUser /></div>
