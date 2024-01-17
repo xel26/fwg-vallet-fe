@@ -79,7 +79,7 @@ const Register = () => {
                         <div><Link to="/"><button className="rounded-lg mt-5 py-2 bg-[#764abc] w-full font-bold" type="submit">Register</button></Link>
                         </div>
                         <div className="flex mt-[10px] justify-center">
-                            <div className="text-[#4F5665]">Have An Account?<Link className="text-[#764abc]" to="./login">Login</Link>
+                            <div className="text-[#4F5665]">Have An Account?<Link className="text-[#764abc]" to="/login">Login</Link>
                             </div>
                         </div>
                     </form>

@@ -13,8 +13,8 @@ import ResponsiveNavigation from "../components/ResponsiveNavigation"
 const Dashboard = () => {
     return (
         <>
-        <Navbar home={false} login={true} dashboard={true} />
-        <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
+        <Navbar />
+        <main className="h-[48rem] flex flex-col sm:flex-row pt-10 w-fit ">
         <Navigation />
 
         <section className="flex flex-col gap-y-4 lg:flex-row md:gap-x-5 py-4 px-5 md:py-11 md:px-10 md:justify-between w-full">
