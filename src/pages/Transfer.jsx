@@ -1,6 +1,6 @@
 import { FaStar } from "react-icons/fa";
 import { FiSearch, FiSend, FiStar } from 'react-icons/fi'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import userPhoto from '../assets/media/user.jpg'
@@ -8,6 +8,8 @@ import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import TransferSteps from "../components/TransferSteps";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
+import axios from "axios";
+import { useSelector } from "react-redux";
 
 
 const CardListContact = ({id, image, contactName, number, isFavorite}) => {
@@ -26,65 +28,94 @@ const CardListContact = ({id, image, contactName, number, isFavorite}) => {
 }
 
 const Transfer = () => {
-    const [listContact, setListContact] = useState([
-        {
-            id: 1,
-            image: userPhoto,
-            name: "Ghaluh 1",
-            number: "(239)555-0108",
-            isFavorite: true
-        },
-        {
-            id: 2,
-            image: userPhoto,
-            name: "Ghaluh 2",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
-        {
-            id: 3, 
-            image: userPhoto,
-            name: "Ghaluh 3",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
-        {
-            id: 4,
-            image: userPhoto,
-            name: "Ghaluh 4",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
-        {
-            id: 5,
-            image: userPhoto,
-            name: "Ghaluh 5",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
-        {
-            id: 6,
-            image: userPhoto,
-            name: "Ghaluh 6",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
-        {
-            id: 7,
-            image: userPhoto,
-            name: "Ghaluh 7",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
-        {
-            id: 8,
-            image: userPhoto,
-            name: "Ghaluh 8",
-            number: "(239)555-0108",
-            isFavorite: false
-        },
+  const token = useSelector(state => state.auth.token)
 
-    ])
+  const [listContact, setListContact] = useState([])
+  const [keyword, setKeyword] = useState('')
+  const getContact = async () => {
+    const { data: dataContact } = await axios.get(`http://localhost:5555/customer/contact-list?search=${keyword}`,
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    
+    })
+    setListContact(dataContact.results)
+  }
+
+  const search = async (e) =>{
+    setKeyword(e.target.value)
+  }
+
+  useEffect(()=>{
+    getContact(),
+    window.scrollTo({
+        top:0,
+        left:0,
+        behavior:'smooth'
+    })
+  },[keyword])
+
+
+    // const [listContact, setListContact] = useState([
+    //     {
+    //         id: 1,
+    //         image: userPhoto,
+    //         name: "Ghaluh 1",
+    //         number: "(239)555-0108",
+    //         isFavorite: true
+    //     },
+    //     {
+    //         id: 2,
+    //         image: userPhoto,
+    //         name: "Ghaluh 2",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+    //     {
+    //         id: 3, 
+    //         image: userPhoto,
+    //         name: "Ghaluh 3",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+    //     {
+    //         id: 4,
+    //         image: userPhoto,
+    //         name: "Ghaluh 4",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+    //     {
+    //         id: 5,
+    //         image: userPhoto,
+    //         name: "Ghaluh 5",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+    //     {
+    //         id: 6,
+    //         image: userPhoto,
+    //         name: "Ghaluh 6",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+    //     {
+    //         id: 7,
+    //         image: userPhoto,
+    //         name: "Ghaluh 7",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+    //     {
+    //         id: 8,
+    //         image: userPhoto,
+    //         name: "Ghaluh 8",
+    //         number: "(239)555-0108",
+    //         isFavorite: false
+    //     },
+
+    // ])
 
     return (
       <>
@@ -110,9 +141,9 @@ const Transfer = () => {
                   </div>
                 </div>
 
-                <form className="w-full sm:w-[15rem] h-fit flex">
+                <div className="w-full sm:w-[15rem] h-fit flex">
                   <label className="border rounded relative w-full">
-                    <input
+                    <input onChange={search}
                       type="text"
                       name="find-people"
                       placeholder="Enter Number Or Full Name"
@@ -124,18 +155,18 @@ const Transfer = () => {
                     />
                   </label>
                   <button type="submit" className="hidden"></button>
-                </form>
+                </div>
               </div>
 
               <div className="flex flex-col justify-center gap-6 sm:gap-4">
                 {listContact &&
                   listContact.map((item) => (
                     <CardListContact
-                      key={item.id}
-                      id={item.id}
-                      image={item.image}
-                      contactName={item.name}
-                      number={item.number}
+                      key={item.userId}
+                      id={item.userId}
+                      image={item.picture}
+                      contactName={item.fullName}
+                      number={item.phoneNumber}
                       isFavorite={item.isFavorite}
                     />
                   ))}
