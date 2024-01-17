@@ -1,13 +1,39 @@
 //import
-import React from "react"
-import { Link } from "react-router-dom"
+import React, { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import { FiMail, FiEyeOff, FiEye, FiKey } from "react-icons/fi"
 import registerImage from "../assets/image/register.png"
 import logoAuth from "../assets/image/logo auth.png"
 import logoGoogle from "../assets/image/google.svg"
 import logoFacebook from "../assets/image/facebook.svg"
+import axios from "axios"
 
 const Register = () => {
+    const [errMessage, setErrMessage] = useState()
+    const navigate = useNavigate()
+    const processRegister = async (event) => {
+        event.preventDefault()
+        const {value: email} = event.target.email
+        const {value: password} = event.target.password
+        const {value: confirmPassword} = event.target.confirmPassword
+
+        if(password === confirmPassword){
+            const form = new URLSearchParams()
+            form.append('email', email)
+            form.append('password', password)
+
+            try{
+                const {data} = await axios.post('http://localhost:5555/auth/register', form.toString())
+
+                navigate('/login')
+            }catch(err){
+                setErrMessage(err.messsage)
+            }
+        }else{
+            setErrMessage("password doesn't match")
+          }
+    }
+
 
 
     // Ganti type di input dari password ke text
@@ -23,8 +49,8 @@ const Register = () => {
     return (
         <>
             <header className="flex bg-[#764abc] h-screen">
-                <div className="bg-white flex flex-1 justify-center md:rounded-r-xl">
-                    <form className=" flex flex-col justify-center w-[90%]">
+                <div className="flex justify-center flex-1 bg-white md:rounded-r-xl">
+                    <form onSubmit={processRegister} className=" flex flex-col justify-center w-[90%]">
                         <div className="flex items-center">
                             <img width="35px" src={logoAuth} alt="" />
                             <span className="text-[#764abc] text-[20px]">Vallet</span>
@@ -39,12 +65,12 @@ const Register = () => {
                             <button className="flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
                                 src={logoFacebook} alt="" /><span className="hidden md:block">Sign In With Facebook</span></button>
                         </div>
-                        <div className=" flex items-center w-full">
+                        <div className="flex items-center w-full ">
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                             <p className="w-[30%] text-center text-[#4F5665]">Or</p>
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                         </div>
-                        <div className="flex gap-3 flex-col">
+                        <div className="flex flex-col gap-3">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
@@ -52,7 +78,7 @@ const Register = () => {
                                     id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
-                        <div className="flex gap-3 flex-col">
+                        <div className="flex flex-col gap-3">
                             <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
@@ -64,19 +90,19 @@ const Register = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="flex gap-3 flex-col">
-                            <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Confirm Password</label>
+                        <div className="flex flex-col gap-3">
+                            <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="confirmPassword">Confirm Password</label>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="password"
-                                    id="password" type={confirmPasswordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="confirmPassword"
+                                    id="confirmPassword" type={confirmPasswordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
                                 {/* <div className="text-[#4F5665] absolute right-4"><FiEyeOff /></div> */}
                                 <div className="absolute right-3" onClick={toggleConfirmPasswordVisibility}>
                                     {confirmPasswordVisible ? <FiEye /> : <FiEyeOff />}
                                 </div>
                             </div>
                         </div>
-                        <div><Link to="/"><button className="rounded-lg mt-5 py-2 bg-[#764abc] w-full font-bold" type="submit">Register</button></Link>
+                        <div><button className="rounded-lg mt-5 py-2 bg-[#764abc] w-full font-bold" type="submit">Register</button>
                         </div>
                         <div className="flex mt-[10px] justify-center">
                             <div className="text-[#4F5665]">Have An Account?<Link className="text-[#764abc]" to="/login">Login</Link>
@@ -84,7 +110,7 @@ const Register = () => {
                         </div>
                     </form>
                 </div>
-                <div className="hidden flex-1 md:flex justify-center items-center">
+                <div className="items-center justify-center flex-1 hidden md:flex">
                     <div className="max-w-[90%]"><img src={registerImage} alt="" /></div>
                 </div>
             </header>
