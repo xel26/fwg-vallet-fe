@@ -44,15 +44,15 @@ const Home = () => {
         {/* Body home atas */}
         
         <div className="flex flex-col px-4 md:px-10 pt-[75px] bg-[#764abc] text-white h-auto gap-6 md:pt-[133px] lg:self-center">
-            <h1 className="text-[32px] md:font-medium md:text-5xl lg:text-6xl md:text-center">
+            <h1 className="text-[32px] md:font-medium md:text-5xl lg:text-6xl md:text-center transition-all duration-1000">
                 Experience the Future of Digital Payments with e-wallet
             </h1>
             <div className="flex flex-col-reverse md:flex-row lg:gap-[75px] lg:justify-center">
                 <div className="flex justify-center">
-                    <img className="lg:max-w-[422px] mb-[-2.5vh]" src={Mobile_dashboard_1} alt="mobile-dashboard-1"/>
+                    <img className="lg:max-w-[422px] mb-[-2.5vh] transition-all duration-1000 " src={Mobile_dashboard_1} alt="mobile-dashboard-1"/>
                 </div>
                 <div className="flex flex-col gap-6 md:self-center">
-                    <p className="text-base font-normal">
+                    <p className="text-base font-normal transition-all duration-1000">
                         Simplify Your Life with Secure and Convenient Mobile Payments
                     </p>
                     <div className="flex gap-[25px]">
@@ -70,7 +70,7 @@ const Home = () => {
                             <img src={Userrounded} alt="user-profile-img"/>
                         </div>
                         <div>
-                            <p className="text-base font-normal">Around the world, we already have over 4.6 happy user</p>
+                            <p className="text-base font-normal transition-all duration-1000">Around the world, we already have over 4.6 happy user</p>
                         </div>
                 </div>
             </div>
@@ -85,7 +85,7 @@ const Home = () => {
                         <FiHeadphones className='w-5 h-5 text-white' />
                         </div>
                     </div>
-                    <div className="flex flex-col gap-[15px] lg:gap-[9px]">
+                    <div className="flex flex-col gap-[15px] lg:gap-[9px] transition-all duration-1000">
                         <p className="text-center font-bold text-lg lg:text-left">24/7 Support</p>
                         <p className="text-center text-base font-normal lg:text-left">We have 24/7 contact support so you can contact us whenever you want and we will respond it.</p>
                     </div>
@@ -119,9 +119,11 @@ const Home = () => {
                     <p className="text-[#764abc] font-bold text-lg text-center lg:text-left ">WELCOME TO E-WALLET</p>
                     <p className="font-medium text-[32px] text-center lg:text-left">Your All-in-One Digital Payment Solution</p>
                     <p className="font-medium text-base text-center lg:text-left">Say goodbye to cash and hello to the future of payments! With e-wallet, you have the power of secure, fast, and convenient digital transactions right at your fingertips. Whether you&apos;re shopping, dining out, or sending money to loved ones, we&apos;ve got you covered.</p>
+
                     <Link to={token ? '/dashboard' : '/login'} className="h-[50px] flex justify-center items-center bg-[#764abc] text-white py-[10px] rounded-md lg:max-w-[143px] hover:bg-violet-400">
                         {token ? 'To Dashboard' : 'Get Started'}
                     </Link>
+
                 </div>
                 <div className="relative mt-[300px] bottom-0 px-4 md:px-10 flex justify-center lg:pt-1 lg:flex-row lg:w-[680px]">
                     <img className="relative bottom-0 " src={Mobile_Dashboard_V2_latar} alt="background-img"/>
@@ -189,7 +191,7 @@ const Home = () => {
 
         <div className="flex flex-col bg-[#F8F8F8] px-4 md:px-10 py-14 gap-[19px] lg:flex-row-reverse lg:items-center ">
             <div className="flex flex-col gap-[25px]lg:max-w-[580px]">
-                <p className="font-medium text-4xl">Download The App</p>
+                <p className="font-medium text-xl md:text-3xl lg:text-4xl transition-all duration-1000">Download The App</p>
                 <p className="font-normal text-base">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
             <div className="flex gap-[25px]">
                 <button className="flex flex-1 items-center justify-center h-[50px] border bg-[#764abc] rounded-md gap-[10px] lg:max-w-[250px] hover:bg-violet-400">
