@@ -5,7 +5,7 @@ import balance from "../assets/media/balance.svg"
 import withdraw from "../assets/media/u_money-withdraw.svg"
 import withdraw1 from "../assets/media/u_money-withdraw-1.svg"
 import moneyInsert from "../assets/media/u_money-insert.svg"
-import send from "../assets/media/send.svg"
+import send from "../assets/media/Send.svg"
 import p1 from "../assets/media/1.png"
 import { FiTrendingDown, FiTrendingUp,FiChevronDown } from "react-icons/fi";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"

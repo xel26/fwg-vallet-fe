@@ -1,5 +1,7 @@
 //import
+import { useSelector } from 'react-redux'
 import React, { useEffect, useState } from 'react'
+
 
 //import gambar
 
@@ -27,7 +29,8 @@ import Testimoni from '../components/testimoni'
 import axios from 'axios'
 
 const Home = () => {
-    const [token, setToken] = useState(false) // Token
+
+    const token = useSelector(state => state.auth.token)
 
     const [testimony, setTestimony] = useState([])
     const [pagesArr, setPagesArr] = React.useState([])
