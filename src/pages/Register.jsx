@@ -27,7 +27,7 @@ const Register = () => {
 
                 navigate('/login')
             }catch(err){
-                setErrMessage(err.messsage)
+                setErrMessage(err.response.data.message)
             }
         }else{
             setErrMessage("password doesn't match")
