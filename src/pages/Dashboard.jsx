@@ -11,7 +11,7 @@ import { FiTrendingDown, FiTrendingUp,FiChevronDown } from "react-icons/fi";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
 
 const Dashboard = () => {
-    return (
+    return ( 
         <div className="">
         <Navbar />
       <main className="h-[48rem] flex flex-col sm:flex-row pt-10">

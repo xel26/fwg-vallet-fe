@@ -7,10 +7,17 @@ import logoAuth from "../assets/image/logo auth.png"
 import logoGoogle from "../assets/image/google.svg"
 import logoFacebook from "../assets/image/facebook.svg"
 import axios from "axios"
+import { useDispatch } from "react-redux"
+import { setregister } from "../redux/reducers/register"
 
 const Register = () => {
     const [errMessage, setErrMessage] = useState()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+
+
+
     const processRegister = async (event) => {
         event.preventDefault()
         const {value: email} = event.target.email
@@ -18,17 +25,22 @@ const Register = () => {
         const {value: confirmPassword} = event.target.confirmPassword
 
         if(password === confirmPassword){
-            const form = new URLSearchParams()
-            form.append('email', email)
-            form.append('password', password)
 
-            try{
-                const {data} = await axios.post('http://localhost:5555/auth/register', form.toString())
+            dispatch(setregister({
+                email: email,
+                password: password
+            }))
+            // const form = new URLSearchParams()
+            // form.append('email', email)
+            // form.append('password', password)
 
-                navigate('/login')
-            }catch(err){
-                setErrMessage(err.response.data.message)
-            }
+            // try{
+            //     const {data} = await axios.post('http://localhost:5555/auth/register', form.toString())
+
+            navigate('/enter-pin')
+            // }catch(err){
+            //     setErrMessage(err.response.data.message)
+            // }
         }else{
             setErrMessage("password doesn't match")
           }
