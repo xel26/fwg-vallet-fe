@@ -1,23 +1,21 @@
 import { FaCheckCircle, FaMoneyBill } from 'react-icons/fa'
 import { FiUpload } from 'react-icons/fi'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
-import BCA from '../assets/media/BCA.png'
-import BRI from '../assets/media/BRI.png'
-import DANA from '../assets/media/DANA.png'
-import Gopay from '../assets/media/gopay.png'
-import OVO from '../assets/media/ovo.png'
 import userPhoto from '../assets/media/user.jpg'
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 const CardListPaymentMethod = ({value, logo, label}) => {
     return (
         <label className="bg-[#E8E8E84D] rounded p-2 flex gap-4 items-center">
         <input type="radio" name="paymentMethod" value={value} />
-        <div>
-            <img src={logo} />
+        <div >
+            <img src={`http://localhost:5555/uploads/paymentMethods/${logo}`} />
         </div>
         <p className='text-[#4F5665] text-sm'>{label}</p>
     </label>
@@ -31,39 +29,83 @@ const PaymentList = ({list, idr}) => {
         <h5 className="text-[#4F5665] font-semibold text-xs sm:text-base">
           {list}
         </h5>
-        <h5 className="font-semibold text-xs sm:text-base">Idr.{idr.toLocaleString('id')}</h5>
+        <h5 className="font-semibold text-xs sm:text-base">Idr.{idr?.toLocaleString('id')}</h5>
       </div>
     );
   };
 
-const TopUp = () => {
-    const [listPaymentMethod, setListPaymentMethod] = useState([
-        {
-            value: "bank-rakyat-indonesia",
-            logo: BRI,
-            label: "Bank Rakyat Indonesia"
-        },
-        {
-            value: "dana",
-            logo: DANA,
-            label : "Dana"
-        },
-        {
-            value: "bank-central-asia",
-            logo: BCA,
-            label: "Bank Central Asia"
-        },
-        {
-            value: "gopay",
-            logo: Gopay,
-            label: "Gopay"
-        },
-        {
-            value: "ovo",
-            logo: OVO,
-            label: "Ovo"
+  
+  const TopUp = () => {
+    const navigate = useNavigate()
+    const profile = useSelector(state => state.profile.data)
+
+    const token = useSelector(state => state.auth.token)
+    const [paymentMethod, setPaymentMethod] = useState()
+
+    const getAllPaymentMethod = async () => {
+      try {
+        const {data} = await axios.get('http://localhost:5555/customer/deposit', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        
+        setPaymentMethod(data.results)
+
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+
+    const [order, setOrder] = useState()
+    const [tax, setTax] = useState(0)
+    const [subTotal, setSubTotal] = useState(0)
+
+    const topUpAmount = (event) => {
+      setOrder(parseInt(event.target.value))
+      setTax(parseInt(event.target.value) * 1/10)
+      if(parseInt(event.target.value) < 10000){
+        setSubTotal(parseInt(event.target.value) + 1000)
+      }else{
+        setSubTotal(parseInt(event.target.value) + (parseInt(event.target.value) * 1/10))
+      }
+    }
+
+    
+    const deposit = async (event) => {
+      event.preventDefault()
+      
+      const {value: amount} = event.target.topUpAmount
+      const paymentMethod = Array.from(event.target.paymentMethod)
+
+      const form = new URLSearchParams()
+      form.append('amount', amount)
+      paymentMethod.map((item) => {
+        if(item.checked){
+          form.append('paymentMethodId', item.value)
         }
-    ])
+      })
+
+      try {
+        const {data} = await axios.post('http://localhost:5555/customer/deposit', form, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        console.log(data)
+
+        navigate('/dashboard')
+      } catch (error) {
+        console.log(error)
+      }
+    } 
+
+
+    useEffect(() => {
+      getAllPaymentMethod()
+    }, [])
+
   return (
     <>
       <Navbar home={false} login={true} dashboard={false} />
@@ -77,7 +119,7 @@ const TopUp = () => {
             <div className="font-bold">Top Up Account</div>
           </div>
 
-          <form className="flex flex-col sm:flex-row gap-4 sm:gap-8 sm:pr-10">
+          <form onSubmit={deposit} className="flex flex-col sm:flex-row gap-4 sm:gap-8 sm:pr-10">
             <div className="sm:border flex-1 sm:mb-10 p-4 flex flex-col gap-4 sm:gap-8">
               <div className="font-bold">Account Information</div>
 
@@ -85,18 +127,20 @@ const TopUp = () => {
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={userPhoto}
+                      src={`http://localhost:5555/uploads/profiles/${profile.picture}`}
                       className="rounded h-20 w-20 object-cover"
                     />
                   </div>
 
                   <div className="flex flex-col justify-center">
-                    <p>Ghaluh</p>
-                    <p className="text-[#4F5665]">(239)555-0108</p>
+                    <p>{profile.fullName}</p>
+                    <p className="text-[#4F5665]">{profile.phoneNumber}</p>
+                    {!profile.isVerified &&
                     <button className="text-white bg-[#764abc] rounded flex items-center justify-center gap-3 p-1">
                       <FaCheckCircle />
                       <p className="text-xs">Verified</p>
                     </button>
+                    }
                   </div>
                 </div>
               </div>
@@ -115,6 +159,7 @@ const TopUp = () => {
                       name="topUpAmount"
                       placeholder="Enter Nominal Top Up"
                       className="text-[#4F5665] w-full outline-none bg-transparent text-xs sm:text-sm"
+                      onChange={topUpAmount}
                     />
                   </div>
                 </label>
@@ -126,13 +171,13 @@ const TopUp = () => {
                   </p>
 
                   <div className="flex flex-col gap-4">
-                    {listPaymentMethod &&
-                      listPaymentMethod.map((item, index) => (
+                    {paymentMethod &&
+                      paymentMethod.map((item, index) => (
                         <CardListPaymentMethod
                           key={index}
-                          value={item.value}
-                          logo={item.logo}
-                          label={item.label}
+                          value={item.id}
+                          logo={item.image}
+                          label={item.name}
                         />
                       ))}
                   </div>
@@ -145,13 +190,12 @@ const TopUp = () => {
                 <h4>Payment</h4>
               </div>
               <div className="payment-summary p-3 text-sm flex flex-col gap-4">
-                <PaymentList list="order" idr={40000} />
-                <PaymentList list="Delivery" idr={0} />
-                <PaymentList list="Tax" idr={4000} />
+                <PaymentList list="order" idr={order ? order : 0} />
+                <PaymentList list="Tax" idr={tax < 1000 ? 1000 : tax} />
 
                 <hr />
 
-                <PaymentList list="Sub Total" idr={44000} />
+                <PaymentList list="Sub Total" idr={subTotal} />
 
                 <button
                   className="bg-[#764abc] text-white w-full rounded-md text-xs sm:text-sm py-1.5 active:scale-95 transition-all flex justify-center"

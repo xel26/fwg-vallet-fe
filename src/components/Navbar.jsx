@@ -1,17 +1,20 @@
 import { FaWallet } from "react-icons/fa";
-
 import { FiSearch, FiShoppingCart, FiChevronDown, FiUser, FiLogOut, FiMenu } from 'react-icons/fi'
+
+import axios from "axios";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
-import userPhoto from '../assets/media/user.jpg'
+import defaultProfile from '../assets/media/default-profile.png'
+
 import { useSelector, useDispatch } from "react-redux";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout as logoutAction } from "../redux/reducers/auth";
+import { setProfile } from "../redux/reducers/profile";
 
 const Navbar = () => {
-
 
   const token = useSelector(state => state.auth.token)
   const dispatch = useDispatch()
@@ -29,6 +32,30 @@ const Navbar = () => {
 
   const [navSearch, setNavSearch] = useState(false)
   const [showMoreNav, setShowMoreNav] = useState(false)
+
+
+  const dataProfile = useSelector(state => state.profile.data)
+
+  const getProfile =  async () => {
+    if(token){
+      try {
+        const {data} = await axios.get(`http://localhost:5555/customer/profile`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+        console.log(data.results)
+        dispatch(setProfile(data.results))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  }
+
+
+  useEffect(() => {
+    getProfile()
+  },[])
 
   return (
     <>
@@ -61,13 +88,13 @@ const Navbar = () => {
             <div className="flex gap-2 items-center sm:hidden">
               <div>
                 <img
-                  src={userPhoto}
+                  src={dataProfile.picture ? `http://localhost:5555/uploads/profiles/${dataProfile.picture}`  : defaultProfile}
                   className="rounded-full object-cover w-10 h-10 sm:hidden"
                 />
               </div>
               <div className="flex flex-col text-white">
                 <p className="text-xs">Hello,</p>
-                <p className="text-base">Ghaluh Wizard</p>
+                <p className="text-base">{dataProfile.fullName}</p>
               </div>
             </div>
           ): (
@@ -137,12 +164,12 @@ const Navbar = () => {
                           : "text-black"
                       } hidden sm:block`}
                     >
-                      Ghaluh Wizard
+                      {dataProfile.fullName}
                     </div>
                   )}
                   <div>
                     <img
-                      src={userPhoto}
+                      src={dataProfile.picture ? `http://localhost:5555/uploads/profiles/${dataProfile.picture}` : defaultProfile}
                       className="rounded-full object-cover w-10 h-10 hidden sm:block"
                     />
                   </div>
