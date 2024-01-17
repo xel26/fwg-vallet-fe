@@ -14,10 +14,10 @@ const Register = () => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
     
-    const [errMessage, setErrMessage] = useState('error message')
+    const [errMessage, setErrMessage] = useState('error')
     const [successMessage, setSuccessMessage] = useState('register success')
 
-    const [registerSuccess, setLoginSuccess] = useState(false)
+    const [registerSuccess, setRegisterSuccess] = useState(false)
 
     const [emailError, setEmailError] = useState(false)
     const [passError, setPassError] = useState(false)
@@ -29,6 +29,33 @@ const Register = () => {
         const {value: email} = event.target.email
         const {value: password} = event.target.password
         const {value: confirmPassword} = event.target.confirmPassword
+
+        if(!email){
+            setErrMessage('email cannot be empty')
+            setEmailError(true)
+            setTimeout(() => {
+                setEmailError(false)
+            }, 2000);
+            return
+        }
+
+        if(!password){
+            setErrMessage('password cannot be empty')
+            setPassError(true)
+            setTimeout(() => {
+                setPassError(false)
+            }, 2000);
+            return
+        }
+
+        if(!confirmPassword){
+            setErrMessage('please confirm your password')
+            setConfirmPassError(true)
+            setTimeout(() => {
+                setConfirmPassError(false)
+            }, 2000);
+            return
+        }
 
         if(password === confirmPassword){
 
@@ -42,13 +69,21 @@ const Register = () => {
 
             // try{
             //     const {data} = await axios.post('http://localhost:5555/auth/register', form.toString())
+            setRegisterSuccess(true)
 
-            navigate('/enter-pin')
+            setTimeout(() => {
+                setRegisterSuccess(false)
+                navigate('/enter-pin')
+            }, 2000);
             // }catch(err){
             //     setErrMessage(err.response.data.message)
             // }
         }else{
             setErrMessage("password doesn't match")
+            setConfirmPassError(true)
+            setTimeout(() => {
+                setConfirmPassError(false)
+            }, 2000);
           }
     }
 
@@ -91,11 +126,11 @@ const Register = () => {
                         <div className="relative flex flex-col gap-3">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
                             <p className={`${emailError ? 'block' : 'hidden'} absolute left-16 -top-2.5 text-[#D00]`}>{errMessage}</p>
-                            <p className={`${registerSuccess ? 'block' : 'hidden'} absolute left-24 -top-2.5  text-green-500`}>{successMessage}</p>
+                            <p className={`${registerSuccess ? 'block' : 'hidden'} absolute left-56 -top-2.5  text-green-500`}>{successMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="email"
-                                    id="email" type="email" placeholder="Enter Your Email" />
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1 outline-none" name="email"
+                                    id="email" type="email" placeholder="Enter Your Email"/>
                             </div>
                         </div>
                         <div className="relative flex flex-col gap-3">
@@ -103,7 +138,7 @@ const Register = () => {
                             <p className={`${passError ? 'block' : 'hidden'} absolute left-24 top-2.5 text-[#D00]`}>{errMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="password"
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1 outline-none" name="password"
                                     id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
                                 {/* <div className="text-[#4F5665] absolute right-4"><FiEyeOff /></div> */}
                                 <div className="absolute right-3" onClick={togglePasswordVisibility}>
@@ -116,7 +151,7 @@ const Register = () => {
                             <p className={`${confirmPassError ? 'block' : 'hidden'} absolute left-40 top-2.5 text-[#D00]`}>{errMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="confirmPassword"
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1 outline-none" name="confirmPassword"
                                     id="confirmPassword" type={confirmPasswordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
                                 {/* <div className="text-[#4F5665] absolute right-4"><FiEyeOff /></div> */}
                                 <div className="absolute right-3" onClick={toggleConfirmPasswordVisibility}>
@@ -124,7 +159,7 @@ const Register = () => {
                                 </div>
                             </div>
                         </div>
-                        <div><button className="rounded-lg mt-5 py-2 bg-[#764abc] w-full font-bold" type="submit">Register</button>
+                        <div><button className="rounded-lg mt-5 py-2 bg-[#764abc] w-full font-bold text-white active:scale-95 transition-all duration-500" type="submit">Register</button>
                         </div>
                         <div className="flex mt-[10px] justify-center">
                             <div className="text-[#4F5665]">Have An Account?<Link className="text-[#764abc]" to="/login">Login</Link>

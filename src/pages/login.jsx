@@ -13,6 +13,13 @@ import logoGoogle from "../assets/image/google.svg"
 import logoFacebook from "../assets/image/facebook.svg"
 
 const Login = () => {
+    const [errMessage, setErrMessage] = useState('error message')
+    const [successMessage, setSuccessMessage] = useState('login success')
+
+    const [loginSuccess, setLoginSuccess] = useState(false)
+
+    const [error, setError] = useState(false)
+
 
     // Ganti type di input dari password ke text
     const [passwordVisible, setPasswordVisible] = React.useState(false)
@@ -35,12 +42,20 @@ const Login = () => {
 
         try{
             const {data} = await axios.post('http://localhost:5555/auth/login', form.toString())
+            setSuccessMessage(data.message)
+            setLoginSuccess(true)
+
             setTimeout(()=>{
+                setLoginSuccess(false)
                 dispatch(loginAction(data.results.token))
                 navigate('/dashboard')
             },2000)
         }catch(err){
-            console.log(err)
+            setErrMessage(err.response.data.message)
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 2000);
         }
     }
 
@@ -49,14 +64,6 @@ const Login = () => {
             navigate('/dashboard')
         }
     },[token, navigate])
-
-    const [errMessage, setErrMessage] = useState('error message')
-    const [successMessage, setSuccessMessage] = useState('login success')
-
-    const [loginSuccess, setLoginSuccess] = useState(false)
-
-    const [emailError, setEmailError] = useState(false)
-    const [passError, setPassError] = useState(false)
 
     return (
         <>
@@ -82,20 +89,19 @@ const Login = () => {
                         </div>
                         <div className="relative flex gap-3 flex-col">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
-                            <p className={`${emailError ? 'block' : 'hidden'} absolute left-16 -top-2.5 text-[#D00]`}>{errMessage}</p>
-                            <p className={`${loginSuccess ? 'block' : 'hidden'} absolute left-24 -top-2.5  text-green-500`}>{successMessage}</p>
+                            <p className={`${error ? 'block' : 'hidden'} absolute left-52 -top-2.5 text-[#D00]`}>{errMessage}</p>
+                            <p className={`${loginSuccess ? 'block' : 'hidden'} absolute left-60 -top-2.5  text-green-500`}>{successMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="email"
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2 outline-none" name="email"
                                     id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
                         <div className="relative flex gap-3 flex-col">
                             <label className=" mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
-                            <p className={`${passError ? 'block' : 'hidden'} absolute left-24 top-2.5  text-[#D00]`}>{errMessage}</p>
                             <div className=" -mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2" name="password"
+                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2 outline-none" name="password"
                                     id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
                                 {/* <div className="text-[#4F5665] absolute right-4"><FiEyeOff /></div> */}
                                 <div className="absolute right-3" onClick={togglePasswordVisibility}>
@@ -103,7 +109,7 @@ const Login = () => {
                                 </div>
                             </div>
                         </div>
-                        <div><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold" type="submit">Login</button>
+                        <div><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold text-white active:scale-95 transition-all duration-500" type="submit">Login</button>
                         </div>
                         <div className="flex mt-[10px] justify-center">
                             <div className="text-[#4F5665]">Not Have An Account? <Link className="text-[#764abc]" to="/register">Register</Link>
