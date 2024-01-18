@@ -9,8 +9,49 @@ import send from "../assets/media/Send.svg"
 import p1 from "../assets/media/1.png"
 import { FiTrendingDown, FiTrendingUp,FiChevronDown } from "react-icons/fi";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
+import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 const Dashboard = () => {
+    
+  const token = useSelector(state => state.auth.token)
+  const profile = useSelector(state => state.profile.data)
+  const [wallet, setWallet] = useState()
+  
+  useEffect(()=>{
+    if(token){
+      axios.get(`http://localhost:5555/customer/wallet/${profile?.id}`, {
+        headers : {
+          'Authorization' : `Bearer ${token}`
+        }
+      }).then(({data})=>{
+       setWallet(data.results)
+      //  console.log(wallet)
+       console.log(profile.id)
+        
+      }).catch((err)=>{console.log(err)})
+    }
+  },[token, profile.id])
+
+
+  const [transferList, setTransferList] = useState()
+
+  useEffect(()=>{
+    if(token){
+      axios.get(`http://localhost:5555/customer/history-transaction`, {
+        headers : {
+          'Authorization' : `Bearer ${token}`
+        }
+      }).then(({data})=>{
+       setTransferList(data.results)
+        
+      }).catch((err)=>{console.log(err)})
+    }
+  },[token])
+
+
+
     return ( 
         <div className="">
         <Navbar />
@@ -33,7 +74,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-xl font-medium xl:text-2xl text-dark">
-                    Rp. 120.000
+                    Rp.{wallet?.balance.toLocaleString('id')}
                   </p>
                 </div>
                 <div className="flex items-center text-xs text-green-500 gap-x-1">

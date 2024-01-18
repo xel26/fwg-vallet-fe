@@ -1,16 +1,18 @@
 //import
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import enterPinImage from "../assets/image/enter pin.png"
 import logoAuth from "../assets/image/logo auth.png"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
+import { setregister } from "../redux/reducers/register"
 
 const EnterPin = () => {
     // const [inputPinActive, setInputPinActive] = React.useState(false)
     const [errMessage, setErrMessage] = useState()
     const data = useSelector(state => state.register.data)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
     // const pins = [1, 2, 3, 4, 5, 6]
 
 
@@ -29,8 +31,8 @@ const EnterPin = () => {
             try{
                 console.log(data.email)
                 const {data : insert} = await axios.post('http://localhost:5555/auth/register', form.toString())
-    
-            navigate('/login')
+                dispatch(setregister({}))
+                navigate('/login')
             }catch(err){
                 // console.log(err)
                 setErrMessage(err.response)
