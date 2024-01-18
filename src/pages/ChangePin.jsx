@@ -13,12 +13,8 @@ const ChangePin = () => {
             <Navbar />
             <header className="flex pt-[56px]">
                 <Navigation />
-                <div className=" flex flex-1 pt-[25px]">
+                <div className=" flex flex-1 pt-[66px]">
                     <div className="w-full flex md:px-[50px] flex-col gap-[20px] justify-center">
-                        <div className="md:pl-[0px] pl-[30px] flex gap-[10px]">
-                            <div><FiUser /></div>
-                            <span className="font-bold">Profile</span>
-                        </div>
                         <form className="flex flex-col gap-[10px] md:border-2 p-[30px] w-full">
                             <span className="text-[#0B132A] text-[30px] font-bold">Change Pin 👋</span>
                             <span className="text-[#4F5665] text-[16px]">Please save your pin because this so important.</span>

@@ -41,7 +41,7 @@ const Transfer = () => {
     
     })
     setListContact(dataContact.results)
-    console.log(dataContact.picture)
+
   }
 
   const search = async (e) =>{
@@ -143,7 +143,9 @@ const Transfer = () => {
                 </div>
 
                 <div className="w-full sm:w-[15rem] h-fit flex">
+
                   <label className="relative w-full border rounded">
+
                     <input onChange={search}
                       type="text"
                       name="find-people"
