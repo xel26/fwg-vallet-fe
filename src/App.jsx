@@ -45,7 +45,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/enter-pin',
-    element: <PrivateRoute><EnterPin/></PrivateRoute>
+    element: <EnterPin/>
   },
   {
     path: '/dashboard',
