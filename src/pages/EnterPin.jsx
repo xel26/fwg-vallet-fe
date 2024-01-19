@@ -5,7 +5,8 @@ import logoAuth from "../assets/image/logo auth.png"
 import React, { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import axios from "axios"
-import { setregister } from "../redux/reducers/register"
+// import { setregister } from "../redux/reducers/register"
+import { removeRegister } from "../redux/reducers/register"
 
 const EnterPin = () => {
     // const [inputPinActive, setInputPinActive] = React.useState(false)
@@ -31,7 +32,7 @@ const EnterPin = () => {
             try{
                 console.log(data.email)
                 const {data : insert} = await axios.post('http://localhost:5555/auth/register', form.toString())
-                dispatch(setregister({}))
+                dispatch(removeRegister())
                 navigate('/login')
             }catch(err){
                 // console.log(err)

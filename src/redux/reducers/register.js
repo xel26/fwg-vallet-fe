@@ -10,9 +10,12 @@ const register = createSlice({
     reducers: {
         setregister: (state, action) => {
             state.data = action.payload
+        },
+        removeRegister: () => {
+            return initialState
         }
     }
 })
 
-export const {setregister} = register.actions
+export const {setregister, removeRegister} = register.actions
 export default register.reducer 
