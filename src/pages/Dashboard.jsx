@@ -21,7 +21,7 @@ const Dashboard = () => {
   
   useEffect(()=>{
     if(token){
-      axios.get(`http://localhost:5555/customer/wallet/${profile?.id}`, {
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/wallet/${profile?.id}`, {
         headers : {
           'Authorization' : `Bearer ${token}`
         }
@@ -39,7 +39,7 @@ const Dashboard = () => {
 
   useEffect(()=>{
     if(token){
-      axios.get(`http://localhost:5555/customer/history-transaction`, {
+      axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/history-transaction`, {
         headers : {
           'Authorization' : `Bearer ${token}`
         }

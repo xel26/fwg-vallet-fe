@@ -16,7 +16,7 @@ const CardListContact = ({id, image, contactName, number, isFavorite}) => {
     return (
       <div  className="flex items-center justify-between sm:pl-24">
         <div>
-          <img src={`http://localhost:5555/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
+          <img src={`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
         </div>
         <div className="flex flex-col text-sm sm:flex-row sm:text-base sm:gap-44">
         <Link to={`/transfer-detail/${id}`} className="active:underline">{contactName}</Link>
@@ -33,7 +33,7 @@ const Transfer = () => {
   const [listContact, setListContact] = useState([])
   const [keyword, setKeyword] = useState('')
   const getContact = async () => {
-    const { data: dataContact } = await axios.get(`http://localhost:5555/customer/contact-list?search=${keyword}`,
+    const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?search=${keyword}`,
     {
       headers: {
         'Authorization': `Bearer ${token}`

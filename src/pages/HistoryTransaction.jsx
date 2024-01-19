@@ -27,7 +27,7 @@ const CardHistoryTransaction = ({id, image, contactName, PhoneNumber, amount, ty
     return (
       <div onClick={() => handleCard(true)} className={`flex items-center justify-between sm:pl-24 sm:gap-36 ${id % 2 !== 0 ? 'bg-[#F9FAFB] border-b': 'bg-white'} p-2`}>
         <div className='hidden sm:block'>
-          <img src={`http://localhost:5555/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
+          <img src={`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
         </div>
         <div className='flex flex-col sm:flex-row sm:gap-24 flex-1 text-[#4F5665]'>
         <div className='text-sm sm:text-base'>{contactName}</div>
@@ -55,7 +55,7 @@ const [transferList, setTransferList] = useState()
 
 useEffect(()=>{
   if(token){
-    axios.get(`http://localhost:5555/customer/history-transaction`, {
+    axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/history-transaction`, {
       headers : {
         'Authorization' : `Bearer ${token}`
       }

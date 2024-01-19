@@ -38,7 +38,7 @@ const Home = () => {
     const [totalPages, setTotalPages] = React.useState()
 
     const getTestimony = async() => {
-        const {data: dataTestimony } = await axios.get('http://localhost:5555/testimony?sortby=createdAt&order=desc&limits=1')
+        const {data: dataTestimony } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/testimony?sortby=createdAt&order=desc&limits=1`)
         setTestimony(dataTestimony.results)
         let page = []
         for(let i = 1; i <= dataTestimony.pageInfo.totalData; i++){
@@ -50,7 +50,7 @@ const Home = () => {
     }
 
     const changePages = async(e) => { // next page
-        const { data } = await axios.get(`http://localhost:5555/testimony?sortby=createdAt&order=desc&limits=1&page=${e}`)
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/testimony?sortby=createdAt&order=desc&limits=1&page=${e}`)
         setTestimony(data.results)
         setPages(data.pageInfo.currentPage)
     }
@@ -107,38 +107,38 @@ const Home = () => {
 
         <div>
             <div className="pt-16 pb-10">
-            <div className="flex flex-col gap-7 px-4 md:px-10 justify-items-center lg:flex-row lg:justify-between ">
+            <div className="flex flex-col px-4 gap-7 md:px-10 justify-items-center lg:flex-row lg:justify-between ">
                 <div className="flex flex-col gap-[15px] lg:flex-row lg:gap-[9px]">
-                    <div className="flex justify-center items-center">
+                    <div className="flex items-center justify-center">
                         <div className=' flex rounded-full w-14 h-14 bg-[#764abc] justify-center items-center'>
                         <FiHeadphones className='w-5 h-5 text-white' />
                         </div>
                     </div>
                     <div className="flex flex-col gap-[15px] lg:gap-[9px] transition-all duration-1000">
-                        <p className="text-center font-bold text-lg lg:text-left">24/7 Support</p>
-                        <p className="text-center text-base font-normal lg:text-left">We have 24/7 contact support so you can contact us whenever you want and we will respond it.</p>
+                        <p className="text-lg font-bold text-center lg:text-left">24/7 Support</p>
+                        <p className="text-base font-normal text-center lg:text-left">We have 24/7 contact support so you can contact us whenever you want and we will respond it.</p>
                     </div>
                 </div>
                 <div className="flex flex-col gap-[15px] lg:flex-row lg:gap-[9px]">
-                    <div className="flex justify-center items-center">
+                    <div className="flex items-center justify-center">
                         <div className=' flex rounded-full w-14 h-14 bg-[#764abc] justify-center items-center'>
                         <FiShield className='w-5 h-5 text-white' />
                         </div>
                     </div>
                     <div className="flex flex-col gap-[15px] lg:gap-[9px]">
-                        <p className="text-center font-bold text-lg lg:text-left">Data Privacy</p>
-                        <p className="text-center text-base font-normal lg:text-left">We make sure your data is safe in our database and we will encrypt any data you submitted to us.</p>
+                        <p className="text-lg font-bold text-center lg:text-left">Data Privacy</p>
+                        <p className="text-base font-normal text-center lg:text-left">We make sure your data is safe in our database and we will encrypt any data you submitted to us.</p>
                     </div>
                 </div>
                 <div className="flex flex-col flex-grow gap-[15px] lg:flex-row lg:gap-[9px]">
-                    <div className="flex justify-center items-center">
+                    <div className="flex items-center justify-center">
                         <div className=' flex rounded-full w-14 h-14 bg-[#764abc] justify-center items-center'>
                         <FiDownload className='w-5 h-5 text-white' />
                         </div>
                     </div>
                     <div className="flex flex-col gap-[15px] lg:gap-[9px]">
-                            <p className="text-center font-bold text-lg lg:text-left">Easy Download</p>
-                            <p className="text-center text-base font-normal lg:text-left">Zwallet is 100% totally free to use it&apos;s now available on Google Play Store and App Store.</p>
+                            <p className="text-lg font-bold text-center lg:text-left">Easy Download</p>
+                            <p className="text-base font-normal text-center lg:text-left">Zwallet is 100% totally free to use it&apos;s now available on Google Play Store and App Store.</p>
                     </div>
                 </div>
             </div>
@@ -147,7 +147,7 @@ const Home = () => {
                 <div className="flex flex-col px-4 md:px-10 pt-7 gap-5 lg:w-[480px] lg:self-end">
                     <p className="text-[#764abc] font-bold text-lg text-center lg:text-left ">WELCOME TO E-WALLET</p>
                     <p className="font-medium text-[32px] text-center lg:text-left">Your All-in-One Digital Payment Solution</p>
-                    <p className="font-medium text-base text-center lg:text-left">Say goodbye to cash and hello to the future of payments! With e-wallet, you have the power of secure, fast, and convenient digital transactions right at your fingertips. Whether you&apos;re shopping, dining out, or sending money to loved ones, we&apos;ve got you covered.</p>
+                    <p className="text-base font-medium text-center lg:text-left">Say goodbye to cash and hello to the future of payments! With e-wallet, you have the power of secure, fast, and convenient digital transactions right at your fingertips. Whether you&apos;re shopping, dining out, or sending money to loved ones, we&apos;ve got you covered.</p>
 
                     <Link to={token ? '/dashboard' : '/login'} className="h-[50px] flex justify-center items-center bg-[#764abc] text-white py-[10px] rounded-md lg:max-w-[143px] hover:bg-violet-400">
                         {token ? 'To Dashboard' : 'Get Started'}
@@ -191,9 +191,9 @@ const Home = () => {
         <div className="px-4 md:px-10 py-14 flex flex-col items-center gap-[19px] lg:flex-row justify-center">
             <div className="flex flex-col lg:w-[330px]">
                 <p className="font-medium text-[32px] text-center lg:text-left">100+ Trusted Partners</p>
-                <p className="font-normal text-base text-center lg:text-left">We have reached global level and have 100+ brand partners around the globe.</p>
+                <p className="text-base font-normal text-center lg:text-left">We have reached global level and have 100+ brand partners around the globe.</p>
             </div>
-            <div className="flex-col md:flex-row md:flex items-center md:justify-normal ">
+            <div className="flex-col items-center md:flex-row md:flex md:justify-normal ">
                 <img  src={Microsoft_logo} alt="microsoft-logo"/>
                 <img  src={Dropbox_logo} alt="dropbox-logo"/>
                 <img  src={Hnm_logo} alt="hnm-logo"/>
@@ -205,11 +205,11 @@ const Home = () => {
 
         <div className="px-4 md:px-10 py-14 flex flex-col items-center gap-[19px]">
             <p className="font-medium text-[32px] text-center">What Our Users Are Saying</p>
-            <p className="font-normal text-base text-center">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
+            <p className="text-base font-normal text-center">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
 
-            <div className='flex justify-between items-center gap-5'>
+            <div className='flex items-center justify-between gap-5'>
                 {pages && 
-                    <div className='hidden md:flex rounded-full w-12 h-12 bg-gray-400 justify-center items-center'>
+                    <div className='items-center justify-center hidden w-12 h-12 bg-gray-400 rounded-full md:flex'>
                         <button onClick={()=>changePages(pages - 1)} ><FiArrowLeft /></button>
                     </div>
                 }
@@ -237,12 +237,12 @@ const Home = () => {
 
         <div className="flex flex-col bg-[#F8F8F8] px-4 md:px-10 py-14 gap-[19px] lg:flex-row-reverse lg:items-center ">
             <div className="flex flex-col gap-[25px]lg:max-w-[580px]">
-                <p className="font-medium text-xl md:text-3xl lg:text-4xl transition-all duration-1000">Download The App</p>
-                <p className="font-normal text-base">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
+                <p className="text-xl font-medium transition-all duration-1000 md:text-3xl lg:text-4xl">Download The App</p>
+                <p className="text-base font-normal">Ready to experience the future of payments? Download e-wallet now and enjoy a world of convenience at your fingertips.</p>
             <div className="flex gap-[25px]">
                 <button className="flex flex-1 items-center justify-center h-[50px] border bg-[#764abc] rounded-md gap-[10px] lg:max-w-[250px] hover:bg-violet-400">
                 <img src={Playstore} alt="" />
-                <p className="text-white text-sm">Play Store</p>
+                <p className="text-sm text-white">Play Store</p>
                 </button>
                 <button className="flex flex-1 items-center justify-center text-[#764abc] h-[50px] border gap-[10px] rounded-md border-[#764abc] lg:max-w-[250px] hover:bg-slate-200">
                 <img  src={Appstore_ungu} alt="" />

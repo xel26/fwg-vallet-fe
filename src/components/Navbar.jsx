@@ -41,7 +41,7 @@ const Navbar = () => {
   const getProfile =  async () => {
     if(token){
       try {
-        const {data} = await axios.get(`http://localhost:5555/customer/profile`, {
+        const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/profile`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -90,7 +90,7 @@ const Navbar = () => {
             <div className="flex items-center gap-2 sm:hidden">
               <div>
                 <img
-                  src={dataProfile.picture ? `http://localhost:5555/uploads/profiles/${dataProfile.picture}`  : defaultProfile}
+                  src={dataProfile.picture ? `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${dataProfile.picture}`  : defaultProfile}
                   className="object-cover w-10 h-10 rounded-full sm:hidden"
                 />
               </div>
@@ -171,7 +171,7 @@ const Navbar = () => {
                   )}
                   <div>
                     <img
-                      src={dataProfile.picture ? `http://localhost:5555/uploads/profiles/${dataProfile.picture}` : defaultProfile}
+                      src={dataProfile.picture ? `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${dataProfile.picture}` : defaultProfile}
                       className="hidden object-cover w-10 h-10 rounded-full sm:block"
                     />
                   </div>
