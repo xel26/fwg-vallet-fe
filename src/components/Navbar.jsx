@@ -12,6 +12,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { logout as logoutAction } from "../redux/reducers/auth";
+import { removeProfile } from "../redux/reducers/profile";
 import { setProfile } from "../redux/reducers/profile";
 
 const Navbar = () => {
@@ -26,6 +27,7 @@ const Navbar = () => {
   }
 
   const logoutProcess = () => {
+    dispatch(removeProfile())
     dispatch(logoutAction())
     navigate('/')
   }
@@ -85,11 +87,11 @@ const Navbar = () => {
               </Link>
             </div>
           ) : document.URL.includes("dashboard") ? (
-            <div className="flex gap-2 items-center sm:hidden">
+            <div className="flex items-center gap-2 sm:hidden">
               <div>
                 <img
                   src={dataProfile.picture ? `http://localhost:5555/uploads/profiles/${dataProfile.picture}`  : defaultProfile}
-                  className="rounded-full object-cover w-10 h-10 sm:hidden"
+                  className="object-cover w-10 h-10 rounded-full sm:hidden"
                 />
               </div>
               <div className="flex flex-col text-white">
@@ -98,11 +100,11 @@ const Navbar = () => {
               </div>
             </div>
           ): (
-            <p className="text-white text-sm sm:hidden">{document.URL.includes("transfer") ? 'Transfer' 
+            <p className="text-sm text-white sm:hidden">{document.URL.includes("transfer") ? 'Transfer' 
             : document.URL.includes("top-up") ? 'Top-Up' : document.URL.includes('history-transaction') ? 'History Transaction' : 'Profile'}</p>
           )}
 
-          <div className="items-center gap-4 hidden sm:flex">
+          <div className="items-center hidden gap-4 sm:flex">
             <FaWallet
               className={`${
                 document.URL.endsWith("/") ? "text-white" : "text-[#764abc]"
@@ -120,7 +122,7 @@ const Navbar = () => {
           <div className="relative flex gap-4">
             {token ? (
               <>
-                <div className=" flex items-center gap-4">
+                <div className="flex items-center gap-4 ">
                   {document.URL.includes("dashboard") ? (
                     <>
                       <form
@@ -170,7 +172,7 @@ const Navbar = () => {
                   <div>
                     <img
                       src={dataProfile.picture ? `http://localhost:5555/uploads/profiles/${dataProfile.picture}` : defaultProfile}
-                      className="rounded-full object-cover w-10 h-10 hidden sm:block"
+                      className="hidden object-cover w-10 h-10 rounded-full sm:block"
                     />
                   </div>
                   <FiChevronDown
@@ -196,7 +198,7 @@ const Navbar = () => {
                     <FiUser size={18} />
                     <div>Profile</div>
                   </Link>
-                  <button onClick={logoutProcess} className="text-red-600 flex items-center gap-2 p-2">
+                  <button onClick={logoutProcess} className="flex items-center gap-2 p-2 text-red-600">
                     <FiLogOut size={18} />
                     <div>Keluar</div>
                   </button>
@@ -206,7 +208,7 @@ const Navbar = () => {
               <>
                 <Link
                   to="/login"
-                  className="text-white border border-white py-2 px-3 text-sm rounded hidden sm:block active:scale-95 transition-all"
+                  className="hidden px-3 py-2 text-sm text-white transition-all border border-white rounded sm:block active:scale-95"
                 >
                   Sign In
                 </Link>

@@ -10,9 +10,12 @@ const profile = createSlice({
     reducers: {
         setProfile: (state, action) => {
             state.data = action.payload
+        },
+        removeProfile: () => {
+            return initialState
         }
     }
 })
 
-export const {setProfile} = profile.actions
+export const {setProfile,  removeProfile} = profile.actions
 export default profile.reducer 
