@@ -13,6 +13,7 @@ import TransferSteps from "../components/TransferSteps";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
 import { useDispatch, useSelector } from 'react-redux'
 import { setTransfer } from '../redux/reducers/transfer'
+import { removeTransfer } from '../redux/reducers/transfer'
 import axios from 'axios'
 
 
@@ -76,6 +77,7 @@ const TransferDetail = () => {
         setCardEnterPinShow(false)
         setStatusTransfer(true)
         setCardStatusShow(true)
+        dispatch(removeTransfer())
       }else{
         setCardEnterPinShow(false)
         setStatusTransfer(false)
