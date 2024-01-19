@@ -45,7 +45,7 @@ const CardEnterPin = ({cardEnterPinShow, submit}) => {
                  />
                ))} */}
 
-               <input type="text" id='pin' name='pin' className='w-full text-5xl ' />
+               <input maxLength='6' type="text" id='pin' name='pin' className='w-full text-5xl' />
              </div>
 
              <div className="flex flex-col items-center w-full gap-1">
