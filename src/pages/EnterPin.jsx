@@ -31,7 +31,7 @@ const EnterPin = () => {
     
             try{
                 console.log(data.email)
-                const {data : insert} = await axios.post('http://localhost:5555/auth/register', form.toString())
+                const {data : insert} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, form.toString())
                 dispatch(removeRegister())
                 navigate('/login')
             }catch(err){

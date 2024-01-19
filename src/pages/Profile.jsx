@@ -50,7 +50,7 @@ const Profile = () => {
     })
 
     try {
-      const {data} = await axios.patch('http://localhost:5555/customer/profile', form, {
+      const {data} = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/customer/profile`, form, {
         headers: {
           'Content-Type': 'multipart/form-data',
           'Authorization': `Bearer ${token}`
@@ -104,7 +104,7 @@ const Profile = () => {
     form.append('picture', file)
 
     try {
-      const {data} = await axios.patch('http://localhost:5555/customer/profile', form, {
+      const {data} = await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/customer/profile`, form, {
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'multipart/form-data'
@@ -134,43 +134,43 @@ const Profile = () => {
        <main className="sm:h-[48rem] flex pt-10">
          <Navigation />
 
-         <section className="relative flex-1 flex flex-col gap-4 mt-4 sm:pl-8">
+         <section className="relative flex flex-col flex-1 gap-4 mt-4 sm:pl-8">
           <p className={`${updateSuccess ? 'block' : 'hidden'} fixed left-[50%] top-20 z-50 text-lg bg-[#764abc] text-white rounded py-1 px-4 shadow`}>{successMessage}</p>
           <p className={`${updateFailed ? 'block' : 'hidden'} fixed left-[40%] top-20 z-50 text-lg bg-[#D00] text-white rounded py-1 px-4 shadow`}>{errorMessage}</p>
-           <div className="hidden sm:flex items-center gap-4 pt-8">
+           <div className="items-center hidden gap-4 pt-8 sm:flex">
              <FiUsers size={20} color="#764abc" />
              <div className="font-bold">Profile</div>
            </div>
 
-           <div className="sm:border flex-1 sm:mr-10 sm:mb-10 p-4 flex flex-col gap-1">
+           <div className="flex flex-col flex-1 gap-1 p-4 sm:border sm:mr-10 sm:mb-10">
              <div className="font-bold">Profile Picture</div>
 
-             <div className="flex flex-col justify-center-center sm:pl-8 rounded p-4 gap-4">
+             <div className="flex flex-col gap-4 p-4 rounded justify-center-center sm:pl-8">
                <form onSubmit={updatePicture} className="flex gap-4">
                  <label className="relative">
                    {!preview && dataProfile && !dataProfile.picture && (
                      <img
-                       className="rounded-full w-28 h-28 object-cover"
+                       className="object-cover rounded-full w-28 h-28"
                        src={defaultProfile}
                      ></img>
                    )}
                    {!preview && dataProfile && dataProfile.picture && (
                      <img
-                       className="rounded-full w-28 h-28 object-cover"
+                       className="object-cover rounded-full w-28 h-28"
                        src={
                          dataProfile &&
-                         `http://localhost:5555/uploads/profiles/${dataProfile.picture}`
+                         `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${dataProfile.picture}`
                        }
                      ></img>
                    )}
                    {preview && (
                      <img
-                       className="rounded-full w-28 h-28 object-cover"
+                       className="object-cover rounded-full w-28 h-28"
                        src={preview}
                      ></img>
                    )}
                    {preview && (
-                     <div className="absolute top-0 left-0 w-full h-full bg-black rounded-full bg-opacity-50" />
+                     <div className="absolute top-0 left-0 w-full h-full bg-black bg-opacity-50 rounded-full" />
                    )}
                    <input
                      onChange={previewPicture}
@@ -208,7 +208,7 @@ const Profile = () => {
              <form onSubmit={updateProfile} className="flex flex-col gap-4">
                <label className="flex flex-col">
                  <p className="font-semibold text-[#4F5665]">Full Name</p>
-                 <div className="w-full border rounded flex items-center gap-2 p-2">
+                 <div className="flex items-center w-full gap-2 p-2 border rounded">
                    <FiUser color="#4F5665" />
                    <input
                      type="text"
@@ -222,7 +222,7 @@ const Profile = () => {
 
                <label className="flex flex-col">
                  <p className="font-semibold text-[#4F5665]">Phone</p>
-                 <div className="w-full border rounded flex items-center gap-2 p-2">
+                 <div className="flex items-center w-full gap-2 p-2 border rounded">
                    <FiPhone color="#4F5665" />
                    <input
                      type="text"
@@ -236,7 +236,7 @@ const Profile = () => {
 
                <label className="flex flex-col">
                  <p className="font-semibold text-[#4F5665]">Email</p>
-                 <div className="w-full border rounded flex items-center gap-2 p-2">
+                 <div className="flex items-center w-full gap-2 p-2 border rounded">
                    <FiMail color="#4F5665" />
                    <input
                      type="text"

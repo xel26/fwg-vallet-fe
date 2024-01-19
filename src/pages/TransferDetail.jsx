@@ -58,7 +58,7 @@ const TransferDetail = () => {
     const {value: pin} = e.target.pin
     const form = new URLSearchParams()
     form.append('pin', pin)
-    const {data : res} = await axios.post(`http://localhost:5555/auth/transfer/${dataSender.id}`, form.toString())
+    const {data : res} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/transfer/${dataSender.id}`, form.toString())
 
     if(res.success === true){
       const form2 = new URLSearchParams()
@@ -67,7 +67,7 @@ const TransferDetail = () => {
       form2.append('recipientId', data.recipientId)
       form2.append('note', data.note)
 
-      const  {data: result} =  await axios.post(`http://localhost:5555/customer/transfer`, form2, {
+      const  {data: result} =  await axios.post(`${import.meta.env.VITE_BACKEND_URL}/customer/transfer`, form2, {
         headers: {
           'Authorization' : `Bearer ${token}`
         }

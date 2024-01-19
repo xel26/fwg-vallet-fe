@@ -12,7 +12,7 @@ const ChangePassword = () => {
     const profile = useSelector(state => state.profile.data)
     const [user, setUser] = useState({})
     useEffect(() => {
-        axios.get('http://localhost:5555/customer/profile', {
+        axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/profile`, {
             headers: {
                 Authorization: `Bearer ${token}`
             }
@@ -31,12 +31,12 @@ const ChangePassword = () => {
         const form = new URLSearchParams()
         form.append('password', existingPassword)
 
-        const {data} = await axios.post(`http://localhost:5555/auth/verify-password/${profile.id}`, form.toString())
+        const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/verify-password/${profile.id}`, form.toString())
         const {success} = data
         if(success && (confirmPassword === password)){
             const form2 = new URLSearchParams()
             form2.append('password', password)
-            await axios.patch(`http://localhost:5555/customer/change-password/${profile.id}`, form2, {
+            await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/customer/change-password/${profile.id}`, form2, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

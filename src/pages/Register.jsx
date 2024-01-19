@@ -68,7 +68,7 @@ const Register = () => {
             // form.append('password', password)
 
             // try{
-            //     const {data} = await axios.post('http://localhost:5555/auth/register', form.toString())
+            //     const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, form.toString())
             setRegisterSuccess(true)
 
             setTimeout(() => {

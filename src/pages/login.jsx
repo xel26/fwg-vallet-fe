@@ -41,7 +41,7 @@ const Login = () => {
         form.append('password', password)
 
         try{
-            const {data} = await axios.post('http://localhost:5555/auth/login', form.toString())
+            const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/login`, form.toString())
             setSuccessMessage(data.message)
             setLoginSuccess(true)
 
@@ -68,7 +68,7 @@ const Login = () => {
     return (
         <>
             <header className=" flex bg-[#764abc] h-screen">
-                <div className="bg-white flex flex-1 justify-center md:rounded-r-xl">
+                <div className="flex justify-center flex-1 bg-white md:rounded-r-xl">
                     <form onSubmit={loginProcess} className=" flex flex-col justify-center gap-[10px] w-[90%]">
                         <div className="flex gap-[10px] items-center">
                             <img width="35px" src={logoAuth} alt="" />
@@ -82,12 +82,12 @@ const Login = () => {
                             <button className="flex justify-center gap-[10px] bg-[#E8E8E8] rounded-full w-full py-[5px]"><img
                                 src={logoFacebook} alt="" /><span className="hidden md:block">Sign In With Facebook</span></button>
                         </div>
-                        <div className=" flex items-center w-full">
+                        <div className="flex items-center w-full ">
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                             <p className="w-[30%] text-center text-[#4F5665]">Or</p>
                             <div className="flex-1 w-full h-[2px] bg-[#DEDEDE]"></div>
                         </div>
-                        <div className="relative flex gap-3 flex-col">
+                        <div className="relative flex flex-col gap-3">
                             <label className="-mt-[10px] text-[#0B132A] font-bold" htmlFor="email">Email</label>
                             <p className={`${error ? 'block' : 'hidden'} absolute left-52 -top-2.5 text-[#D00]`}>{errMessage}</p>
                             <p className={`${loginSuccess ? 'block' : 'hidden'} absolute left-60 -top-2.5  text-green-500`}>{successMessage}</p>
@@ -97,7 +97,7 @@ const Login = () => {
                                     id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
-                        <div className="relative flex gap-3 flex-col">
+                        <div className="relative flex flex-col gap-3">
                             <label className=" mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
                             <div className=" -mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
@@ -117,7 +117,7 @@ const Login = () => {
                         </div>
                     </form>
                 </div>
-                <div className="hidden flex-1 md:flex justify-center items-center">
+                <div className="items-center justify-center flex-1 hidden md:flex">
                     <div className="max-w-[90%]"><img src={loginImage} alt="" /></div>
                 </div>
             </header>

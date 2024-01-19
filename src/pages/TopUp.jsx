@@ -15,7 +15,7 @@ const CardListPaymentMethod = ({value, logo, label}) => {
         <label className="bg-[#E8E8E84D] rounded p-2 flex gap-4 items-center">
         <input type="radio" name="paymentMethod" value={value} />
         <div >
-            <img src={`http://localhost:5555/uploads/paymentMethods/${logo}`} />
+            <img src={`${import.meta.env.VITE_BACKEND_URL}/uploads/paymentMethods/${logo}`} />
         </div>
         <p className='text-[#4F5665] text-sm'>{label}</p>
     </label>
@@ -29,7 +29,7 @@ const PaymentList = ({list, idr}) => {
         <h5 className="text-[#4F5665] font-semibold text-xs sm:text-base">
           {list}
         </h5>
-        <h5 className="font-semibold text-xs sm:text-base">Idr.{idr?.toLocaleString('id')}</h5>
+        <h5 className="text-xs font-semibold sm:text-base">Idr.{idr?.toLocaleString('id')}</h5>
       </div>
     );
   };
@@ -44,7 +44,7 @@ const PaymentList = ({list, idr}) => {
 
     const getAllPaymentMethod = async () => {
       try {
-        const {data} = await axios.get('http://localhost:5555/customer/deposit', {
+        const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/deposit`, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -88,7 +88,7 @@ const PaymentList = ({list, idr}) => {
       })
 
       try {
-        const {data} = await axios.post('http://localhost:5555/customer/deposit', form, {
+        const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/customer/deposit`, form, {
           headers: {
             'Authorization': `Bearer ${token}`
           }
@@ -113,22 +113,22 @@ const PaymentList = ({list, idr}) => {
       <main className="sm:h-[52rem] flex gap-8 pt-10">
         <Navigation />
 
-        <section className="flex-1 flex flex-col gap-4 pt-3">
-          <div className="hidden sm:flex items-center gap-4 pt-10 pl">
+        <section className="flex flex-col flex-1 gap-4 pt-3">
+          <div className="items-center hidden gap-4 pt-10 sm:flex pl">
             <FiUpload size={20} color="#764abc" />
             <div className="font-bold">Top Up Account</div>
           </div>
 
-          <form onSubmit={deposit} className="flex flex-col sm:flex-row gap-4 sm:gap-8 sm:pr-10">
-            <div className="sm:border flex-1 sm:mb-10 p-4 flex flex-col gap-4 sm:gap-8">
+          <form onSubmit={deposit} className="flex flex-col gap-4 sm:flex-row sm:gap-8 sm:pr-10">
+            <div className="flex flex-col flex-1 gap-4 p-4 sm:border sm:mb-10 sm:gap-8">
               <div className="font-bold">Account Information</div>
 
               <div className="flex justify-between items-center sm:pl-8 bg-[#E8E8E84D] rounded p-2 sm:p-4">
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={`http://localhost:5555/uploads/profiles/${profile.picture}`}
-                      className="rounded h-20 w-20 object-cover"
+                      src={`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${profile.picture}`}
+                      className="object-cover w-20 h-20 rounded"
                     />
                   </div>
 
@@ -152,7 +152,7 @@ const PaymentList = ({list, idr}) => {
                     Type the amount you want to top up and then press continue
                     to the next steps.
                   </p>
-                  <div className="w-full border rounded flex items-center gap-2 p-2">
+                  <div className="flex items-center w-full gap-2 p-2 border rounded">
                     <FaMoneyBill />
                     <input
                       type="text"
@@ -185,11 +185,11 @@ const PaymentList = ({list, idr}) => {
               </div>
             </div>
 
-            <div className="sm:border h-fit flex flex-col">
-              <div className="flex p-3 h-12 font-semibold">
+            <div className="flex flex-col sm:border h-fit">
+              <div className="flex h-12 p-3 font-semibold">
                 <h4>Payment</h4>
               </div>
-              <div className="payment-summary p-3 text-sm flex flex-col gap-4">
+              <div className="flex flex-col gap-4 p-3 text-sm payment-summary">
                 <PaymentList list="order" idr={order ? order : 0} />
                 <PaymentList list="Tax" idr={tax < 1000 ? 1000 : tax} />
 
