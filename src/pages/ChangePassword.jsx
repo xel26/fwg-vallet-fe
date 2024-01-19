@@ -9,6 +9,7 @@ import { useSelector } from "react-redux"
 
 const ChangePassword = () => {
     const token = useSelector(state => state.auth.token)
+    const profile = useSelector(state => state.profile.data)
     const [user, setUser] = useState({})
     useEffect(() => {
         axios.get('http://localhost:5555/customer/profile', {
@@ -30,12 +31,12 @@ const ChangePassword = () => {
         const form = new URLSearchParams()
         form.append('password', existingPassword)
 
-        const {data} = await axios.post(`http://localhost:5555/auth/verify-password/2`, form.toString())
+        const {data} = await axios.post(`http://localhost:5555/auth/verify-password/${profile.id}`, form.toString())
         const {success} = data
         if(success && (confirmPassword === password)){
             const form2 = new URLSearchParams()
             form2.append('password', password)
-            await axios.patch(`http://localhost:5555/customer/change-password/2`, form2, {
+            await axios.patch(`http://localhost:5555/customer/change-password/${profile.id}`, form2, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -70,7 +71,7 @@ const ChangePassword = () => {
                         </div>
                         <form onSubmit={verifyPassword}  className="flex flex-col gap-[10px] md:border-2 p-[30px] w-full">
                             <span className="text-[#0B132A] font-bold">Change Password</span>
-                            <div className="flex gap-3 flex-col">
+                            <div className="flex flex-col gap-3">
                                 <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="existingPassword">Existing Password</label>
                                 <div className="-mt-[5px] flex relative items-center">
                                     <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
@@ -82,7 +83,7 @@ const ChangePassword = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex gap-3 flex-col">
+                            <div className="flex flex-col gap-3">
                                 <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="password">New Password</label>
                                 <div className="-mt-[5px] flex relative items-center">
                                     <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
@@ -94,7 +95,7 @@ const ChangePassword = () => {
                                     </div>
                                 </div>
                             </div>
-                            <div className="flex gap-3 flex-col">
+                            <div className="flex flex-col gap-3">
                                 <label className="mt-[10px] text-[#0B132A] font-bold" htmlFor="confirmPassword">Confirm New Password</label>
                                 <div className="-mt-[5px] flex relative items-center">
                                     <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
