@@ -11,6 +11,8 @@ import ResponsiveNavigation from "../components/ResponsiveNavigation"
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 
+import defaultProfile from '../assets/media/default-profile.png'
+
 export const TransferSteps = ({steps, value}) => {
     return (
       <div className="flex items-center gap-4">
@@ -27,11 +29,11 @@ const CardHistoryTransaction = ({id, image, contactName, PhoneNumber, amount, ty
     return (
       <div onClick={() => handleCard(true)} className={`flex items-center justify-between sm:pl-24 sm:gap-36 ${id % 2 !== 0 ? 'bg-[#F9FAFB] border-b': 'bg-white'} p-2`}>
         <div className='hidden sm:block'>
-          <img src={`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
+          <img src={image ? `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}` : defaultProfile} className="object-cover w-10 h-10 rounded min-w-10" />
         </div>
         <div className='flex flex-col sm:flex-row sm:gap-24 flex-1 text-[#4F5665]'>
-        <div className='text-sm sm:text-base'>{contactName}</div>
-        <div className='text-sm sm:text-base'>{PhoneNumber}</div>
+          <div className='text-sm sm:text-base'>{contactName}</div> 
+          <div className='text-sm sm:text-base'>{PhoneNumber}</div>
         </div>
         <div className="flex items-center gap-24">
           <div className={`${type === "income" ? 'text-[#1EC15F]': 'text-[#D00000]'}`}>RP.{amount.toLocaleString('id')}</div>
@@ -50,6 +52,8 @@ const HistoryTransaction = () => {
 
 //===================================================================================================================================//
 
+
+const profile = useSelector(state => state.profile.data)
 const token = useSelector(state => state.auth.token)
 const [transferList, setTransferList] = useState()
 
@@ -124,11 +128,11 @@ useEffect(()=>{
                     <CardHistoryTransaction
                       key={item.id}
                       id={item.id}
-                      image={item.sender.id == 1? item.recipient.picture : item.sender.picture}
-                      contactName={item.sender.id == 1? item.recipient.fullName : item.sender.fullName}
-                      PhoneNumber={item.sender.id == 1? item.recipient.phone : item.sender.phone}
+                      image={item.sender.id == profile.id? item.recipient.picture : item.sender.picture}
+                      contactName={item.sender.id == profile.id? item.recipient.fullName : item.sender.fullName}
+                      PhoneNumber={item.sender.id == profile.id? item.recipient.phone : item.sender.phone}
                       amount={item.amount}
-                      type={item.sender.id == 1? 'asda' : 'income'}
+                      type={item.sender.id == profile.id? 'asda' : 'income'}
                       deleteHistoryOrder={deleteHistoryOrder}
                       cardShow={cardShow}
                       handleCard={setCardShow}
