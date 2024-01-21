@@ -9,12 +9,14 @@ import axios from "axios"
 import { removeRegister } from "../redux/reducers/register"
 
 const EnterPin = () => {
-    // const [inputPinActive, setInputPinActive] = React.useState(false)
-    const [errMessage, setErrMessage] = useState()
+    const [errMessage, setErrMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
+    const [error, setError] = useState(true)
+    const [success, setSuccess] = useState(true)
+
     const data = useSelector(state => state.register.data)
     const navigate = useNavigate()
     const dispatch = useDispatch()
-    // const pins = [1, 2, 3, 4, 5, 6]
 
 
     const register = async (event) => {
@@ -22,24 +24,39 @@ const EnterPin = () => {
         console.log(data)
         const {value : pin} = event.target.pin
         console.log(pin)
-        if(pin.length > 5){
-            const form = new URLSearchParams()
-            form.append('email', data.email)
-            form.append('password', data.password)
-            form.append('pin', pin)
-    
-    
-            try{
-                console.log(data.email)
-                const {data : insert} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, form.toString())
-                dispatch(removeRegister())
+        if(pin.length <= 5){
+            setErrMessage("pin must be six character!")
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 2000);
+            return 
+        }
+
+        const form = new URLSearchParams()
+        form.append('email', data.email)
+        form.append('password', data.password)
+        form.append('pin', pin)
+
+
+        try{
+            console.log(data.email)
+            await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, form.toString())
+            dispatch(removeRegister())
+            setSuccessMessage('Enter Pin Success')
+            setSuccess(true)
+
+            setTimeout(() => {
+                setSuccess(false)
                 navigate('/login')
-            }catch(err){
-                // console.log(err)
-                setErrMessage(err.response)
-            }
-        }else{
-            setErrMessage("password doesn't match")
+            }, 2000);
+        }catch(err){
+            // console.log(err)
+            setErrMessage(err.response.data.message)
+            setError(true)
+            setTimeout(() => {
+                setError(false)
+            }, 2000);
         }
     }
 
@@ -55,7 +72,11 @@ const EnterPin = () => {
                         </div>
                         <span className="text-[#0B132A] text-[30px]">Enter Your Pin 👋</span>
                         <span className="text-[#4F5665] text-[16px]">Please save your pin because this so important.</span>
-                        <div className="flex justify-between items-center gap-3 h-[200px]">
+
+
+                        <div className="relative flex justify-between items-center gap-3 h-[200px]">
+                        <p className={`${error ? 'block' : 'hidden'} absolute left-16 top-2.5 text-[#D00]`}>{errMessage}</p>
+                        <p className={`${success ? 'block' : 'hidden'} absolute left-56 top-2.5  text-green-500`}>{successMessage}</p>
                             {/* {pins.map((item) => (
                                 <input
                                     key={item}
@@ -68,8 +89,7 @@ const EnterPin = () => {
                             ))} */}
                         <input type="text" name="pin" id="pin" className="text-5xl lg:tracking-[90px] md:tracking-[50px] tracking-[50px] outline-none w-full" maxLength="6"/>
                         </div>
-                        <div><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold" type="submit">Submit</button>
-                        </div>
+                        <button className="rounded-lg mt-5 py-2 text-white bg-[#764abc] w-full font-bold active:scale-95 transition-all duration-500" type="submit">Submit</button>
                         <div className="flex mt-[10px] justify-center">
                             {/* <div className="text-[#4F5665]">Forgot Your Pin? <a href="./register.html" className="text-[#764abc]">Reset</a>
                             </div> */}

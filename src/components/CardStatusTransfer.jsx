@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 import transferSuccess from '../assets/media/transfer-success.png'
 import transferFailed from '../assets/media/transfer-failed.png'
 
-const CardStatusTransfer = ({cardStatusShow, statusTransfer}) => {
-  // cardStatusShow = false
-  // statusTransfer= true
+const CardStatusTransfer = ({cardStatusShow, statusTransfer, setCardStatusShow}) => {
 
     return (
         <div className={`${cardStatusShow ? 'block' : 'hidden'} absolute bg-[#00000099] left-0 top-0 h-full w-full z-40 flex justify-center items-center`}>
@@ -25,8 +23,12 @@ const CardStatusTransfer = ({cardStatusShow, statusTransfer}) => {
                 'Thank you for using this application for your financial' 
                 : 'Sorry Theres is an issue for your transfer, try again later !'}
                 </p>
-    
-                <button className='p-1 text-xs sm:text-sm text-white bg-[#764abc] flex justify-center items-center rounded w-full active:scale-95 transition-all duration-500'>{statusTransfer ? 'Done' : 'Try Again'}</button>
+                  
+                {statusTransfer ? (
+                  <Link to='/dashboard' className='p-1 text-xs sm:text-sm text-white bg-[#764abc] flex justify-center items-center rounded w-full active:scale-95 transition-all duration-500'>Done</Link>
+                ):
+                <button onClick={() => setCardStatusShow(!cardStatusShow)} className='p-1 text-xs sm:text-sm text-white bg-[#764abc] flex justify-center items-center rounded w-full active:scale-95 transition-all duration-500'>Try Again</button>
+                }
                 <Link to={statusTransfer ? '/transfer' : '/dashboard'} className='p-1 text-xs sm:text-sm w-full border text-[#764abc] border-[#764abc] flex justify-center items-center rounded active:scale-95 transition-all duration-500'>{statusTransfer ? 'Transfer Again' : 'Back To Dashboard'}</Link>
             </div>
         </div>

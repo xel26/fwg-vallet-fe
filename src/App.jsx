@@ -37,11 +37,11 @@ const router = createBrowserRouter([
   },
   {
     path: '/forgot-password',
-    element: <PrivateRoute><ForgotPassword/></PrivateRoute>
+    element: <ForgotPassword/>
   },
   {
     path: '/create-new-password',
-    element: <PrivateRoute><CreateNewPassword/></PrivateRoute>
+    element: <CreateNewPassword/>
   },
   {
     path: '/enter-pin',
