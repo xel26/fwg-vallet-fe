@@ -1,7 +1,7 @@
 import { FaCheckCircle, FaStar, FaMoneyBill } from 'react-icons/fa'
 import { FiStar, FiSend } from 'react-icons/fi'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useState, } from 'react'
+import { useState,useEffect } from 'react'
 
 import userPhoto from '../assets/media/user.jpg'
 import Navbar from "../components/Navbar";
@@ -23,6 +23,7 @@ const TransferDetail = () => {
   const [statusTransfer, setStatusTransfer] = useState(false)
   const [cardStatusShow, setCardStatusShow] = useState(false)
   const [cardEnterPinShow, setCardEnterPinShow] = useState(false)
+  const [detailContactList, setDetailContactList] = useState([{}])//ambil detail cntact list
   const dispatch = useDispatch()
 
   const [verified, setVerified] = useState(false)
@@ -31,6 +32,23 @@ const TransferDetail = () => {
   const {id} = useParams()
   const sender = useSelector(state => state.profile.data)
   
+  const getDetailContactList = async (id) =>{
+    const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list/${id}`,
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    if(data.success){
+      setDetailContactList(data.results)
+      console.log(data.results)
+      console.log(data.results.fullName)
+    }
+}
+useEffect(() => {
+  getDetailContactList(id)
+},[id])
+
   const setData = (e) => {
     e.preventDefault()
     const {value: transferAmount} = e.target.transferAmount
@@ -72,7 +90,6 @@ const TransferDetail = () => {
           'Authorization' : `Bearer ${token}`
         }
       })
-      console.log(result)
       if(result.succes){
         setCardEnterPinShow(false)
         setStatusTransfer(true)
@@ -112,28 +129,28 @@ const TransferDetail = () => {
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={userPhoto}
+                      src={`http://localhost:5555/uploads/profiles/${detailContactList.picture}`}
                       className="object-cover w-20 h-20 rounded"
                     />
                   </div>
 
                   <div className="flex flex-col justify-center gap-1">
-                    <p className='text-sm sm:text-base'>Ghaluh</p>
-                    <p className="text-[#4F5665] text-sm sm:text-base">(239)555-0108</p>
+                    <p className='text-sm sm:text-base'>{detailContactList.fullName}</p>
+                    <p className="text-[#4F5665] text-sm sm:text-base">{detailContactList.phoneNumber}</p>
                     {verified &&
                     <button className="text-white bg-[#764abc] rounded flex items-center justify-center gap-3 p-1">
                       <FaCheckCircle />
-                      <p className="text-xs">Verified</p>
+                      <p className="text-xs">{detailContactList.isVerified}</p>
                     </button>
                     }
                   </div>
                 </div>
 
-                {isFavorite ? (
+                {/* {isFavorite ? (
                   <FaStar color="orange" />
                 ) : (
                   <FiStar color="#4F5665" />
-                )}
+                )} */}
               </div>
 
               <form onSubmit={setData} className="flex flex-col gap-4">
