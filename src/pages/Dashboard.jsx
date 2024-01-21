@@ -3,9 +3,11 @@ import Navigation from "../components/Navigation";
 import IncomeChart from "../components/IncomeChart";
 import balance from "../assets/media/balance.svg"
 import withdraw from "../assets/media/u_money-withdraw.svg"
+import DashTransactionHistory from "../components/DashTransactionHistory";
 import withdraw1 from "../assets/media/u_money-withdraw-1.svg"
 import moneyInsert from "../assets/media/u_money-insert.svg"
 import send from "../assets/media/Send.svg"
+import { Link } from "react-router-dom";
 import p1 from "../assets/media/1.png"
 import { FiTrendingDown, FiTrendingUp,FiChevronDown } from "react-icons/fi";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
@@ -49,8 +51,6 @@ const Dashboard = () => {
       }).catch((err)=>{console.log(err)})
     }
   },[token])
-
-
 
     return ( 
         <div className="">
@@ -187,117 +187,24 @@ const Dashboard = () => {
                 <p className="text-sm font-semibold xl:text-base text-dark">
                   Transaction History
                 </p>
-                <p className="text-xs font-medium text-primary">See All</p>
+                <Link to='/history-transaction'>
+                  <p className="text-xs font-medium text-primary">See All</p>
+                </Link>
               </div>
               <div className="flex flex-col gap-y-7">
-                <div className="flex flex-row gap-x-6">
-                  <div className="lg:self-start">
-                    <img
-                      src={p1}
-                      alt="profile"
-                      className="w-14 h-14"
+                
+              {transferList &&
+                  transferList.map((item) => (
+                    <DashTransactionHistory
+                      key={item.id}
+                      id={item.id}
+                      picture={item.sender.id == profile.id? item.recipient.picture : item.sender.picture}
+                      name={item.sender.id == profile.id? item.recipient.fullName : item.sender.fullName}
+                      PhoneNumber={item.sender.id == profile.id? item.recipient.phone : item.sender.phone}
+                      amount={item.amount}
+                      type={item.sender.id == profile.id? 'asda' : 'income'}
                     />
-                  </div>
-                  <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-                    <div className="flex flex-col gap-y-1">
-                      <p className="font-semibold text-dark">Robert Fox</p>
-                      <p className="text-secondary">Transfer</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-500">+Rp50.000</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-x-6">
-                  <div className="lg:self-start">
-                    <img
-                    src={p1}
-                      alt="profile"
-                      className="w-14 h-14"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-                    <div className="flex flex-col gap-y-1">
-                      <p className="font-semibold text-dark">Robert Fox</p>
-                      <p className="text-secondary">Transfer</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-500">+Rp50.000</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-x-6">
-                  <div className="lg:self-start">
-                    <img
-                    src={p1}
-                      alt="profile"
-                      className="w-14 h-14"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-                    <div className="flex flex-col gap-y-1">
-                      <p className="font-semibold text-dark">Robert Fox</p>
-                      <p className="text-secondary">Transfer</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-500">+Rp50.000</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-x-6">
-                  <div className="lg:self-start">
-                    <img
-                    src={p1}
-                      alt="profile"
-                      className="w-14 h-14"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-                    <div className="flex flex-col gap-y-1">
-                      <p className="font-semibold text-dark">Robert Fox</p>
-                      <p className="text-secondary">Transfer</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-500">+Rp50.000</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-x-6">
-                  <div className="lg:self-start">
-                    <img
-                    src={p1}
-                      alt="profile"
-                      className="w-14 h-14"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-                    <div className="flex flex-col gap-y-1">
-                      <p className="font-semibold text-dark">Robert Fox</p>
-                      <p className="text-secondary">Transfer</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-500">+Rp50.000</p>
-                    </div>
-                  </div>
-                </div>
-                <div className="flex flex-row gap-x-6">
-                  <div className="lg:self-start">
-                    <img
-                    src={p1}
-                      alt="profile"
-                      className="w-14 h-14"
-                    />
-                  </div>
-                  <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-                    <div className="flex flex-col gap-y-1">
-                      <p className="font-semibold text-dark">Robert Fox</p>
-                      <p className="text-secondary">Transfer</p>
-                    </div>
-                    <div>
-                      <p className="font-semibold text-green-500">+Rp50.000</p>
-                    </div>
-                  </div>
-                </div>
+                  ))}
               </div>
             </div>
           </aside>
