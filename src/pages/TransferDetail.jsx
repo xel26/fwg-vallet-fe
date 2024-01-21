@@ -175,6 +175,7 @@ const TransferDetail = () => {
               <CardStatusTransfer
                 cardStatusShow={cardStatusShow}
                 statusTransfer={statusTransfer}
+                setCardStatusShow={setCardStatusShow}
               />
 
               <CardEnterPin cardEnterPinShow={cardEnterPinShow} submit={sendPin} />

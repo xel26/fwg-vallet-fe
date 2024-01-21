@@ -93,16 +93,19 @@ const Login = () => {
                             <p className={`${loginSuccess ? 'block' : 'hidden'} absolute left-60 -top-2.5  text-green-500`}>{successMessage}</p>
                             <div className="-mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2 outline-none" name="email"
+                                <input required className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2 outline-none" name="email"
                                     id="email" type="email" placeholder="Enter Your Email" />
                             </div>
                         </div>
                         <div className="relative flex flex-col gap-3">
+                            <div className="flex justify-between w-full items-center ">
                             <label className=" mt-[10px] text-[#0B132A] font-bold" htmlFor="password">Password</label>
+                            <Link to='/forgot-password' className="text-[#764abc] mt-[10px]">forgot-password?</Link>
+                            </div>
                             <div className=" -mt-[5px] flex relative items-center">
                                 <div className="text-[#4F5665] absolute left-3"><FiKey /></div>
-                                <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2 outline-none" name="password"
-                                    id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter Your Password Again" />
+                                <input required className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-2 outline-none" name="password"
+                                    id="password" type={passwordVisible ? "text" : "password"} placeholder="Enter Your Password" />
                                 {/* <div className="text-[#4F5665] absolute right-4"><FiEyeOff /></div> */}
                                 <div className="absolute right-3" onClick={togglePasswordVisibility}>
                                     {passwordVisible ? <FiEye /> : <FiEyeOff />}
