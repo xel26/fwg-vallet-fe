@@ -29,8 +29,6 @@ const Dashboard = () => {
         }
       }).then(({data})=>{
        setWallet(data.results)
-      //  console.log(wallet)
-       console.log(profile.id)
         
       }).catch((err)=>{console.log(err)})
     }
@@ -150,7 +148,7 @@ const Dashboard = () => {
                     alt="u_money_insert"
                     className="w-6 h-6"
                   />
-                  <p className="text-sm xl:text-base text-light">Top Up</p>
+                  <p className="text-sm xl:text-base text-light text-white">Top Up</p>
                 </button>
                 <button className="bg-[#764abc] p-3 rounded-md flex justify-center items-center gap-x-2 hover:bg-violet-400 focus:ring">
                   <img
@@ -158,7 +156,7 @@ const Dashboard = () => {
                     alt="Send"
                     className="w-6 h-6"
                   />
-                  <p className="text-sm xl:text-base text-light">Transfer</p>
+                  <p className="text-sm xl:text-base text-light text-white">Transfer</p>
                 </button>
               </div>
             </section>

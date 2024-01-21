@@ -11,6 +11,8 @@ import Register from './pages/Register'
 import Login from './pages/login'
 import ForgotPassword from './pages/ForgotPassword'
 import CreateNewPassword from './pages/CreateNewPassword'
+import ForgotPin from './pages/ForgotPin'
+import CreateNewPin from './pages/CreateNewPin'
 import EnterPin from './pages/EnterPin'
 import Dashboard from './pages/Dashboard'
 import HistoryTransaction from './pages/HistoryTransaction'
@@ -42,6 +44,14 @@ const router = createBrowserRouter([
   {
     path: '/create-new-password',
     element: <CreateNewPassword/>
+  },
+  {
+    path: '/forgot-pin',
+    element: <ForgotPin/>
+  },
+  {
+    path: '/create-new-pin',
+    element: <CreateNewPin/>
   },
   {
     path: '/enter-pin',

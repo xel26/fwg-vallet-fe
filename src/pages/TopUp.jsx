@@ -4,16 +4,17 @@ import { useEffect, useState } from 'react';
 
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
-import userPhoto from '../assets/media/user.jpg'
+import defaultProfile from '../assets/media/default-profile.png'
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
+import CardStatusTopUp from '../components/CardStatusTopUp';
+
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 
 const CardListPaymentMethod = ({value, logo, label}) => {
     return (
         <label className="bg-[#E8E8E84D] rounded p-2 flex gap-4 items-center">
-        <input type="radio" name="paymentMethod" value={value} />
+        <input required type="radio" name="paymentMethod" value={value} />
         <div >
             <img src={`${import.meta.env.VITE_BACKEND_URL}/uploads/paymentMethods/${logo}`} />
         </div>
@@ -36,7 +37,10 @@ const PaymentList = ({list, idr}) => {
 
   
   const TopUp = () => {
-    const navigate = useNavigate()
+    const [cardTopUpShow, setCardTopUpShow] = useState(false)
+    const [statusTopUp, setStatusTopUp] = useState()
+
+
     const profile = useSelector(state => state.profile.data)
 
     const token = useSelector(state => state.auth.token)
@@ -73,6 +77,8 @@ const PaymentList = ({list, idr}) => {
     }
 
     
+
+
     const deposit = async (event) => {
       event.preventDefault()
       
@@ -93,11 +99,12 @@ const PaymentList = ({list, idr}) => {
             'Authorization': `Bearer ${token}`
           }
         })
-        console.log(data)
 
-        navigate('/dashboard')
+        setCardTopUpShow(true)
+        setStatusTopUp(true)
       } catch (error) {
-        console.log(error)
+        setCardTopUpShow(true)
+        setStatusTopUp(false)
       }
     } 
 
@@ -113,7 +120,13 @@ const PaymentList = ({list, idr}) => {
       <main className="sm:h-[52rem] flex gap-8 pt-10">
         <Navigation />
 
-        <section className="flex flex-col flex-1 gap-4 pt-3">
+        <section className="relative flex flex-col flex-1 gap-4 pt-3">
+        <CardStatusTopUp
+        cardTopUpShow={cardTopUpShow}
+        statusTopUp={statusTopUp}
+        setCardTopUpShow={setCardTopUpShow}
+        />
+
           <div className="items-center hidden gap-4 pt-10 sm:flex pl">
             <FiUpload size={20} color="#764abc" />
             <div className="font-bold">Top Up Account</div>
@@ -127,7 +140,7 @@ const PaymentList = ({list, idr}) => {
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${profile.picture}`}
+                      src={profile.picture ? `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${profile.picture}` : defaultProfile}
                       className="object-cover w-20 h-20 rounded"
                     />
                   </div>
@@ -154,7 +167,7 @@ const PaymentList = ({list, idr}) => {
                   </p>
                   <div className="flex items-center w-full gap-2 p-2 border rounded">
                     <FaMoneyBill />
-                    <input
+                    <input required
                       type="text"
                       name="topUpAmount"
                       placeholder="Enter Nominal Top Up"

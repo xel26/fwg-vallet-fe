@@ -21,9 +21,7 @@ const EnterPin = () => {
 
     const register = async (event) => {
         event.preventDefault()
-        console.log(data)
         const {value : pin} = event.target.pin
-        console.log(pin)
         if(pin.length <= 5){
             setErrMessage("pin must be six character!")
             setError(true)
@@ -40,7 +38,6 @@ const EnterPin = () => {
 
 
         try{
-            console.log(data.email)
             await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/register`, form.toString())
             dispatch(removeRegister())
             setSuccessMessage('Enter Pin Success')
@@ -51,7 +48,6 @@ const EnterPin = () => {
                 navigate('/login')
             }, 2000);
         }catch(err){
-            // console.log(err)
             setErrMessage(err.response.data.message)
             setError(true)
             setTimeout(() => {
@@ -77,17 +73,7 @@ const EnterPin = () => {
                         <div className="relative flex justify-between items-center gap-3 h-[200px]">
                         <p className={`${error ? 'block' : 'hidden'} absolute left-16 top-2.5 text-[#D00]`}>{errMessage}</p>
                         <p className={`${success ? 'block' : 'hidden'} absolute left-56 top-2.5  text-green-500`}>{successMessage}</p>
-                            {/* {pins.map((item) => (
-                                <input
-                                    key={item}
-                                    type="text"
-                                    name="pin"
-
-                                    maxLength="1"
-                                    className={`outline-none flex flex-1 w-4 border-b ${inputPinActive ? 'border-[#764abc]' : 'border-[#E8E8E8]'}  bg-transparent text-center`}
-                                />
-                            ))} */}
-                        <input type="text" name="pin" id="pin" className="text-5xl lg:tracking-[90px] md:tracking-[50px] tracking-[50px] outline-none w-full" maxLength="6"/>
+                        <input required type="text" name="pin" id="pin" className="text-5xl lg:tracking-[90px] md:tracking-[50px] tracking-[50px] outline-none w-full" maxLength="6" minLength='6'/>
                         </div>
                         <button className="rounded-lg mt-5 py-2 text-white bg-[#764abc] w-full font-bold active:scale-95 transition-all duration-500" type="submit">Submit</button>
                         <div className="flex mt-[10px] justify-center">
