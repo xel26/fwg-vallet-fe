@@ -20,7 +20,6 @@ const ChangePassword = () => {
             setUser(data.results)
         })
     },[])
-    console.log(user)
 
 
     const [error, setError] = useState(true)
@@ -35,8 +34,7 @@ const ChangePassword = () => {
         const {value: existingPassword} = e.target.existingPassword
         const {value: password} = e.target.password
         const {value: confirmPassword} = e.target.confirmPassword
-        console.log(existingPassword)
-        console.log(password)
+
         const form = new URLSearchParams()
         form.append('password', existingPassword)
 
@@ -76,7 +74,6 @@ const ChangePassword = () => {
             }
             
         } catch (error) {
-            console.log(error)
             if(error.response.data.message === 'wrong email or password'){
                 error.response.data.message = 'wrong password'
             }

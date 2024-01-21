@@ -75,7 +75,6 @@ const Profile = () => {
   const updatePicture = async (event) => {
     event.preventDefault()
     const [file] = event.target.picture.files
-    console.log(file.type)
 
     const pictureType = ['image/jpeg', 'image/jpg', 'image/png']
     if(!pictureType.includes(file.type)){

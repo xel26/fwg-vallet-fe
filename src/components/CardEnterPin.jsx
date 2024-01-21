@@ -4,10 +4,6 @@ import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 const CardEnterPin = ({cardEnterPinShow, submit}) => {
-  // cardEnterPinShow = false
-
-    // const pins = [1, 2, 3, 4, 5, 6]
-    // const data = useSelector(state => state.transfer.data)
 
    return (
      <div
@@ -35,17 +31,8 @@ const CardEnterPin = ({cardEnterPinShow, submit}) => {
 
            <form onSubmit={submit} className="flex flex-col items-center w-full gap-8">
              <div className="flex w-full gap-4">
-               {/* {pins.map((item) => (
-                 <input
-                   key={item}
-                   type="text"
-                   name="pin"
-                   maxLength="1"
-                   className={`outline-none flex flex-1 w-4 border-b border-[#E8E8E8] bg-transparent text-center`}
-                 />
-               ))} */}
 
-               <input maxLength='6' type="text" id='pin' name='pin' className='w-full text-5xl' />
+               <input maxLength='6' minLength='6' type="text" id='pin' name='pin' className='w-full text-5xl' />
              </div>
 
              <div className="flex flex-col items-center w-full gap-1">
@@ -57,7 +44,7 @@ const CardEnterPin = ({cardEnterPinShow, submit}) => {
                </button>
                <div className="flex pb-4">
                  <p className="text-[#4F5665] text-xs sm:text-sm">Forgot your pin ?</p>
-                 <Link to="/profile/change-pin" className="text-[#764abc] text-xs sm:text-sm">
+                 <Link to="/forgot-pin" className="text-[#764abc] text-xs sm:text-sm">
                    Reset
                  </Link>
                </div>

@@ -46,7 +46,7 @@ const Navbar = () => {
             'Authorization': `Bearer ${token}`
           }
         })
-        console.log(data.results)
+        
         dispatch(setProfile(data.results))
       } catch (error) {
         console.log(error)
