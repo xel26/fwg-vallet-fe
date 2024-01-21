@@ -135,7 +135,7 @@ const PaymentList = ({list, idr}) => {
                   <div className="flex flex-col justify-center">
                     <p>{profile.fullName}</p>
                     <p className="text-[#4F5665]">{profile.phoneNumber}</p>
-                    {!profile.isVerified &&
+                    {profile.isVerified &&
                     <button className="text-white bg-[#764abc] rounded flex items-center justify-center gap-3 p-1">
                       <FaCheckCircle />
                       <p className="text-xs">Verified</p>

@@ -11,12 +11,14 @@ import ResponsiveNavigation from "../components/ResponsiveNavigation"
 import axios from "axios";
 import { useSelector } from "react-redux";
 
+import defaultProfile from '../assets/media/default-profile.png'
+
 
 const CardListContact = ({id, image, contactName, number, isFavorite}) => {
     return (
       <div  className="flex items-center justify-between sm:pl-24">
         <div>
-          <img src={`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`} className="object-cover w-10 h-10 rounded" />
+          <img src={image?`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`:defaultProfile} className="object-cover w-10 h-10 rounded" />
         </div>
         <div className="flex flex-col text-sm sm:flex-row sm:text-base sm:gap-44">
         <Link to={`/transfer-detail/${id}`} className="active:underline">{contactName}</Link>
@@ -31,21 +33,35 @@ const Transfer = () => {
   const token = useSelector(state => state.auth.token)
 
   const [listContact, setListContact] = useState([])
-  const [keyword, setKeyword] = useState('')
+  
   const getContact = async () => {
-    const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?search=${keyword}`,
+    const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list`,
+    {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+      
+    })
+    setListContact(dataContact.results)
+    
+  }
+  
+  const [search, setSearch] = useState()
+  const [contact, setContact] = useState()
+  const searchPhone = async (e) => {
+    e.preventDefault()
+    const {value: phone} = e.target.search
+    setSearch(phone)
+    const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list/?phoneNumber=${phone}`,
     {
       headers: {
         'Authorization': `Bearer ${token}`
       }
     
-    })
-    setListContact(dataContact.results)
-
-  }
-
-  const search = async (e) =>{
-    setKeyword(e.target.value)
+    },{params: {
+      phoneNumber: phone
+    }})
+    setContact(dataContact.results)
   }
 
   useEffect(()=>{
@@ -55,7 +71,7 @@ const Transfer = () => {
         left:0,
         behavior:'smooth'
     })
-  },[keyword])
+  },[])
 
 
     // const [listContact, setListContact] = useState([
@@ -142,28 +158,36 @@ const Transfer = () => {
                   </div>
                 </div>
 
-                <div className="w-full sm:w-[15rem] h-fit flex">
+                <form onSubmit={searchPhone} className="w-full sm:w-[15rem] h-fit flex">
 
                   <label className="relative w-full border rounded">
 
-                    <input onChange={search}
+                    <input
+                     id="search" 
+                     name="search"
                       type="text"
-                      name="find-people"
                       placeholder="Enter Number Or Full Name"
                       className="text-xs outline-none bg-transparent w-full p-2 text-[#4F5665]"
                     />
+                    <button type="submit">
                     <FiSearch
                       size={18}
                       className="absolute right-0 top-2 text-[#4F5665]"
                     />
+                    </button>
                   </label>
-                  <button type="submit" className="hidden"></button>
-                </div>
+                </form>
               </div>
 
               <div className="flex flex-col justify-center gap-6 sm:gap-4">
-                {listContact &&
-                  listContact.map((item) => (
+                {contact && search ? <CardListContact
+                        key={contact.id}
+                        id={contact.userId}
+                        image={contact.picture}
+                        contactName={contact.fullName}
+                        number={contact.phoneNumber}
+                  /> :
+                  listContact?.map((item) => (
                     <CardListContact
                       key={item.userId}
                       id={item.userId}
@@ -172,7 +196,7 @@ const Transfer = () => {
                       number={item.phoneNumber}
                       isFavorite={item.isFavorite}
                     />
-                  ))}
+                  )) }
               </div>
             </div>
             <ResponsiveNavigation/>
