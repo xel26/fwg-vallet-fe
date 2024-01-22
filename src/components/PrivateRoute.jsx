@@ -19,4 +19,21 @@ const PrivateRoute = ({children}) => {
 
 }
 
+
+// eslint-disable-next-line react/prop-types
+export const VerifyPin = ({children}) => {
+	const pin = useSelector(state => state.verifyPin.data.success)
+	if(pin){
+		return (
+			<>
+				{children}
+			</>
+		)
+	}else{
+		return (
+			<Navigate to={'/profile/change-pin'} />
+		)
+	}
+}
+
 export default PrivateRoute
