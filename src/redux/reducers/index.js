@@ -6,6 +6,7 @@ import auth from "./auth";
 import profile from "./profile";
 import register from "./register";
 import transfer from "./transfer";
+import verifyPin from "./verifyPin";
 
 const authConfig = {
     key: 'auth',
@@ -16,7 +17,8 @@ const reducer = combineReducers({
     auth: persistReducer(authConfig, auth),
     profile,
     register,
-    transfer
+    transfer,
+    verifyPin
 })
 
 export default reducer

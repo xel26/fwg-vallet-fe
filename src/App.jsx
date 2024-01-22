@@ -22,6 +22,8 @@ import TopUp from './pages/TopUp'
 import Profile from './pages/Profile'
 import ChangePin from './pages/ChangePin'
 import ChangePassword from './pages/ChangePassword'
+import EnterNewPin from './pages/EnterNewPin'
+import { VerifyPin } from './components/PrivateRoute'
 
 
 const router = createBrowserRouter([
@@ -84,6 +86,10 @@ const router = createBrowserRouter([
   {
     path: 'profile/change-pin',
     element: <PrivateRoute><ChangePin/></PrivateRoute>
+  },
+  {
+    path: 'profile/enter-new-pin',
+    element: <VerifyPin><EnterNewPin/></VerifyPin>
   },
   {
     path: 'profile/change-password',
