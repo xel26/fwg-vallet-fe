@@ -3,7 +3,6 @@ import { FiSearch, FiSend, FiStar } from 'react-icons/fi'
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-import userPhoto from '../assets/media/user.jpg'
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
 import TransferSteps from "../components/TransferSteps";
@@ -12,57 +11,280 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 
 import defaultProfile from '../assets/media/default-profile.png'
+import PageNavigation from "../components/PageNavigation";
+import Alert from "../components/Alert"
 
 
 const CardListContact = ({id, image, contactName, number, isFavorite}) => {
     return (
-      <div  className="flex items-center justify-between sm:pl-24">
+      <Link to={`/transfer-detail/${id}`}  className="flex items-center justify-between bg-[#E8E8E84D] shadow-[0px_3px_5px_0px_rgba(0,0,0,0.08)] active:shadow-none rounded p-2 transition-all">
         <div>
-          <img src={image?`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`:defaultProfile} className="object-cover w-10 h-10 rounded" />
+          {/* <img src={image?`${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${image}`:defaultProfile} className="object-cover w-10 h-10 rounded" /> */}
+          <img src={image? image : defaultProfile} className="object-cover w-12 h-12 sm:w-14 sm:h-14 rounded" />
         </div>
-        <div className="flex flex-col text-sm sm:flex-row sm:text-base sm:gap-44">
-        <Link to={`/transfer-detail/${id}`} className="active:underline">{contactName}</Link>
-        <div>{number}</div>
+
+        <div className="flex justify-start items-center text-sm sm:text-base w-16 sm:w-60 whitespace-nowrap overflow-hidden">
+          {contactName?.split(' ')[0]}
         </div>
-          {isFavorite ? <FaStar color="orange" /> : <FiStar color="#4F5665" />}
-      </div>
+
+        <div className="flex items-center justify-start w-24 sm:w-40 text-sm sm:text-base whitespace-nowrap overflow-hidden">
+          {number}
+        </div>
+
+        <div>
+          {isFavorite ? <FaStar color='orange'/> : <FiStar color="#4F5665"/>}
+        </div>
+      </Link>
     );
 }
 
 const Transfer = () => {
   const token = useSelector(state => state.auth.token)
 
-  const [listContact, setListContact] = useState([])
-  
-  const getContact = async () => {
-    const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list`,
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-      
-    })
-    setListContact(dataContact.results)
-    
-  }
-  
+  const [listContact, setListContact] = useState()
   const [search, setSearch] = useState()
-  const [contact, setContact] = useState()
+  const [currentPage, setCurrentPage] = useState()
+  const [nextPage, setNextPage] = useState()
+  const [prevPage, setPrevPage] = useState()
+  const [totalPage, setTotalPage] = useState()
+  const [totalData, setTotalData] = useState(0)
+
+  const [loading, setLoading] = useState()
+  const [errMessage, setErrMessage] = useState()
+
+
+
+  const getContact = async () => {
+    setLoading(true)
+
+    try {
+      const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?limit=5`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+        
+      })
+
+      console.log(dataContact)
+      setLoading()
+      setListContact(dataContact)
+      setCurrentPage(dataContact.pageInfo.currentPage)
+      setNextPage(dataContact.pageInfo.nextPage)
+      setPrevPage(dataContact.pageInfo.prevPage)
+      setTotalPage(dataContact.pageInfo.totalPage)
+      setTotalData(dataContact.pageInfo.totalData)
+      
+    } catch (error) {
+      setLoading()
+      // console.log(error)
+      // setErrMessage(error.response.data ? error.response.data.message : error.message)
+    }
+  }
+
+
+  const searchOnChange = (e) => {
+    if(isNaN(e.target.value)){
+      e.target.value = ''
+      return
+    }
+  }
+
+  
   const searchPhone = async (e) => {
     e.preventDefault()
-    const {value: phone} = e.target.search
+    let {value: phone} = e.target.search
+
+    if(phone == ''){
+      return
+    }
+
+    setLoading(true)
     setSearch(phone)
-    const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list/?phoneNumber=${phone}`,
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    
-    },{params: {
-      phoneNumber: phone
-    }})
-    setContact(dataContact.results)
+
+    try {
+      const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?phoneNumber=${phone}&limit=5`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      
+      },{params: {
+        phoneNumber: phone
+      }})
+      
+      e.target.search.value = ''
+      setLoading()
+      setListContact(dataContact)
+      setCurrentPage(dataContact.pageInfo.currentPage)
+      setNextPage(dataContact.pageInfo.nextPage)
+      setPrevPage(dataContact.pageInfo.prevPage)
+      setTotalPage(dataContact.pageInfo.totalPage)
+      setTotalData(dataContact.pageInfo.totalData)
+
+    } catch (error) {
+      console.log(error)
+      setLoading()
+      setErrMessage(error.response ? error.response.data.message : error.message)
+
+      setTimeout(() => {
+        setErrMessage()
+      }, 3000)
+    }
   }
+
+
+  const next = async (e) => {
+    setLoading(true)
+    e.preventDefault()
+
+    try {
+      if(search){
+        const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?phoneNumber=${search}&limit=5&page=${nextPage}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+    
+      setLoading()
+      setListContact(dataContact)
+      setCurrentPage(dataContact.pageInfo.currentPage)
+      setNextPage(dataContact.pageInfo.nextPage)
+      setPrevPage(dataContact.pageInfo.prevPage)
+      setTotalPage(dataContact.pageInfo.totalPage)
+      setTotalData(dataContact.pageInfo.totalData)
+  
+      }else{
+        const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?limit=5&page=${nextPage}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+          
+        })
+  
+        setLoading()
+        setListContact(dataContact)
+        setCurrentPage(dataContact.pageInfo.currentPage)
+        setNextPage(dataContact.pageInfo.nextPage)
+        setPrevPage(dataContact.pageInfo.prevPage)
+        setTotalPage(dataContact.pageInfo.totalPage)
+        setTotalData(dataContact.pageInfo.totalData)
+      }
+    } catch (error) {
+      console.log(error.message)
+      setLoading()
+      setErrMessage(error.response ? error.response.data.message : error.message)
+
+      setTimeout(() => {
+        setErrMessage()
+      }, 3000)
+    }
+  }
+
+
+  const prev = async (e) => {
+    setLoading(true)
+    e.preventDefault()
+
+    try {
+      if(search){
+        const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?phoneNumber=${search}&limit=5&page=${prevPage}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        
+        })
+    
+        setLoading()
+        setListContact(dataContact)
+        setCurrentPage(dataContact.pageInfo.currentPage)
+        setNextPage(dataContact.pageInfo.nextPage)
+        setPrevPage(dataContact.pageInfo.prevPage)
+        setTotalPage(dataContact.pageInfo.totalPage)
+        setTotalData(dataContact.pageInfo.totalData)
+  
+      }else{
+        const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?limit=5&page=${prevPage}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+          
+        })
+  
+        setLoading()
+        setListContact(dataContact)
+        setCurrentPage(dataContact.pageInfo.currentPage)
+        setNextPage(dataContact.pageInfo.nextPage)
+        setPrevPage(dataContact.pageInfo.prevPage)
+        setTotalPage(dataContact.pageInfo.totalPage)
+        setTotalData(dataContact.pageInfo.totalData)
+      }
+    } catch (error) {
+      console.log(error)
+      setLoading()
+      setErrMessage(error.response ? error.response.data.message : error.message)
+      
+      setTimeout(() => {
+        setErrMessage()
+      }, 3000)
+    }
+  }
+
+
+  const page = async (e, page) => {
+    setLoading(true)
+    e.preventDefault()
+
+    try {
+      if(search){
+        const { data } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?phoneNumber=${search}&limit=5&page=${page}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        
+        })
+    
+        setLoading()
+        setListContact(data)
+        setCurrentPage(data.pageInfo.currentPage)
+        setNextPage(data.pageInfo.nextPage)
+        setPrevPage(data.pageInfo.prevPage)
+        setTotalPage(data.pageInfo.totalPage)
+        setTotalData(data.pageInfo.totalData)
+  
+      }else{
+        const { data: dataContact } = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list?limit=5&page=${page}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+          
+        })
+  
+        setLoading()
+        setListContact(dataContact)
+        setCurrentPage(dataContact.pageInfo.currentPage)
+        setNextPage(dataContact.pageInfo.nextPage)
+        setPrevPage(dataContact.pageInfo.prevPage)
+        setTotalPage(dataContact.pageInfo.totalPage)
+        setTotalData(dataContact.pageInfo.totalData)
+      }
+    } catch (error) {
+      console.log(error)
+      setLoading()
+      setErrMessage(error.response ? error.response.data.message : error.message)
+
+      setTimeout(() => {
+        setErrMessage()
+      }, 3000)
+    }
+  }
+
 
   useEffect(()=>{
     getContact(),
@@ -73,72 +295,12 @@ const Transfer = () => {
     })
   },[])
 
-
-    // const [listContact, setListContact] = useState([
-    //     {
-    //         id: 1,
-    //         image: userPhoto,
-    //         name: "Ghaluh 1",
-    //         number: "(239)555-0108",
-    //         isFavorite: true
-    //     },
-    //     {
-    //         id: 2,
-    //         image: userPhoto,
-    //         name: "Ghaluh 2",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-    //     {
-    //         id: 3, 
-    //         image: userPhoto,
-    //         name: "Ghaluh 3",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-    //     {
-    //         id: 4,
-    //         image: userPhoto,
-    //         name: "Ghaluh 4",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-    //     {
-    //         id: 5,
-    //         image: userPhoto,
-    //         name: "Ghaluh 5",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-    //     {
-    //         id: 6,
-    //         image: userPhoto,
-    //         name: "Ghaluh 6",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-    //     {
-    //         id: 7,
-    //         image: userPhoto,
-    //         name: "Ghaluh 7",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-    //     {
-    //         id: 8,
-    //         image: userPhoto,
-    //         name: "Ghaluh 8",
-    //         number: "(239)555-0108",
-    //         isFavorite: false
-    //     },
-
-    // ])
-
     return (
       <>
         <Navbar home={false} login={true} dashboard={false} />
 
-        <main className="sm:h-[48rem] flex gap-8 pt-10">
+        <main className={`${listContact ? 'sm:h-[50rem]' : 'sm:h-screen'} flex gap-8 pt-10 pb-20 sm:pb-0`}>
+          <Alert loading={loading}/>
           <Navigation />
 
           <section className="flex flex-col flex-1 gap-4 pt-3">
@@ -147,59 +309,63 @@ const Transfer = () => {
               <div className="font-bold">Transfer Money</div>
             </div>
 
-            <TransferSteps/>
+            <TransferSteps />
 
-            <div className="flex flex-col flex-1 gap-8 p-4 sm:border sm:mr-10 sm:mb-10">
+            <div className={`flex flex-col ${listContact ? 'gap-8' : 'gap-0'} p-4 sm:border sm:mr-10 max-h-[44rem]`}>
               <div className="flex flex-col gap-2 sm:flex-row sm:justify-between sm:gap-0">
                 <div>
                   <div className="font-bold">Find People</div>
-                  <div className="text-xs text-[#4F5665] hidden sm:block">
-                    8 Result Found For Ghaluh
-                  </div>
+                  {listContact && search ? (
+                    <div className="text-xs text-[#4F5665] hidden sm:block">
+                      {`${totalData} Result For ${search}`}
+                    </div>
+                  ) : (
+                    <div className="text-xs text-[#4F5665] hidden sm:block">
+                      { totalData ? `${totalData} Result From Your History Transaction` : ''}
+                    </div>
+                  )}
                 </div>
 
                 <form onSubmit={searchPhone} className="w-full sm:w-[15rem] h-fit flex">
-
-                  <label className="relative w-full border rounded">
-
+                  <label className="search flex justify-between items-center w-full pr-2 border-2 rounded">
                     <input
-                     id="search" 
-                     name="search"
+                      id="search"
+                      name="search"
                       type="text"
-                      placeholder="Enter Number Or Full Name"
-                      className="text-xs outline-none bg-transparent w-full p-2 text-[#4F5665]"
+                      placeholder="search phone number"
+                      className="sm:text-sm text-xs outline-none bg-transparent w-full p-2 text-[#4F5665]"
+                      onChange={searchOnChange}
                     />
+
                     <button type="submit">
-                    <FiSearch
-                      size={18}
-                      className="absolute right-0 top-2 text-[#4F5665]"
-                    />
+                      <FiSearch
+                        size={18}
+                        className="text-[#4F5665] active:scale-95 active:text-[#764abc] transition-all"
+                      />
                     </button>
+
                   </label>
                 </form>
               </div>
 
               <div className="flex flex-col justify-center gap-6 sm:gap-4">
-                {contact && search ? <CardListContact
-                        key={contact.id}
-                        id={contact.userId}
-                        image={contact.picture}
-                        contactName={contact.fullName}
-                        number={contact.phoneNumber}
-                  /> :
-                  listContact?.map((item) => (
-                    <CardListContact
-                      key={item.userId}
-                      id={item.userId}
-                      image={item.picture}
-                      contactName={item.fullName}
-                      number={item.phoneNumber}
-                      isFavorite={item.isFavorite}
-                    />
-                  )) }
+                {listContact?.results &&
+                  listContact.results.map((item) => {
+                    return (
+                      <CardListContact
+                        key={item.userId}
+                        id={item.userId}
+                        image={item.picture}
+                        contactName={item.fullName}
+                        number={item.phoneNumber}
+                      />
+                    );
+                  })}
               </div>
+
+              <PageNavigation totalPage={totalPage} currentPage={currentPage} handleNext={next} handlePrev={prev} handlePage={page}/>
             </div>
-            <ResponsiveNavigation/>
+            <ResponsiveNavigation />
           </section>
         </main>
       </>

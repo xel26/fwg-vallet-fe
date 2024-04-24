@@ -19,7 +19,40 @@ const Dashboard = () => {
     
   const token = useSelector(state => state.auth.token)
   const profile = useSelector(state => state.profile.data)
-  const [wallet, setWallet] = useState()
+  const [wallet, setWallet] = useState(0)
+  const [income, setIncome] = useState(0)
+  const [expense, setExpense] = useState(0)
+
+
+  const Income = async () => {
+    try {
+      const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/wallet/income`, {
+        headers : {
+          'Authorization' : `Bearer ${token}`
+        }})
+
+        setIncome(data.results)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+
+  const Expense = async () => {
+    try {
+      const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/wallet/expense`, {
+        headers : {
+          'Authorization' : `Bearer ${token}`
+        }})
+
+        setExpense(data.results)
+
+    } catch (error) {
+      console.log(error)
+    }
+  }
+ 
   
   useEffect(()=>{
     if(token){
@@ -48,12 +81,15 @@ const Dashboard = () => {
         
       }).catch((err)=>{console.log(err)})
     }
+
+    Income()
+    Expense()
   },[token])
 
     return ( 
         <div className="">
         <Navbar />
-       <main className="h-[48rem] flex flex-col sm:flex-row pt-10">
+       <main className="sm:h-[44rem] flex flex-col sm:flex-row pt-10 pb-20 sm:pb-0">
         <Navigation />
 
         <section className="flex flex-col flex-1 px-5 py-4 gap-y-4 lg:flex-row md:gap-x-5 md:py-11 md:px-10 md:justify-between">
@@ -72,10 +108,11 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-xl font-medium xl:text-2xl text-dark">
-                    Rp.{wallet?.balance.toLocaleString('id')}
+                    Rp.{wallet && wallet.balance.toLocaleString('id')}
                   </p>
                 </div>
-                <div className="flex items-center text-xs text-green-500 gap-x-1">
+
+                {/* <div className="flex items-center text-xs text-green-500 gap-x-1">
                   <p className="">+2%</p>
                   <div>
                     <FiTrendingUp 
@@ -84,7 +121,8 @@ const Dashboard = () => {
                       />
                   </div>
                   <p>3 Days Ago</p>
-                </div>
+                </div> */}
+
               </div>
               <div className="border border-[#E8E8E8] p-[19px] flex flex-col gap-y-4 w-full rounded-md">
                 <div className="flex gap-x-3.5">
@@ -99,11 +137,11 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-xl font-medium xl:text-2xl text-dark">
-                    Rp. 2.120.000
+                    Rp. {income ? income.toLocaleString('id') : 0}
                   </p>
                 </div>
                 <div className="flex items-center text-xs text-green-500 gap-x-1">
-                  <p className="">+11.01%</p>
+                  {/* <p className="">+11.01%</p> */}
                   <div>
                   <FiTrendingUp 
                     alt="ArrowRise-success"
@@ -125,11 +163,11 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <p className="text-xl font-medium xl:text-2xl text-dark">
-                    Rp. 200.000
+                    Rp. {expense ? expense.toLocaleString('id') : 0}
                   </p>
                 </div>
                 <div className="flex items-center text-xs text-red-500 gap-x-1">
-                  <p className="">-5.06%</p>
+                  {/* <p className="">-5.06%</p> */}
                   <div>
                   <FiTrendingDown 
                     alt="ArrowRise-success"
@@ -142,26 +180,28 @@ const Dashboard = () => {
             <section className="border border-[#E8E8E8] p-[19px] rounded-md flex flex-col gap-y-3 md:flex-row justify-between md:items-center">
               <p className="font-medium">Fast Service</p>
               <div className="flex flex-col gap-y-3 md:flex-row md:gap-x-[14px]">
-                <button className="bg-[#764abc] p-3 rounded-md flex justify-center items-center gap-x-2 hover:bg-violet-400 focus:ring">
+                <Link to="/top-up" className="bg-[#764abc] p-3 rounded-md flex justify-center items-center gap-x-2 active:scale-95 transition-all">
                   <img
                     src={moneyInsert}
                     alt="u_money_insert"
                     className="w-6 h-6"
                   />
                   <p className="text-sm xl:text-base text-light text-white">Top Up</p>
-                </button>
-                <button className="bg-[#764abc] p-3 rounded-md flex justify-center items-center gap-x-2 hover:bg-violet-400 focus:ring">
+                </Link>
+
+                <Link to="/transfer" className="bg-[#764abc] p-3 rounded-md flex justify-center items-center gap-x-2 active:scale-95 transition-all">
                   <img
                     src={send}
                     alt="Send"
                     className="w-6 h-6"
                   />
                   <p className="text-sm xl:text-base text-light text-white">Transfer</p>
-                </button>
+                </Link>
               </div>
             </section>
             <section className="border border-[#E8E8E8] p-[19px] rounded-md flex flex-col items-center gap-y-4">
-              <div className="flex flex-col w-full gap-y-3 md:flex-row md:justify-between md:items-center">
+              
+              {/* <div className="flex flex-col w-full gap-y-3 md:flex-row md:justify-between md:items-center">
                 <p className="font-medium text-dark">Income Chart</p>
                 <div className="flex flex-col gap-y-3 md:flex-row gap-x-4">
                   <button className="p-3 bg-[#F1F1F1] rounded-md flex gap-x-2 items-center justify-between">
@@ -173,23 +213,24 @@ const Dashboard = () => {
                     <FiChevronDown />
                   </button>
                 </div>
-              </div>
+              </div> */}
+
               <div className="w-full">
                 <IncomeChart></IncomeChart>
               </div>
             </section>
           </section>
           <aside className="flex-1 ">
-            <div className="border border-[#E8E8E8] p-[19px] rounded-md flex flex-col gap-y-6">
+            <div className="border border-[#E8E8E8] p-[19px] rounded-md flex flex-col gap-y-6 overflow-y-hidden">
               <div className="flex items-center justify-between">
-                <p className="text-sm font-semibold xl:text-base text-dark">
+                <p className="font-semibold text-base text-dark">
                   Transaction History
                 </p>
                 <Link to='/history-transaction'>
-                  <p className="text-xs font-medium text-primary">See All</p>
+                  <p className=" font-medium text-primary">See All</p>
                 </Link>
               </div>
-              <div className="flex flex-col gap-y-7">
+              <div className="flex flex-col gap-y-4 sm:gap-y-7">
                 
               {transferList &&
                   transferList.map((item) => (

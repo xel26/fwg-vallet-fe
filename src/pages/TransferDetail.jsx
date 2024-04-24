@@ -3,11 +3,10 @@ import { FiStar, FiSend } from 'react-icons/fi'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useState,useEffect } from 'react'
 
-import userPhoto from '../assets/media/user.jpg'
 import Navbar from "../components/Navbar";
 import Navigation from "../components/Navigation";
-import Button from '../components/Button'
-import CardStatusTransfer from '../components/CardStatusTransfer'
+import {Button} from '../components/Piece'
+import CardStatus from '../components/CardStatus'
 import CardEnterPin from '../components/CardEnterPin'
 import TransferSteps from "../components/TransferSteps";
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
@@ -15,39 +14,46 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setTransfer } from '../redux/reducers/transfer'
 import { removeTransfer } from '../redux/reducers/transfer'
 import axios from 'axios'
+import Alert from "../components/Alert"
 
 
 
 const TransferDetail = () => {
+  const {id} = useParams()
 
-  const [statusTransfer, setStatusTransfer] = useState(false)
-  const [cardStatusShow, setCardStatusShow] = useState(false)
+  const [cardStatus, setCardStatus] = useState()
+  const [cardShow, setCardShow] = useState()
+  const [loading, setLoading] = useState()
+  const [errMessage, setErrMessage] = useState()
+
   const [cardEnterPinShow, setCardEnterPinShow] = useState(false)
-  const [detailContactList, setDetailContactList] = useState([{}])//ambil detail cntact list
+  const [detailContactList, setDetailContactList] = useState([{}])
   const dispatch = useDispatch()
 
-  const [verified, setVerified] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(true)
+  // const [verified, setVerified] = useState(false)
+  // const [isFavorite, setIsFavorite] = useState(true)
   
-  const {id} = useParams()
   const sender = useSelector(state => state.profile.data)
   
-  const getDetailContactList = async (id) =>{
-    const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list/${id}`,
-    {
-      headers: {
-        'Authorization': `Bearer ${token}`
+  const getDetailContactList = async () =>{
+    try {
+      const {data} = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/customer/contact-list/${id}`,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
+  
+      if(data.success){
+        setDetailContactList(data.results)
       }
-    })
-    if(data.success){
-      setDetailContactList(data.results)
-      console.log(data.results)
-      console.log(data.results.fullName)
+      
+    } catch (error) {
+      console.log(error)
     }
+
 }
-useEffect(() => {
-  getDetailContactList(id)
-},[id])
+
 
   const setData = (e) => {
     e.preventDefault()
@@ -62,18 +68,24 @@ useEffect(() => {
     }))
 
     setCardEnterPinShow(true)
-
   }
 
   
   const dataSender = useSelector(state => state.profile.data)
   const data = useSelector(state => state.transfer.data)
   const token = useSelector(state=>state.auth.token)
+
   const sendPin = async (e) => {
+    setLoading(true)
+
     e.preventDefault()
     try{
       
-    const {value: pin} = e.target.pin
+    let pin = ''
+    e.target.pin?.forEach((item) => {
+        pin += item.value
+    })
+
     const form = new URLSearchParams()
     form.append('pin', pin)
     const {data : res} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/transfer/${dataSender.id}`, form.toString())
@@ -90,28 +102,42 @@ useEffect(() => {
           'Authorization' : `Bearer ${token}`
         }
       })
+
       if(result.succes){
+        setLoading()
         setCardEnterPinShow(false)
-        setStatusTransfer(true)
-        setCardStatusShow(true)
+        setCardStatus(true)
+        setCardShow(true)
         dispatch(removeTransfer())
+
       }else{
+        setLoading()
         setCardEnterPinShow(false)
-        setStatusTransfer(false)
-        setCardStatusShow(true)
+        setCardStatus(false)
+        setCardShow(true)
+        dispatch(removeTransfer())
       }
     }
+
     }catch(err){
-      console.log(err)
-      console.log(data.note)
-      // console.log(data.amount)
+      setLoading()
+      setErrMessage(err?.response?.data.message)
+      setCardStatus(false)
+      setCardShow(true)
+      setCardEnterPinShow(false)
     }
   }
+
+
+  useEffect(() => {
+    getDetailContactList()
+  },[])
 
     return (
       <>
         <Navbar home={false} login={true} dashboard={false} />
-        <main className="h-fit sm:h-[48rem] flex pt-10">
+        <main className="h-fit sm:h-[50rem] flex pt-10 pb-20 sm:pb-0">
+          <Alert loading={loading}/>
           <Navigation />
 
           <section className="relative flex flex-col flex-1 gap-4 pt-4 sm:pl-8 ">
@@ -129,7 +155,8 @@ useEffect(() => {
                 <div className="flex gap-4">
                   <div>
                     <img
-                      src={`http://localhost:5555/uploads/profiles/${detailContactList.picture}`}
+                      // src={`http://localhost:5555/uploads/profiles/${detailContactList.picture}`}
+                      src={detailContactList.picture}
                       className="object-cover w-20 h-20 rounded"
                     />
                   </div>
@@ -137,12 +164,16 @@ useEffect(() => {
                   <div className="flex flex-col justify-center gap-1">
                     <p className='text-sm sm:text-base'>{detailContactList.fullName}</p>
                     <p className="text-[#4F5665] text-sm sm:text-base">{detailContactList.phoneNumber}</p>
-                    {verified &&
+                    <button className="text-white bg-[#764abc] rounded flex items-center gap-2 p-1.5 w-fit">
+                      <FaCheckCircle />
+                      <p className="text-xs">Verified</p>
+                    </button>
+                    {/* {verified &&
                     <button className="text-white bg-[#764abc] rounded flex items-center justify-center gap-3 p-1">
                       <FaCheckCircle />
                       <p className="text-xs">{detailContactList.isVerified}</p>
                     </button>
-                    }
+                    } */}
                   </div>
                 </div>
 
@@ -163,6 +194,7 @@ useEffect(() => {
                   <label className="flex items-center w-full gap-2 p-2 border rounded">
                     <FaMoneyBill />
                     <input
+                      required
                       type="text"
                       name="transferAmount"
                       id="transferAmount"
@@ -179,23 +211,27 @@ useEffect(() => {
                     coffee or something
                   </p>
                   <textarea
-                    className="w-full border rounded flex items-center gap-2 p-2 outline-none text-[#4F5665] text-xs sm:text-sm"
+                    className="w-full border rounded flex items-center gap-2 p-2 outline-none text-[#4F5665] text-xs sm:text-sm max-h-28 min-h-28"
                     name="notes"
                     id="notes"
                     placeholder="Enter Some Notes"
                   />
                 </label>
 
-                <Button value="Submit & Transfer" />
+
+                <Button text="Submit & Transfer"/>
               </form>
 
-              <CardStatusTransfer
-                cardStatusShow={cardStatusShow}
-                statusTransfer={statusTransfer}
-                setCardStatusShow={setCardStatusShow}
+              <CardStatus
+                show={cardShow}
+                status={cardStatus}
+                setShow={setCardShow}
+                header={`TRANSFER TO ${detailContactList.fullName?.toUpperCase()}`}
+                transaction="transfer"
+                text={errMessage}
               />
 
-              <CardEnterPin cardEnterPinShow={cardEnterPinShow} submit={sendPin} />
+              <CardEnterPin show={cardEnterPinShow} setShow={setCardEnterPinShow} submit={sendPin} recipient={detailContactList.fullName}/>
             </div>
 
             <ResponsiveNavigation/>

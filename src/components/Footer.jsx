@@ -1,7 +1,7 @@
 // import
 import { FiPhone} from "react-icons/fi"
 import { FiMail } from "react-icons/fi"
-import logoAuth from "../assets/image/logo auth.png"
+import walletIcon from "../assets/media/wallet.png"
 
 const Footer = () => {
     return (
@@ -10,21 +10,23 @@ const Footer = () => {
                 <div className=" flex flex-col w-full max-w-[80%] py-[40px]">
                     <form className="flex md:flex-row flex-col justify-between gap-[40px] items-start mb-[100px]">
                         <div className="flex flex-col gap-[20px]">
-                            <div className="flex gap-[10px] items-center">
-                                <img width="35px" src={logoAuth} alt="" />
-                                <span className="text-white text-[36px]">Vallet</span>
+
+                            <div className="flex items-center gap-2 w-fit">
+                                <img src={walletIcon} alt="wallet icon"/>
+                                <span className="text-white text-lg sm:text-3xl">Vallet</span>
                             </div>
+
                             <span className="text-white">Clarity gives you the blocks and components you need to create a truly
                                 professional
                                 website.</span>
                         </div>
                         <div className="flex flex-col gap-[10px]">
                             <span className="text-white text-[18px]">GET IN TOUCH</span>
-                            <div className="flex gap-[10px]">
+                            <div className="flex gap-[10px] items-center">
                                 <div><FiPhone className="text-white" /></div>
                                 <span className="text-white">+62 5637 8882 9901</span>
                             </div>
-                            <div className="flex gap-[10px]">
+                            <div className="flex gap-[10px] items-center">
                                 <div><FiMail className="text-white" /></div>
                                 <span className="text-white">contact@zwallet.com</span>
                             </div>
@@ -33,7 +35,7 @@ const Footer = () => {
                             <span className="text-white text-[18px]">SOCIAL MEDIA</span>
                             <div className="flex gap-[10px]">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="222" height="42" viewBox="0 0 222 42" fill="none">
-                                    <circle cx="21" cy="21" r="21" fill="white" />
+                                    <circle cx="21" cy="21" r="21" fill="white"/>
                                     <path
                                         d="M30.3107 16.4747C29.6822 16.754 29.0187 16.9286 28.3203 17.0334C29.0187 16.6143 29.5774 15.9509 29.8218 15.1478C29.1584 15.5319 28.4251 15.8112 27.622 15.9858C26.9934 15.3223 26.0856 14.9033 25.1078 14.9033C23.2222 14.9033 21.6858 16.4397 21.6858 18.3253C21.6858 18.6047 21.7207 18.8491 21.7906 19.0935C18.9622 18.9539 16.4131 17.592 14.7021 15.4969C14.4228 16.0207 14.2482 16.5794 14.2482 17.2079C14.2482 18.3952 14.8418 19.4427 15.7846 20.0713C15.2259 20.0363 14.7021 19.8967 14.2133 19.6522V19.6872C14.2133 21.3632 15.4005 22.76 16.9718 23.0743C16.6925 23.1441 16.3782 23.179 16.0639 23.179C15.8544 23.179 15.61 23.1441 15.4005 23.1092C15.8544 24.471 17.1115 25.4836 18.613 25.4836C17.4258 26.3915 15.9592 26.9502 14.3529 26.9502C14.0736 26.9502 13.7942 26.9502 13.5498 26.9153C15.0862 27.893 16.8671 28.4517 18.8225 28.4517C25.1428 28.4517 28.5997 23.2139 28.5997 18.6745C28.5997 18.5348 28.5997 18.3603 28.5997 18.2206C29.2631 17.7666 29.8568 17.173 30.3107 16.4747Z"
                                         fill="#764abc" />
@@ -63,12 +65,11 @@ const Footer = () => {
                             <div className="flex gap-3 flex-col">
                                 <div className="-mt-[5px] flex relative items-center">
                                     <div className="text-[#4F5665] absolute left-3"><FiMail /></div>
-                                    <input className="w-full text-[#4F5665] border-solid border-2 rounded-lg px-12 py-1" name="email"
+                                    <input  className="w-full text-[#4F5665] disabled:bg-transparent border-solid border-2 rounded-lg px-12 py-1 outline-none" name="email"
                                         id="email" type="email" placeholder="Enter Your Email" />
                                 </div>
                             </div>
-                            <div><button className="rounded-lg mt-2 py-3 bg-white w-full font-bold text-[#764abc]" type="submit">Subscribe</button>
-                            </div>
+                            <button className="rounded-lg mt-2 py-2 bg-white w-full font-bold text-[#764abc] active:scale-95 transition-all">Subscribe</button>
                         </div>
                     </form>
                     <div className="mb-[25px]">

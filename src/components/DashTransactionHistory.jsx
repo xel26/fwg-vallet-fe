@@ -1,27 +1,24 @@
 import defaultProfile from '../assets/media/default-profile.png'
 
 const DashTransactionHistory = ({name, amount, type, picture}) => {
-  const transfer = 'transfer'
-  const income = 'income'
   return(
     <>
-      <div className="flex flex-row gap-x-6">
-        <div className="lg:self-start">
+      <div className="flex justify-between items-center">
+        <div>
           <img
-            src={picture? `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${picture}` : defaultProfile}
+            // src={picture? `${import.meta.env.VITE_BACKEND_URL}/uploads/profiles/${picture}` : defaultProfile}
+            src={picture? picture : defaultProfile}
             alt="profile"
-            className="w-14 h-14"
+            className="sm:w-14 sm:h-14 w-12 h-12 rounded-lg object-cover"
           />
         </div>
-        <div className="flex flex-row gap-x-6 lg:flex-col xl:flex-row">
-          <div className="flex flex-col gap-y-1">
-            <p className="font-semibold text-dark">{name}</p>
-            <p className="text-secondary">{type === "income" ? income : transfer}</p>
+
+          <div className="flex flex-col w-20 whitespace-nowrap overflow-hidden">
+            <p className="font-semibold text-dark text-sm sm:text-base">{name.split(' ')[0]}</p>
+            <p className="text-[#4F5665] text-sm sm:text-base">{type === "income" ? 'transfer' : 'send'}</p>
           </div>
-          <div>
-            <div className={`${type === "income" ? 'text-[#1EC15F]': 'text-[#D00000]'}`}>RP.{amount.toLocaleString('id')}</div>
-          </div>
-        </div>
+
+            <div className={`${type === "income" ? 'text-[#1EC15F]': 'text-[#D00000]'} text-sm sm:text-base`}>{type === "income" ? '+' : '-'}RP.{amount.toLocaleString('id')}</div>
       </div>
     </>
   )

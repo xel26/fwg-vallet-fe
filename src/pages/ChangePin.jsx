@@ -1,41 +1,109 @@
-//import
-import { FiUser } from "react-icons/fi"
-import React from "react"
+import axios from "axios";
+import { useState} from "react"
+import { useSelector } from "react-redux"
+import { useNavigate, Link } from "react-router-dom";
+
 import Navbar from "../components/Navbar"
 import Navigation from "../components/Navigation"
 import ResponsiveNavigation from "../components/ResponsiveNavigation"
+import { Button, ProfileHeader} from "../components/Piece"
+import Pin from "../components/Pin"
+import Alert from "../components/Alert"
 
 const ChangePin = () => {
-    const pins = [1, 2, 3, 4, 5, 6]
-    const [inputPinActive, setInputPinActive] = React.useState(false)
+    const token = useSelector(state => state.auth.token)
+    const profile = useSelector(state => state.profile.data)
+    const navigate = useNavigate()
+
+    const [loading, setLoading] = useState()
+    const [errMessage, setErrMessage] = useState()
+    const [successMessage, setSuccessMessage] = useState()
+
+    const ChangePin = async(e) => {
+        setLoading(true)
+        e.preventDefault()
+
+        let existingPin = ''
+        e.target.existingPin?.forEach((item) => {
+            existingPin += item.value
+        })
+
+        let pin = ''
+        e.target.pin?.forEach((item) => {
+            pin += item.value
+        })
+
+        console.log(existingPin, pin)
+        const form = new URLSearchParams()
+        form.append('pin', existingPin)
+
+        try {
+            const {data} = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/auth/verify-pin/${profile.id}`, form.toString())
+            const {success} = data
+
+            if(success){
+                    const form2 = new URLSearchParams()
+                    form2.append('pin', pin)
+    
+                    await axios.patch(`${import.meta.env.VITE_BACKEND_URL}/customer/profile`, form2, {
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        }
+                    })
+
+                    e.target.existingPin.value = ''
+                    e.target.pin.value = ''
+
+                    setLoading()
+                    
+                    setSuccessMessage('Change Pin Success')
+                    setTimeout(() => {
+                        setSuccessMessage()
+                        navigate("/profile")
+                    }, 3000);
+
+            }
+            
+        } catch (error) {
+            console.log(error)
+            setLoading()
+            setErrMessage(error?.response?.data?.message == "Verify Pin Failed" && "Wrong Existing Pin!")
+
+            setTimeout(() => {
+                setErrMessage()
+            }, 3000);
+        }
+
+    }
+
     return (
         <>
             <Navbar />
-            <header className="flex pt-[56px]">
+            <main className="h-screen sm:pt-10 flex items-center justify-center sm:items-start sm:justify-start">
+                <Alert loading={loading} successMessage={successMessage} errMessage={errMessage}/>
                 <Navigation />
-                <div className=" flex flex-1 pt-[66px]">
-                    <div className="w-full flex md:px-[50px] flex-col gap-[20px] justify-center">
-                        <form className="flex flex-col gap-[10px] md:border-2 p-[30px] w-full">
-                            <span className="text-[#0B132A] text-[30px] font-bold">Change Pin 👋</span>
-                            <span className="text-[#4F5665] text-[16px]">Please save your pin because this so important.</span>
-                            <div className=" flex justify-center items-center gap-[30px] h-[200px]">
-                                {pins.map((item) => (
-                                    <input
-                                        key={item}
-                                        type="text"
-                                        name="pin"
-                                        maxLength="1"
-                                        className={`outline-none flex flex-1 w-4 border-b ${inputPinActive ? 'border-[#764abc]' : 'border-[#E8E8E8]'}  bg-transparent text-center`}
-                                    />
-                                ))}
+                <section className="relative flex flex-col flex-1 gap-4 mt-4 sm:pl-8">
+                        <ProfileHeader/>
+                        
+                        <form onSubmit={ChangePin} className="flex flex-col gap-4 p-4 sm:border sm:mr-10 sm:mb-10">
+                            <div className="flex flex-col">
+                                <div className="flex justify-between items-center">
+                                    <p className="font-bold sm:text-lg">Enter Your Existing Pin</p>
+                                    <Link to="/forgot-pin" className="text-[#764abc] active:underline">Forgot Pin</Link>
+                                </div>
+                                <Pin name="existingPin"/>
                             </div>
-                            <div className="w-full"><button className="rounded-lg mt-5 py-3 bg-[#764abc] w-full font-bold" type="submit">Submit</button>
+
+                            <div className="flex flex-col">
+                                <p className="font-bold sm:text-lg">Enter Your New Pin</p>
+                                <Pin/>
                             </div>
+
+                            <Button/>
                         </form>
                         <ResponsiveNavigation />
-                    </div>
-                </div>
-            </header>
+                </section>
+            </main>
         </>
     )
 }
