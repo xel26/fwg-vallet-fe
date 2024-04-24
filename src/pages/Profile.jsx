@@ -141,6 +141,7 @@ const Profile = () => {
   const [confirmCard, setConfirmCard] = useState()
 
   const deletePicture = async (event) => {
+    console.log('delete picture')
     setLoading(true)
     setConfirmCard()
     event.preventDefault()
@@ -176,7 +177,7 @@ const Profile = () => {
    return (
      <>
        <Navbar />
-       <main className="sm:h-[50rem] flex py-10 pt-10 pb-10 sm:pb-0 px-5 sm:px-0">
+       <main className="sm:h-[48rem] flex py-10 pt-10 pb-10 sm:pb-0 px-5 sm:px-0">
         <Navigation />
         {!confirmCard && (
           <Alert loading={loading} successMessage={successMessage} errMessage={errMessage}/>

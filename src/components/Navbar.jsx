@@ -47,6 +47,7 @@ const Navbar = () => {
           }
         })
         
+        console.log(data)
         dispatch(setProfile(data.results))
       } catch (error) {
         console.log(error)
