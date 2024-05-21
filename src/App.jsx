@@ -8,7 +8,7 @@ import PrivateRoute from './components/PrivateRoute'
 
 import Home from './pages/Home'
 import Register from './pages/Register'
-import Login from './pages/login'
+import Login from './pages/Login'
 import ForgotPassword from './pages/ForgotPassword'
 import CreateNewPassword from './pages/CreateNewPassword'
 import ForgotPin from './pages/ForgotPin'
